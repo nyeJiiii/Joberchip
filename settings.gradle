@@ -1,0 +1,51 @@
+rootProject.name = 'joberchip-be'
+
+["libs", "api"].each {
+
+    def subRootDir = new File(rootDir, it)
+    if (!subRootDir.exists()) {
+        subRootDir.mkdirs()
+    }
+
+    def subRootGradleFile = new File(subRootDir.absolutePath, it + "-common.gradle")
+    if (!subRootGradleFile.exists()) {
+        subRootGradleFile.text = """
+                    
+                    dependencies {
+                
+                    }
+                
+                    """.stripIndent(20)
+    }
+
+    subRootDir.eachDir { moduleRootDir ->
+
+        def gradleFile = new File(moduleRootDir.absolutePath, "build.gradle")
+        if (!gradleFile.exists()) {
+            gradleFile.text = """
+                    
+                    dependencies {
+                
+                    }
+                
+                    """.stripIndent(20)
+        }
+
+        [
+                "src/main/java/kr/joberchip/" + moduleRootDir.name.replaceAll("-", "_"),
+                "src/main/resources",
+                "src/test/java/kr/joberchip/" + moduleRootDir.name.replaceAll("-", "_"),
+                "src/test/resources"
+        ].each { srcDir ->
+            def srcFolder = new File(moduleRootDir.absolutePath, srcDir)
+            if (!srcFolder.exists()) {
+                srcFolder.mkdirs()
+            }
+        }
+
+        def projectName = ":${it}-${moduleRootDir.name}"
+        include projectName
+        project(projectName).projectDir = moduleRootDir
+    }
+}
+
