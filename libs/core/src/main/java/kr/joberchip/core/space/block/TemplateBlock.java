@@ -3,6 +3,7 @@ package kr.joberchip.core.space.block;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import kr.joberchip.core.space.BaseBlock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

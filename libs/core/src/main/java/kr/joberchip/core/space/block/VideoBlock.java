@@ -2,6 +2,7 @@ package kr.joberchip.core.space.block;
 
 import javax.persistence.*;
 import kr.joberchip.core.file.VideoBlockFile;
+import kr.joberchip.core.space.BaseBlock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

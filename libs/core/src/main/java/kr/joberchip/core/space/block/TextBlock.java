@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import kr.joberchip.core.space.BaseBlock;
 
 @Entity
 @Table(name = "text_block_tb")
