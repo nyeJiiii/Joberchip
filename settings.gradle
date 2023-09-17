@@ -1,6 +1,59 @@
 rootProject.name = 'joberchip-be'
 
-["libs", "api"].each {
+["api"].each {
+
+    def subRootDir = new File(rootDir, it)
+    if (!subRootDir.exists()) {
+        subRootDir.mkdirs()
+    }
+
+    def subRootGradleFile = new File(subRootDir.absolutePath, it + "-common.gradle")
+    if (!subRootGradleFile.exists()) {
+        subRootGradleFile.text = """
+                    
+                    dependencies {
+                
+                    }
+                
+                    """.stripIndent(20)
+    }
+
+    subRootDir.eachDir { moduleRootDir ->
+
+        def gradleFile = new File(moduleRootDir.absolutePath, "build.gradle")
+        if (!gradleFile.exists()) {
+            gradleFile.text = """
+                    
+                    dependencies {
+                
+                    }
+                
+                    """.stripIndent(20)
+        }
+
+        def delimIdx = moduleRootDir.name.indexOf("-", 0)
+        def packageBaseDir = moduleRootDir.name.substring(0, delimIdx);
+        def versionDir = moduleRootDir.name.substring(delimIdx + 1);
+
+        [
+                "src/main/java/kr/joberchip/" + packageBaseDir + "/" + versionDir,
+                "src/main/resources",
+                "src/main/java/kr/joberchip/" + packageBaseDir + "/" + versionDir,
+                "src/test/resources"
+        ].each { srcDir ->
+            def srcFolder = new File(moduleRootDir.absolutePath, srcDir)
+            if (!srcFolder.exists()) {
+                srcFolder.mkdirs()
+            }
+        }
+
+        def projectName = ":${it}-${moduleRootDir.name}"
+        include projectName
+        project(projectName).projectDir = moduleRootDir
+    }
+}
+
+["libs"].each {
 
     def subRootDir = new File(rootDir, it)
     if (!subRootDir.exists()) {
@@ -32,9 +85,9 @@ rootProject.name = 'joberchip-be'
         }
 
         [
-                "src/main/java/kr/joberchip/" + moduleRootDir.name.replaceAll("-", "_"),
+                "src/main/java/kr/joberchip/" + moduleRootDir.name,
                 "src/main/resources",
-                "src/test/java/kr/joberchip/" + moduleRootDir.name.replaceAll("-", "_"),
+                "src/main/java/kr/joberchip/" + moduleRootDir.name,
                 "src/test/resources"
         ].each { srcDir ->
             def srcFolder = new File(moduleRootDir.absolutePath, srcDir)
