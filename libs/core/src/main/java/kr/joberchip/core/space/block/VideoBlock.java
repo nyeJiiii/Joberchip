@@ -1,8 +1,8 @@
 package kr.joberchip.core.space.block;
 
 import javax.persistence.*;
-import kr.joberchip.core.file.VideoBlockFile;
-import kr.joberchip.core.space.BaseBlock;
+import kr.joberchip.core.space.BaseObject;
+import kr.joberchip.core.storage.VideoBlockFile;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "video_block_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class VideoBlock extends BaseBlock {
+public class VideoBlock extends BaseObject {
   @Column(name = "title")
   private String title;
 
@@ -21,7 +21,6 @@ public class VideoBlock extends BaseBlock {
   @Column(name = "video_link")
   private String videoLink;
 
-  @OneToOne
-  @JoinColumn(name = "video_file_id")
+  @OneToOne(mappedBy = "videoBlock")
   private VideoBlockFile videoFile;
 }

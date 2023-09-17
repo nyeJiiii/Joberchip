@@ -6,12 +6,12 @@ import kr.joberchip.core.space.page.SpacePage;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
-public abstract class BaseBlock extends OnScreenLocation {
+public abstract class BaseObject extends OnScreenLocation {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "block_id", columnDefinition = "BINARY(16)")
-  private UUID blockId;
+  @Column(name = "object_id", columnDefinition = "BINARY(16)")
+  private UUID objectId;
 
   @ManyToOne
   @JoinColumn(name = "page_id")

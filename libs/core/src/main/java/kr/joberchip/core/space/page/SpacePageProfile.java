@@ -1,7 +1,7 @@
 package kr.joberchip.core.space.page;
 
 import javax.persistence.*;
-import kr.joberchip.core.file.ProfileImageFile;
+import kr.joberchip.core.storage.ProfileImageFile;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

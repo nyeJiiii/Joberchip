@@ -2,7 +2,7 @@ package kr.joberchip.core.space.page;
 
 import java.util.*;
 import javax.persistence.*;
-import kr.joberchip.core.space.BaseBlock;
+import kr.joberchip.core.space.BaseObject;
 import kr.joberchip.core.space.block.ImageBlock;
 import kr.joberchip.core.space.block.LinkBlock;
 import kr.joberchip.core.space.block.TextBlock;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "space_page")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class SpacePage extends BaseBlock {
+public class SpacePage extends BaseObject {
   @Column(name = "title")
   private String title;
 
