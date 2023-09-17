@@ -1,4 +1,4 @@
-package kr.joberchip.core.file;
+package kr.joberchip.core.storage;
 
 import javax.persistence.*;
 import lombok.AccessLevel;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class AttachedFile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "file_id")
-  private Long fileId;
+  @Column(name = "attached_file_id")
+  private Long attachedFileId;
 
   @Column(name = "content_type")
   private String contentType;
@@ -29,10 +29,10 @@ public class AttachedFile {
   private ImageBlockFile imageBlockFile;
 
   @OneToOne(mappedBy = "attachedFile")
-  private ProfileImageFile profileFile;
+  private ProfileImageFile profileImageFile;
 
-  private AttachedFile(Long fileId, String contentType, String savePath) {
-    this.fileId = fileId;
+  private AttachedFile(Long attachedFileId, String contentType, String savePath) {
+    this.attachedFileId = attachedFileId;
     this.contentType = contentType;
     this.savePath = savePath;
   }

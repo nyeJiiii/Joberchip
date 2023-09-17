@@ -1,4 +1,4 @@
-package kr.joberchip.core.file;
+package kr.joberchip.core.storage;
 
 import javax.persistence.*;
 import kr.joberchip.core.space.block.ImageBlock;
@@ -8,13 +8,10 @@ import kr.joberchip.core.space.block.ImageBlock;
 public class ImageBlockFile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="image_file_id")
   private Long imageFileId;
 
-  @OneToOne
-  @JoinColumn(name = "block_id")
-  private ImageBlock imageBlock;
+  @OneToOne private ImageBlock imageBlock;
 
-  @OneToOne
-  @JoinColumn(name = "file_id")
-  private AttachedFile attachedFile;
+  @OneToOne private AttachedFile attachedFile;
 }

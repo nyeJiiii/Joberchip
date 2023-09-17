@@ -1,4 +1,4 @@
-package kr.joberchip.core.file;
+package kr.joberchip.core.storage;
 
 import javax.persistence.*;
 import kr.joberchip.core.space.block.VideoBlock;
@@ -8,13 +8,10 @@ import kr.joberchip.core.space.block.VideoBlock;
 public class VideoBlockFile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name="video_file_id")
   private Long videoFileId;
 
-  @OneToOne
-  @JoinColumn(name = "block_id")
-  private VideoBlock videoBlock;
+  @OneToOne private VideoBlock videoBlock;
 
-  @OneToOne
-  @JoinColumn(name = "file_id")
-  private AttachedFile attachedFile;
+  @OneToOne private AttachedFile attachedFile;
 }

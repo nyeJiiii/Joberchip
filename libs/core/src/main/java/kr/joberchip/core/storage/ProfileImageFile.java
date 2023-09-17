@@ -1,4 +1,4 @@
-package kr.joberchip.core.file;
+package kr.joberchip.core.storage;
 
 import javax.persistence.*;
 import kr.joberchip.core.space.page.SpacePageProfile;
@@ -11,11 +11,7 @@ public class ProfileImageFile {
   @Column(name = "profile_image_file_id")
   private Long profileImageFileId;
 
-  @OneToOne(targetEntity = SpacePageProfile.class)
-  @JoinColumn(name = "profile_id")
-  private SpacePageProfile pageProfile;
+  @OneToOne private SpacePageProfile pageProfile;
 
-  @OneToOne(targetEntity = AttachedFile.class)
-  @JoinColumn(name = "file_id")
-  private AttachedFile attachedFile;
+  @OneToOne private AttachedFile attachedFile;
 }
