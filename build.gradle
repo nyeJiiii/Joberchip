@@ -50,6 +50,8 @@ subprojects {
         testAnnotationProcessor lombok
 
         testImplementation "$boot:spring-boot-starter-test"
+
+        implementation 'org.springframework.boot:spring-boot-starter-security'
     }
 
     test {
