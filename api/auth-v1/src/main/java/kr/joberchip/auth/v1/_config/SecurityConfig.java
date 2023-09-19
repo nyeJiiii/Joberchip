@@ -14,20 +14,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                    .headers().frameOptions().sameOrigin()
-                .and()
-                    .cors().configurationSource(configurationSource())
-                .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        http.csrf().disable();
+        http.headers().frameOptions().sameOrigin()
+            .and().cors().configurationSource(configurationSource())
+            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and().formLogin().disable()
+                  .httpBasic().disable();
         http.authorizeRequests()
                 .antMatchers("/user").authenticated()
-                .anyRequest().permitAll()
-
-                .and().formLogin().loginPage("/login")
-                    .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/");
+                .anyRequest().permitAll();
 
         return http.build();
     }
