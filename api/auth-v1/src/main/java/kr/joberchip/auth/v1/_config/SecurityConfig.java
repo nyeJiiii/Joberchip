@@ -1,4 +1,4 @@
-package kr.joberchip.auth.v1.security;
+package kr.joberchip.auth.v1._config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
