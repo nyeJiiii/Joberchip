@@ -11,9 +11,12 @@ public abstract class BaseObject extends OnScreenLocation {
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "object_id", columnDefinition = "BINARY(16)")
-  private UUID objectId;
+  protected UUID objectId;
 
   @ManyToOne
   @JoinColumn(name = "page_id")
-  private SpacePage parentPage;
+  protected SpacePage parentPage;
+
+  @Column(name = "visible")
+  protected Boolean visible = Boolean.FALSE;
 }
