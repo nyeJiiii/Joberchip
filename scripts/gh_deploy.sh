@@ -60,7 +60,7 @@ API_SERVER_JAR_NAME=$(basename $API_SERVER_BUILD_JAR)
 
 echo "==== api server 배포 시작 : $(date +%c) ====" >> $DEPLOY_LOG_PATH
 
-echo "> api-auth build 파일명 : $API_AUTH_JAR_NAME" >> $DEPLOY_LOG_PATH
+echo "> api-auth build 파일명 : $API_SERVER_JAR_NAME" >> $DEPLOY_LOG_PATH
 echo "> application build 파일명 : $API_SERVER_JAR_NAME" >> $DEPLOY_LOG_PATH
 
 echo "> build 파일 복사" >> $DEPLOY_LOG_PATH
