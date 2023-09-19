@@ -1,5 +1,7 @@
 dependencies {
     implementation("$boot:spring-boot-starter-web")
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation project(":libs-core")
 
     runtimeOnly 'com.h2database:h2'
