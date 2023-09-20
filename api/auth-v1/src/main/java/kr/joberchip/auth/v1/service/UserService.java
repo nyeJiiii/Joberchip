@@ -26,9 +26,13 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<User> login(UserRequest loginUser) {
-        //TODO userOP.isEmpty 일 경우 Exception
-        Optional<User> userOP = userRepository.findByUsername(loginUser.getUsername());
-        return userOP;
+    public User login(UserRequest loginUser) {
+        Optional<User> userOptional = userRepository.findByUsername(loginUser.getUsername());
+        if (userOptional.isEmpty()) {
+            //TODO userOP.isEmpty 일 경우 Exception
+            return null;
+        }
+        User user = userOptional.get();
+        return user;
     }
 }
