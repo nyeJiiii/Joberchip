@@ -18,5 +18,5 @@ public abstract class BaseObject extends OnScreenLocation {
   protected SpacePage parentPage;
 
   @Column(name = "visible")
-  protected Boolean visible = Boolean.FALSE;
+  protected Boolean visible = Boolean.TRUE;
 }
