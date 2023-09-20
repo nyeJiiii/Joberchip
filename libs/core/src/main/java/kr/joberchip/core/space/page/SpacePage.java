@@ -42,4 +42,8 @@ public class SpacePage extends BaseObject {
 
   @OneToOne(mappedBy = "spacePage")
   private SpacePageProfile spacePageProfile;
+
+  public static SpacePage of(String title, String description) {
+    return new SpacePage(title, description, null, null, null, null, null, null, null);
+  }
 }
