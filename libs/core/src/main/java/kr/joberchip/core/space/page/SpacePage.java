@@ -9,12 +9,14 @@ import kr.joberchip.core.space.block.TextBlock;
 import kr.joberchip.core.space.block.VideoBlock;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "space_page")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@Getter
 public class SpacePage extends BaseObject {
   @Column(name = "title")
   private String title;
@@ -22,19 +24,19 @@ public class SpacePage extends BaseObject {
   @Column(name = "description")
   private String description;
 
-  @OneToMany(mappedBy = "parentPage", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "parentPageId", cascade = CascadeType.ALL)
   private Set<SpacePage> childPages = new LinkedHashSet<>();
 
-  @OneToMany(mappedBy = "parentPage")
+  @OneToMany(mappedBy = "parentPageId")
   private List<TextBlock> textBlocks;
 
-  @OneToMany(mappedBy = "parentPage")
+  @OneToMany(mappedBy = "parentPageId")
   private List<LinkBlock> linkBlocks;
 
-  @OneToMany(mappedBy = "parentPage")
+  @OneToMany(mappedBy = "parentPageId")
   private List<ImageBlock> imageBlocks;
 
-  @OneToMany(mappedBy = "parentPage")
+  @OneToMany(mappedBy = "parentPageId")
   private List<VideoBlock> videoBlocks;
 
   @OneToMany(mappedBy = "spacePage")
@@ -45,5 +47,9 @@ public class SpacePage extends BaseObject {
 
   public static SpacePage of(String title, String description) {
     return new SpacePage(title, description, null, null, null, null, null, null, null);
+  }
+
+  public UUID getPageId() {
+    return this.objectId;
   }
 }
