@@ -1,6 +1,5 @@
 package kr.joberchip.server.v1.space;
 
-import java.util.UUID;
 import kr.joberchip.core.user.User;
 import kr.joberchip.server.v1._config.security.CustomUserDetails;
 import kr.joberchip.server.v1._utils.ApiResponse;
@@ -16,12 +15,12 @@ public class JoberSpaceController {
   private final JoberSpaceService joberSpaceService;
 
   @PostMapping("/new")
-  public ResponseEntity<ApiResponse.Result<UUID>> createNewSpace(
+  public ResponseEntity<ApiResponse.Result<JoberSpaceResponse>> createNewSpace(
       @AuthenticationPrincipal CustomUserDetails authentication) {
     User user = authentication.getUser();
 
-    UUID generatedSpaceId = joberSpaceService.createSpace(user.getUserId());
+    JoberSpaceResponse result = joberSpaceService.createSpace(user.getUserId());
 
-    return ResponseEntity.ok(ApiResponse.success(generatedSpaceId));
+    return ResponseEntity.ok(ApiResponse.success(result));
   }
 }

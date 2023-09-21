@@ -26,7 +26,7 @@ public class JoberSpaceService {
    * @return 생성된 스페이스 UUID
    */
   @Transactional
-  public UUID createSpace(Long userId) {
+  public JoberSpaceResponse createSpace(Long userId) {
     User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
 
     SpacePage defaultPage =
@@ -36,6 +36,6 @@ public class JoberSpaceService {
     spacePageRepository.save(defaultPage);
 
     JoberSpace generatedSpace = joberSpaceRepository.save(JoberSpace.of(user, defaultPage));
-    return generatedSpace.getSpaceId();
+    return new JoberSpaceResponse(generatedSpace.getSpaceId());
   }
 }
