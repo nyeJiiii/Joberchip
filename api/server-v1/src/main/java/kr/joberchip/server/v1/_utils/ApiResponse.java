@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse {
   public static <T> Result<T> success() {
     return Result.of(HttpStatus.NO_CONTENT.value(), true, null, null);
@@ -19,6 +18,7 @@ public class ApiResponse {
     return Result.of(status.value(), false, null, Error.of(message));
   }
 
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   public record Result<T>(int status, boolean success, T response, Error error) {
     public static <T> Result<T> of(int status, boolean success, T response, Error error) {
       return new Result<T>(status, success, response, error);
