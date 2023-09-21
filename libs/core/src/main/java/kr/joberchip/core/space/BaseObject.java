@@ -14,8 +14,8 @@ public abstract class BaseObject extends OnScreenLocation {
   protected UUID objectId;
 
   @ManyToOne
-  @JoinColumn(name = "page_id")
-  protected SpacePage parentPage;
+  @JoinColumn(name = "parent_page_id")
+  protected SpacePage parentPageId;
 
   @Column(name = "visible")
   protected Boolean visible = Boolean.TRUE;
