@@ -36,7 +36,7 @@ public class UserController {
         // TODO @Valid 유효성검사 Exception (Null 값 들어왔을 때)
 
         userService.join(newUser);
-        return ResponseEntity.ok().body(ApiResponse.success("회원가입 성공"));
+        return ResponseEntity.ok().body(ApiResponse.success());
     }
 
     @PostMapping("/login")
