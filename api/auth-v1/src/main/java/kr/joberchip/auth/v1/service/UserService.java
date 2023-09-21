@@ -36,8 +36,4 @@ public class UserService {
         User user = userOptional.get();
         return JwtTokenProvider.create(user);
     }
-
-    public void createToken(UserRequest loginUser) {
-
-    }
 }
