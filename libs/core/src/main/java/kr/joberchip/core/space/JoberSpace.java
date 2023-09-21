@@ -7,6 +7,7 @@ import kr.joberchip.core.space.page.SpacePage;
 import kr.joberchip.core.user.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "jober_space_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class JoberSpace extends BaseEntity {
   @Id
   @GeneratedValue(generator = "uuid2")
