@@ -1,7 +1,7 @@
-package kr.joberchip.auth.v1.service;
+package kr.joberchip.auth.v1.user.service;
 
-import kr.joberchip.auth.v1.dto.UserRequest;
-import kr.joberchip.auth.v1.repository.UserRepository;
+import kr.joberchip.auth.v1.user.dto.UserRequest;
+import kr.joberchip.auth.v1.user.repository.UserRepository;
 import kr.joberchip.auth.v1.security.JwtTokenProvider;
 import kr.joberchip.core.user.User;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,10 @@ public class UserService {
     @Transactional
     public void join(UserRequest newUser) {
         //TODO username 중복검사, 중복일 경우 Exception
+        Optional<User> isUser = userRepository.findByUsername(newUser.getUsername());
+        if (isUser.isPresent()) {
+
+        }
 
         newUser.encodePassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser.toEntity());

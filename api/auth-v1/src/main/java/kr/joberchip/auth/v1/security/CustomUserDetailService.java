@@ -1,9 +1,8 @@
 package kr.joberchip.auth.v1.security;
 
-import kr.joberchip.auth.v1.repository.UserRepository;
+import kr.joberchip.auth.v1.user.repository.UserRepository;
 import kr.joberchip.core.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

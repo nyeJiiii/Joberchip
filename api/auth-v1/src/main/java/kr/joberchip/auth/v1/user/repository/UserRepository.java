@@ -1,4 +1,4 @@
-package kr.joberchip.auth.v1.repository;
+package kr.joberchip.auth.v1.user.repository;
 
 import java.util.Optional;
 import kr.joberchip.core.user.User;

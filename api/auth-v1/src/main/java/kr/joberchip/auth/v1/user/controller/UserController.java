@@ -1,11 +1,8 @@
-package kr.joberchip.auth.v1.controller;
+package kr.joberchip.auth.v1.user.controller;
 
 import kr.joberchip.auth.v1._utils.ApiResponse;
-import kr.joberchip.auth.v1.dto.UserRequest;
-import kr.joberchip.auth.v1.dto.UserResponse;
-import kr.joberchip.auth.v1.security.JwtTokenProvider;
-import kr.joberchip.auth.v1.service.UserService;
-import kr.joberchip.core.user.User;
+import kr.joberchip.auth.v1.user.dto.UserRequest;
+import kr.joberchip.auth.v1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EntityScan(basePackages = {"kr.joberchip.core"})
-@EnableJpaRepositories(basePackages = {"kr.joberchip.auth.v1.repository"})
+@EnableJpaRepositories(basePackages = {"kr.joberchip.auth.v1.user.repository"})
 @EnableJpaAuditing
 public class JpaConfig {}
