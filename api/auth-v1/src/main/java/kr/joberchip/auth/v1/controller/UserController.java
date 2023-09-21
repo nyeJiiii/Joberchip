@@ -43,10 +43,9 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest loginUser) {
         // TODO @Valid 유효성검사 Exception (Null 값 들어왔을 때)
 
-        User athurizedUser = userService.login(loginUser);
-        String token = JwtTokenProvider.create(athurizedUser);
+        String token = userService.login(loginUser);
         return ResponseEntity.ok()
                 .header("Authorization", token)
-                .body(ApiResponse.success(new UserResponse(athurizedUser)));
+                .body(ApiResponse.success());
     }
 }

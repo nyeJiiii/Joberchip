@@ -2,6 +2,7 @@ package kr.joberchip.auth.v1.service;
 
 import kr.joberchip.auth.v1.dto.UserRequest;
 import kr.joberchip.auth.v1.repository.UserRepository;
+import kr.joberchip.auth.v1.security.JwtTokenProvider;
 import kr.joberchip.core.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,13 +27,17 @@ public class UserService {
     }
 
     @Transactional
-    public User login(UserRequest loginUser) {
+    public String login(UserRequest loginUser) {
         Optional<User> userOptional = userRepository.findByUsername(loginUser.getUsername());
         if (userOptional.isEmpty()) {
             //TODO userOP.isEmpty 일 경우 Exception
             return null;
         }
         User user = userOptional.get();
-        return user;
+        return JwtTokenProvider.create(user);
+    }
+
+    public void createToken(UserRequest loginUser) {
+
     }
 }
