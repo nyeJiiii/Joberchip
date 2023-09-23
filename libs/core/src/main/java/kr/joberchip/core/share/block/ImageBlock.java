@@ -9,6 +9,7 @@ import kr.joberchip.core.share.BaseObject;
 import kr.joberchip.core.storage.ImageBlockFile;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -17,12 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageBlock extends BaseObject {
   @Column(name = "title")
+  @Getter
   private String title;
 
   @Column(name = "description")
+  @Getter
   private String description;
 
   @Column(name = "image_link")
+  @Getter
   private String imageLink;
 
   @OneToOne(mappedBy = "imageBlock")
