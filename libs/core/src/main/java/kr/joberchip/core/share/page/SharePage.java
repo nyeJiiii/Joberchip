@@ -4,6 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 import kr.joberchip.core.share.BaseObject;
 import kr.joberchip.core.share.block.*;
+import kr.joberchip.core.storage.ProfileImageFile;
 import lombok.*;
 
 @Entity
@@ -41,7 +42,7 @@ public class SharePage extends BaseObject {
   private Set<PageHashtag> hashtags = new LinkedHashSet<>();
 
   @OneToOne(mappedBy = "sharePage", cascade = CascadeType.ALL)
-  private SpacePageProfile spacePageProfile;
+  private ProfileImageFile profileImageFile;
 
   private SharePage(String title, String description) {
     this.title = title;
