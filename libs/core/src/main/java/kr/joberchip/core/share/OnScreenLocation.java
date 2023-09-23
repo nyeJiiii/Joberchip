@@ -1,4 +1,4 @@
-package kr.joberchip.core.space;
+package kr.joberchip.core.share;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

@@ -1,4 +1,4 @@
-package kr.joberchip.core.space.page;
+package kr.joberchip.core.share.page;
 
 import javax.persistence.*;
 
@@ -10,9 +10,9 @@ public class PageHashtag {
   @Column(name = "page_hashtag_id")
   private Long pageHashtagId;
 
-  @ManyToOne(targetEntity = SpacePage.class)
+  @ManyToOne(targetEntity = SharePage.class)
   @JoinColumn(name = "page_id")
-  private SpacePage spacePage;
+  private SharePage sharePage;
 
   @ManyToOne(targetEntity = Hashtag.class)
   @JoinColumn(name = "hashtag_id")
