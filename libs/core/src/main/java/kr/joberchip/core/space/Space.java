@@ -3,35 +3,37 @@ package kr.joberchip.core.space;
 import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.BaseEntity;
-import kr.joberchip.core.space.page.SpacePage;
+import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.core.user.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "jober_space_tb")
+@Table(name = "space_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class JoberSpace extends BaseEntity {
+public class Space extends BaseEntity {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "space_id", columnDefinition = "BINARY(16)")
   protected UUID spaceId;
 
-  @ManyToOne
-  @JoinColumn(name = "owner_id")
-  private User owner;
+  @OneToOne
+  @JoinColumn(name = "creator_id")
+  private User creator;
 
   @OneToOne
-  @JoinColumn(name = "main_page_id")
-  private SpacePage mainPage;
+  @JoinColumn(name = "objectId")
+  private SharePage mainPage;
 
-  public static JoberSpace of(User owner, SpacePage mainPage) {
-    return new JoberSpace(null, owner, mainPage);
+  public void setMainPage(SharePage sharePage) {
+    sharePage.setParentObjectId(this.spaceId);
+    this.mainPage = sharePage;
+  }
+
+  public static Space createDefault(User creator) {
+    return new Space(null, creator, null);
   }
 }
