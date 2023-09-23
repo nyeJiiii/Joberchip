@@ -1,7 +1,7 @@
 package kr.joberchip.core.storage;
 
 import javax.persistence.*;
-import kr.joberchip.core.space.block.VideoBlock;
+import kr.joberchip.core.share.block.VideoBlock;
 
 @Entity
 @Table(name = "video_file_tb")

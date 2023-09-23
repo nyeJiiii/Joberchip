@@ -1,7 +1,7 @@
 package kr.joberchip.core.storage;
 
 import javax.persistence.*;
-import kr.joberchip.core.space.block.ImageBlock;
+import kr.joberchip.core.share.block.ImageBlock;
 
 @Entity
 @Table(name = "image_file_tb")
