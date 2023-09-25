@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
-import kr.joberchip.server.v1.storage.exceptions.StorageException;
-import kr.joberchip.server.v1.storage.exceptions.StorageFileNotFoundException;
+import kr.joberchip.server.v1._errors.exceptions.StorageException;
+import kr.joberchip.server.v1._errors.exceptions.StorageFileNotFoundException;
 import kr.joberchip.server.v1.storage.properties.StorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
