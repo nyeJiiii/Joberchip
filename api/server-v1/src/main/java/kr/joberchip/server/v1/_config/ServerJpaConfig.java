@@ -14,8 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
 @EntityScan(basePackages = {"kr.joberchip.core"})
-@EnableJpaRepositories(
-    basePackages = {"kr.joberchip.server.v1.space", "kr.joberchip.server.v1.user"})
+@EnableJpaRepositories(basePackages = {"kr.joberchip.server.v1"})
 @EnableJpaAuditing
 public class ServerJpaConfig {
   @Bean
