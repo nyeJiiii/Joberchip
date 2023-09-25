@@ -58,8 +58,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
           new UsernamePasswordAuthenticationToken(
               myUserDetails, myUserDetails.getPassword(), myUserDetails.getAuthorities());
 
-      CustomUserDetails userDetail = (CustomUserDetails) authentication.getPrincipal();
-
       SecurityContextHolder.getContext().setAuthentication(authentication);
       log.info(
           "Security Context에 '{}' 인증 정보를 저장했습니다, Uri: '{}'",
