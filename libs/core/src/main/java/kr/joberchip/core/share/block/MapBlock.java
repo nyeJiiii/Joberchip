@@ -1,10 +1,7 @@
 package kr.joberchip.core.share.block;
 
 import kr.joberchip.core.share.BaseObject;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @Table(name = "map_block_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class MapBlock extends BaseObject {
 
   @Column(name = "address")
