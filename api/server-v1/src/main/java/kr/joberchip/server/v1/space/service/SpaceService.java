@@ -1,5 +1,6 @@
 package kr.joberchip.server.v1.space.service;
 
+import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.core.space.ParticipationType;
@@ -7,15 +8,17 @@ import kr.joberchip.core.space.Space;
 import kr.joberchip.core.user.SpaceUserInfo;
 import kr.joberchip.core.user.User;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
-import kr.joberchip.server.v1.space.dto.SpaceInfo;
+import kr.joberchip.server.v1.space.dto.ParticipatingInfo;
 import kr.joberchip.server.v1.space.dto.SpaceInvitation;
 import kr.joberchip.server.v1.space.repository.SpaceRepository;
 import kr.joberchip.server.v1.user.repository.SpaceUserInfoRepository;
 import kr.joberchip.server.v1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SpaceService {
@@ -34,6 +37,7 @@ public class SpaceService {
     Space defaultSpace = Space.createDefault(user);
 
     spaceRepository.save(defaultSpace);
+    log.info("Default Space created : {}", defaultSpace);
 
     SharePage defaultSharePage = generateDefaultSharePage(defaultSpace, user.getUsername());
 
@@ -43,10 +47,14 @@ public class SpaceService {
         userId, ParticipationType.DEFAULT)) {
       SpaceUserInfo memberInfo = SpaceUserInfo.of(defaultSpace, user, ParticipationType.OWNER);
       spaceUserInfoRepository.save(memberInfo);
+      log.info("Space User Info : {}", memberInfo);
     } else {
       SpaceUserInfo memberInfo = SpaceUserInfo.of(defaultSpace, user);
       spaceUserInfoRepository.save(memberInfo);
+      log.info("Space User Info : {}", memberInfo);
     }
+
+    log.info("Default SharePage created : {}", defaultSharePage);
   }
 
   private SharePage generateDefaultSharePage(Space defaultSpace, String username) {
@@ -62,10 +70,10 @@ public class SpaceService {
   }
 
   @Transactional(readOnly = true)
-  public SpaceInfo getDefaultSpace(Long userId) {
-    Space defaultSpace =
-        spaceRepository.findByCreator_UserId(userId).orElseThrow(EntityNotFoundException::new);
-    return SpaceInfo.fromEntity(defaultSpace);
+  public List<ParticipatingInfo> getParticipatingInfo(Long userId) {
+    return spaceUserInfoRepository.findAllByUser_UserId(userId).stream()
+        .map(ParticipatingInfo::fromEntity)
+        .toList();
   }
 
   @Transactional
