@@ -36,4 +36,16 @@ public class Space extends BaseEntity {
   public static Space createDefault(User creator) {
     return new Space(null, creator, null);
   }
+
+  @Override
+  public String toString() {
+    return "{ "
+        + "spaceId : "
+        + spaceId
+        + ", creator : "
+        + creator.getUsername()
+        + ", mainPage : "
+        + (this.mainPage != null ? mainPage.getPageId() : null)
+        + " }";
+  }
 }
