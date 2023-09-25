@@ -25,7 +25,7 @@ public class Space extends BaseEntity {
   private User creator;
 
   @OneToOne
-  @JoinColumn(name = "objectId")
+  @JoinColumn(name = "page_id")
   private SharePage mainPage;
 
   public void setMainPage(SharePage sharePage) {
