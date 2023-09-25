@@ -1,18 +1,23 @@
 package kr.joberchip.core.share.page;
 
-import java.util.*;
-import javax.persistence.*;
 import kr.joberchip.core.share.BaseObject;
 import kr.joberchip.core.share.block.*;
 import kr.joberchip.core.storage.ProfileImageFile;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "space_page")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-@ToString
 public class SharePage extends BaseObject {
   @Column(name = "title")
   private String title;
@@ -97,5 +102,20 @@ public class SharePage extends BaseObject {
 
   public UUID getPageId() {
     return this.objectId;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName()
+        + "\n{\n"
+        + "\ttitle = "
+        + title
+        + ",\n"
+        + "\tdescription = "
+        + description
+        + ",\n"
+        + "\tprofileImageFile = "
+        + profileImageFile
+        + "\n}\n";
   }
 }
