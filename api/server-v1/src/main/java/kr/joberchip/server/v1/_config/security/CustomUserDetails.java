@@ -3,16 +3,10 @@ package kr.joberchip.server.v1._config.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import kr.joberchip.core.user.User;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-
-  @Getter
-  private final User user;
+public record CustomUserDetails(User user) implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
