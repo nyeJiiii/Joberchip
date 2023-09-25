@@ -1,7 +1,7 @@
 package kr.joberchip.core.user;
 
+import java.util.List;
 import javax.persistence.*;
-
 import lombok.*;
 
 @Entity
@@ -23,6 +23,8 @@ public class User {
   @Column(nullable = false)
   private String password;
 
-  @Builder.Default
-  private String userRoles = "ROLE_USER";
+  @Builder.Default private String userRoles = "ROLE_USER";
+
+  @OneToMany(mappedBy = "user")
+  private List<SpaceUserInfo> spaceUserInfoList;
 }
