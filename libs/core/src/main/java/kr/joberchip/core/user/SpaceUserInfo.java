@@ -21,7 +21,7 @@ public class SpaceUserInfo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "info_id")
-  private Long spaceMemberInfoId;
+  private Long spaceUserInfoId;
 
   @ManyToOne
   @JoinColumn(name = "space_id")
@@ -41,5 +41,19 @@ public class SpaceUserInfo {
 
   public static SpaceUserInfo of(Space space, User user, ParticipationType participationType) {
     return new SpaceUserInfo(null, space, user, participationType);
+  }
+
+  @Override
+  public String toString() {
+    return "\n{\n"
+        + "\tspaceMemberInfoId : "
+        + spaceUserInfoId
+        + ",\n\t space : "
+        + space
+        + ",\n\t user : "
+        + user
+        + ",\n\t participationType : "
+        + participationType
+        + "\n}\n";
   }
 }
