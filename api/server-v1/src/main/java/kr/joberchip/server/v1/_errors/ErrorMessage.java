@@ -9,4 +9,7 @@ public class ErrorMessage {
   // 인증 - API 접근
   public static final String UN_AUTHORIZED = "인증 되지 않은 접근";
   public static final String FORBIDDEN = "접근 거부";
+
+  // @Valid
+  public static final String NOT_EMPTY = "비어있을 수 없습니다.";
 }
