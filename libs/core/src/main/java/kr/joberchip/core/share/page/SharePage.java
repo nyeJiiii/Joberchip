@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "space_page")
+@Table(name = "share_page_tb")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
