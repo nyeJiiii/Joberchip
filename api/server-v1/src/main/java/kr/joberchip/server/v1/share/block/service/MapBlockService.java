@@ -31,4 +31,9 @@ public class MapBlockService {
                 modifiedMapBlock.getLongitude(),
                 blockId);
     }
+
+    @Transactional
+    public void deleteMapBlock(UUID blockId) {
+        mapBlockRepository.deleteById(blockId);
+    }
 }
