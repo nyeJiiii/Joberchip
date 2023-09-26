@@ -4,17 +4,17 @@ import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import lombok.Getter;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 public class CreateMapBlock {
 
-    @NotEmpty(message = ErrorMessage.NOT_EMPTY)
-    public String address;
-    @NotEmpty(message = ErrorMessage.NOT_EMPTY)
-    public Double latitude;
-    @NotEmpty(message = ErrorMessage.NOT_EMPTY)
-    public Double longitude;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private String address;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Double latitude;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Double longitude;
 
     public MapBlock toEntity() {
         return MapBlock.builder()
