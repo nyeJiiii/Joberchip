@@ -14,14 +14,20 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/page/{pageId}/mapBlock")
+//@RequestMapping("/v1/page/{pageId}/mapBlock")
 @RequiredArgsConstructor
 public class MapBlockController {
 
     private final MapBlockService mapBlockService;
 
+//    @PostMapping("/")
+//    public ResponseEntity<?> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
+//        mapBlockService.createMapBlock(newMapBlock);
+//        return ResponseEntity.ok().body(ApiResponse.success());
+//    }
+
     @PostMapping("/")
-    public ResponseEntity<?> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
+    public ResponseEntity<?> createMapBlock(@RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
         mapBlockService.createMapBlock(newMapBlock);
         return ResponseEntity.ok().body(ApiResponse.success());
     }
