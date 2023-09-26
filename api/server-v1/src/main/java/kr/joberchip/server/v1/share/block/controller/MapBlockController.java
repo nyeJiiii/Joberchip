@@ -44,4 +44,16 @@ public class MapBlockController {
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 
+//    @DeleteMapping("/{blockId}")
+//    public ResponseEntity<?> deleteMapBlock(@PathVariable UUID pageId, @PathVariable UUID blockId) {
+//        mapBlockService.deleteMapBlock(blockId);
+//        return ResponseEntity.ok().body(ApiResponse.success());
+//    }
+
+    @DeleteMapping("/{blockId}")
+    public ResponseEntity<?> deleteMapBlock(@PathVariable UUID blockId) {
+        mapBlockService.deleteMapBlock(blockId);
+        return ResponseEntity.ok().body(ApiResponse.success());
+    }
+
 }
