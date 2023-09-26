@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /** 첨부파일 테이블 엔티티 */
 @Entity
@@ -13,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-@Setter
 public class AttachedFile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +21,8 @@ public class AttachedFile {
   @Column(name = "content_type")
   private String contentType;
 
-  @Column(name = "save_path")
-  private String savePath;
+  @Column(name = "stored_name")
+  private String storedName;
 
   @OneToOne(mappedBy = "attachedFile")
   private VideoBlockFile videoFile;
@@ -35,26 +33,12 @@ public class AttachedFile {
   @OneToOne(mappedBy = "attachedFile")
   private ProfileImageFile profileImageFile;
 
-  private AttachedFile(Long attachedFileId, String contentType, String savePath) {
-    this.attachedFileId = attachedFileId;
+  private AttachedFile(String contentType, String storedName) {
     this.contentType = contentType;
-    this.savePath = savePath;
+    this.storedName = storedName;
   }
 
-  private AttachedFile(String contentType, String savePath) {
-    this.contentType = contentType;
-    this.savePath = savePath;
-  }
-
-  public static AttachedFile of(String contentType, String savePath) {
-    return new AttachedFile(contentType, savePath);
-  }
-
-  public static AttachedFile of(Long fileId, String contentType, String savePath) {
-    return new AttachedFile(fileId, contentType, savePath);
-  }
-
-  public void changePath(String newPath) {
-    this.savePath = newPath;
+  public static AttachedFile of(String contentType, String storedName) {
+    return new AttachedFile(contentType, storedName);
   }
 }

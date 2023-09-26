@@ -53,7 +53,7 @@ public class VideoBlockService {
           Paths.get(inputFilePath),
           StandardCopyOption.REPLACE_EXISTING);
 
-      String outputFileName = UUID.randomUUID().toString() + ".mp4";
+      String outputFileName = UUID.randomUUID() + ".mp4";
       String outputFilePath = folderPath.resolve(outputFileName).toString();
 
       // ffmpeg를 사용하여 확장자를 변경
@@ -64,9 +64,7 @@ public class VideoBlockService {
       ProcessBuilder pb = new ProcessBuilder(ffmpegCommand);
       pb.inheritIO().start().waitFor();
 
-      AttachedFile attachedFile = new AttachedFile();
-      attachedFile.setContentType("mp4");
-      attachedFile.setSavePath(outputFilePath);
+      AttachedFile attachedFile = AttachedFile.of("mp4", outputFileName);
       AttachedFile savedAttachedFile = attachedFileRepository.save(attachedFile);
 
       VideoBlock videoBlock = new VideoBlock();

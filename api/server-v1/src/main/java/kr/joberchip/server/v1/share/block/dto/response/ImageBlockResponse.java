@@ -9,6 +9,6 @@ public record ImageBlockResponse(UUID id, String title, String description, Stri
         imageBlock.getImageBlockId(),
         imageBlock.getTitle(),
         imageBlock.getDescription(),
-        imageBlock.getImageBlockFile().getAttachedFile().getSavePath());
+        imageBlock.getImageBlockFile().getAttachedFile().getStoredName());
   }
 }

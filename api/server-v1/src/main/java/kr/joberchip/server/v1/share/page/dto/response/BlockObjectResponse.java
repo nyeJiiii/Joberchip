@@ -76,7 +76,7 @@ public record BlockObjectResponse(
         BlockType.IMAGE,
         imageBlock.getTitle(),
         imageBlock.getDescription(),
-        imageBlock.getImageBlockFile().getAttachedFile().getSavePath(),
+        imageBlock.getImageBlockFile().getAttachedFile().getStoredName(),
         imageBlock.getX(),
         imageBlock.getY(),
         imageBlock.getWidth(),
