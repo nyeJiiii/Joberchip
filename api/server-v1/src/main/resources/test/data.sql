@@ -94,6 +94,25 @@ UPDATE space_tb SET page_id =  @user2_page1 WHERE space_id = @user2_space;
 UPDATE share_page_tb SET parent_object_id =  @user1_space WHERE object_id = @user2_page1;
 
 
+/*
+    user2 의 최상위 sharePage에 텍스트블록, 링크블록, 지도블록, 페이지 생성
+*/
+SET @user2_page1_link = UUID_TO_BIN(UUID(), TRUE);
+insert into link_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, title, link, description)
+values (@user2_page1_link, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 0, 1, 2, @user2_page1, 1, "[user2]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
+
+SET @user2_page1_map = UUID_TO_BIN(UUID(), TRUE);
+insert into map_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, address, latitude, longitude)
+values (@user2_page1_map, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 1, 1, 2, @user2_page1, 1, "산성역", 37.457001, 127.150027);
+
+SET @user2_page1_text = UUID_TO_BIN(UUID(), TRUE);
+insert into text_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, content)
+values (@user2_page1_text, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 2, 1, 2, @user2_page1, 1, "[user2]<1>텍스트블록입니다.");
+
+SET @user2_page2 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
+values (@user2_page2, 'user2', '2023-09-26', '2023-09-26', 'user2', 0, 4, 1, 2, @user2_page1, 1, "[user2]<2>제목입니다.", "[user1]<2>설명입니다.");
+
 
 /*
     사용자 user3 의 space 생성
