@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         try {
             DecodedJWT decodedJWT = JwtTokenProvider.verify(jwt);
             Long userId = decodedJWT.getClaim("userId").asLong();
+            String username = decodedJWT.getClaim("username").asString();
             String userRoles = decodedJWT.getClaim("userRoles").asString();
 
             User user = User.builder().userId(userId).userRoles(userRoles).build();
