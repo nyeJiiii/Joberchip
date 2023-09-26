@@ -1,4 +1,4 @@
-package kr.joberchip.core.storage;
+package kr.joberchip.core.storage.types;
 
 public enum ContentType {
     JPEG,

@@ -3,7 +3,7 @@ package kr.joberchip.server.v1.space.service;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.share.page.SharePage;
-import kr.joberchip.core.space.ParticipationType;
+import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.core.space.Space;
 import kr.joberchip.core.user.SpaceUserInfo;
 import kr.joberchip.core.user.User;

@@ -1,7 +1,7 @@
 package kr.joberchip.server.v1.space.dto;
 
 import java.util.UUID;
-import kr.joberchip.core.space.ParticipationType;
+import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.core.user.SpaceUserInfo;
 
 public record ParticipatingInfo(

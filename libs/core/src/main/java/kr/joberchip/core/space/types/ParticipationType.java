@@ -1,4 +1,4 @@
-package kr.joberchip.core.space;
+package kr.joberchip.core.space.types;
 
 public enum ParticipationType {
   DEFAULT,

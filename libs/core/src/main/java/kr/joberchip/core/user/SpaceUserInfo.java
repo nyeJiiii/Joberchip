@@ -1,7 +1,7 @@
 package kr.joberchip.core.user;
 
 import javax.persistence.*;
-import kr.joberchip.core.space.ParticipationType;
+import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.core.space.Space;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
