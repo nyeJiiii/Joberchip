@@ -32,4 +32,16 @@ public class MapBlockController {
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 
+//    @PutMapping("/{blockId}")
+//    public ResponseEntity<?> modifyMapBlock(@PathVariable UUID pageId, @PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
+//        mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
+//        return ResponseEntity.ok().body(ApiResponse.success());
+//    }
+
+    @PutMapping("/{blockId}")
+    public ResponseEntity<?> modifyMapBlock(@PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
+        mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
+        return ResponseEntity.ok().body(ApiResponse.success());
+    }
+
 }
