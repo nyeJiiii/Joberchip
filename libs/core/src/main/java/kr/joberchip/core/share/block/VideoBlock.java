@@ -4,30 +4,50 @@ import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.share.BaseObject;
 import kr.joberchip.core.storage.VideoBlockFile;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "video_block_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class VideoBlock extends BaseObject {
   @Column(name = "title")
-  @Getter
   private String title;
 
   @Column(name = "description")
-  @Getter
   private String description;
 
   @Column(name = "video_link")
-  @Getter
+  @Lob
   private String videoLink;
 
   @OneToOne(mappedBy = "videoBlock")
-  private VideoBlockFile videoFile;
+  private VideoBlockFile videoBlockFile;
+
+  public static VideoBlock of(String title, String description) {
+    return new VideoBlock(title, description, null, null);
+  }
+
+  public static VideoBlock of(String title, String description, String videoLink) {
+    return new VideoBlock(title, description, videoLink, null);
+  }
+
+  public void modifyTitle(String title) {
+    this.title = title;
+  }
+
+  public void modifyDescription(String description) {
+    this.description = description;
+  }
+
+  public void modifyVideoLink(String videoLink) {
+    this.videoLink = videoLink;
+  }
+
+  public void attachVideoFile(VideoBlockFile videoBlockFile) {
+    this.videoBlockFile = videoBlockFile;
+  }
 
   public UUID getVideoBlockId() {
     return this.objectId;

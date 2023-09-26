@@ -1,3 +1,3 @@
 package kr.joberchip.server.v1.share.block.dto.modify;
 
-public class ModifyLinkBlock {}
+public record ModifyLinkBlock(String title, String description, String link) {}

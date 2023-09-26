@@ -22,6 +22,18 @@ public class TemplateBlock extends BaseObject {
   @Column(name = "description")
   private String description;
 
+  public static TemplateBlock of(String title, String description) {
+    return new TemplateBlock(title, description);
+  }
+
+  public void modifyTitle(String title) {
+    this.title = title;
+  }
+
+  public void modifyDescription(String description) {
+    this.description = description;
+  }
+
   public UUID getTemplateBlockId() {
     return this.objectId;
   }

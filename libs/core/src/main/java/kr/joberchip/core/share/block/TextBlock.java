@@ -3,15 +3,25 @@ package kr.joberchip.core.share.block;
 import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.share.BaseObject;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
 @Table(name = "text_block_tb")
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@Getter
 public class TextBlock extends BaseObject {
-  @Lob
   @Column(name = "content")
-  @Getter
+  @Lob
   private String content;
+
+  public static TextBlock of(String content) {
+    return new TextBlock(content);
+  }
+
+  public void modifyContent(String content) {
+    this.content = content;
+  }
 
   public UUID getTextBlockId() {
     return this.objectId;

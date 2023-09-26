@@ -1,29 +1,47 @@
 package kr.joberchip.server.v1.share.block.controller;
 
+import java.util.UUID;
 import kr.joberchip.server.v1._utils.ApiResponse;
+import kr.joberchip.server.v1.share.block.dto.create.CreateImageBlock;
+import kr.joberchip.server.v1.share.block.dto.modify.ModifyImageBlock;
+import kr.joberchip.server.v1.share.block.service.ImageBlockService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/space/{spaceId}/page/{pageId}/block")
+@RequestMapping("/v1/page/{pageId}/imageBlock")
+@RequiredArgsConstructor
 public class ImageBlockController {
+  private final ImageBlockService imageBlockService;
 
-  @PostMapping("/image")
-  public ApiResponse.Result<Object> createTextBlock(
-      @PathVariable Long spaceId, @PathVariable Long pageId, @RequestBody MultipartFile file) {
+  @PostMapping
+  public ResponseEntity<ApiResponse.Result<Object>> createImageBlock(
+      @PathVariable UUID pageId, @RequestBody CreateImageBlock createImageBlock) {
+    imageBlockService.createImageBlock(pageId, createImageBlock);
 
-    return ApiResponse.success();
+    return ResponseEntity.ok(ApiResponse.success());
   }
 
-  @PutMapping("/image/{blockId}")
-  public ApiResponse.Result<Object> modifyImageBlock(
-      @PathVariable Long spaceId,
-      @PathVariable Long pageId,
+  @PutMapping("/{blockId}")
+  public ResponseEntity<ApiResponse.Result<Object>> modifyImageBlock(
+      @PathVariable UUID pageId,
       @PathVariable Long blockId,
-      @RequestBody MultipartFile file) {
+      @RequestBody ModifyImageBlock modifyImageBlock) {
+    imageBlockService.modifyImageBlock(pageId, blockId, modifyImageBlock);
 
-    return ApiResponse.success();
+    return ResponseEntity.ok(ApiResponse.success());
+  }
+
+  @DeleteMapping("/{blockId}")
+  public ResponseEntity<ApiResponse.Result<Object>> deleteImageBlock(
+          @PathVariable UUID pageId,
+          @PathVariable Long blockId
+          ) {
+    imageBlockService.deleteImageBlock(pageId, blockId);
+
+    return ResponseEntity.ok(ApiResponse.success());
   }
 }
