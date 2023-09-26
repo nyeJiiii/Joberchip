@@ -9,8 +9,7 @@ import java.util.UUID;
 import kr.joberchip.core.share.block.VideoBlock;
 import kr.joberchip.core.storage.AttachedFile;
 import kr.joberchip.core.storage.VideoBlockFile;
-import kr.joberchip.server.v1.share.block.dto.create.CreateVideoBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyVideoBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.VideoBlockDTO;
 import kr.joberchip.server.v1.share.block.repository.AttachedFileRepository;
 import kr.joberchip.server.v1.share.block.repository.VideoBlockRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +32,11 @@ public class VideoBlockService {
   @Value("${ffmpeg.executable}")
   private String ffmpegPath;
 
-  public void createVideoBlock(UUID pageId, CreateVideoBlock createVideoBlock) {}
+  public void createVideoBlock(UUID pageId, VideoBlockDTO videoBlockDTO) {}
 
   // 영상 업로드
-  public void uploadVideo(CreateVideoBlock createVideoBlock) {
-    String originalFileName = createVideoBlock.videoFile().getOriginalFilename();
+  public void uploadVideo(VideoBlockDTO videoBlockDTO) {
+    String originalFileName = videoBlockDTO.videoFile().getOriginalFilename();
 
     String folderName = generateFolderName(originalFileName);
     Path folderPath = Path.of(uploadDir, folderName);
@@ -49,7 +48,7 @@ public class VideoBlockService {
 
       String inputFilePath = folderPath.resolve(originalFileName).toString();
       Files.copy(
-          createVideoBlock.videoFile().getInputStream(),
+          videoBlockDTO.videoFile().getInputStream(),
           Paths.get(inputFilePath),
           StandardCopyOption.REPLACE_EXISTING);
 
@@ -90,7 +89,7 @@ public class VideoBlockService {
     return folderName;
   }
 
-  public void modifyVideoBlock(UUID pageId, UUID blockId, ModifyVideoBlock modifyVideoBlock) {}
+  public void modifyVideoBlock(UUID pageId, UUID blockId, VideoBlockDTO videoBlockDTO) {}
 
   public void deleteVideoBlock(UUID pageId, UUID blockId) {}
 }

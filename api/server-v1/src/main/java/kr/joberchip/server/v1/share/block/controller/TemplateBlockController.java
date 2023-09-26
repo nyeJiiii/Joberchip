@@ -2,8 +2,7 @@ package kr.joberchip.server.v1.share.block.controller;
 
 import java.util.UUID;
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.share.block.dto.create.CreateTemplateBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyTemplateBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.TemplateBlockDTO;
 import kr.joberchip.server.v1.share.block.service.TemplateBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +18,9 @@ public class TemplateBlockController {
 
   @PostMapping
   public ResponseEntity<ApiResponse.Result<Object>> createTemplateBlock(
-      @PathVariable UUID pageId, @RequestBody CreateTemplateBlock createTemplateBlock) {
+      @PathVariable UUID pageId, @RequestBody TemplateBlockDTO templateBlockDTO) {
 
-    templateBlockService.createTemplateBlock(pageId, createTemplateBlock);
+    templateBlockService.createTemplateBlock(pageId, templateBlockDTO);
 
     return ResponseEntity.ok(ApiResponse.success());
   }
@@ -30,7 +29,7 @@ public class TemplateBlockController {
   public ApiResponse.Result<Object> modifyLinkBlock(
       @PathVariable UUID pageId,
       @PathVariable Long blockId,
-      @RequestBody ModifyTemplateBlock modifyTemplateBlock) {
+      @RequestBody TemplateBlockDTO templateBlockDTO) {
 
     return ApiResponse.success();
   }

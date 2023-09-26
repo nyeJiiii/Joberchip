@@ -7,9 +7,8 @@ import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.share.block.ImageBlock;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.core.storage.AttachedFile;
-import kr.joberchip.server.v1.share.block.dto.create.CreateImageBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyImageBlock;
-import kr.joberchip.server.v1.share.block.dto.response.ImageBlockResponse;
+import kr.joberchip.server.v1.share.block.controller.dto.ImageBlockDTO;
+import kr.joberchip.server.v1.share.block.controller.dto.ImageBlockResponse;
 import kr.joberchip.server.v1.share.block.repository.AttachedFileRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +44,12 @@ public class ImageBlockService {
   }
 
   @Transactional
-  public ImageBlockResponse createImageBlock(UUID pageId, CreateImageBlock createImageBlock) {
+  public ImageBlockResponse createImageBlock(UUID pageId, ImageBlockDTO imageBlockDTO) {
     SharePage parentPage =
         sharePageRepository.findById(pageId).orElseThrow(EntityNotFoundException::new);
-    ImageBlock imageBlock = createImageBlock.toEntity();
+    ImageBlock imageBlock = imageBlockDTO.toEntity();
 
-    AttachedFile attachedFile = ImageFile(createImageBlock.attachedImage());
+    AttachedFile attachedFile = ImageFile(imageBlockDTO.attachedImage());
     // imageBlock = imageBlockRepository.save(imageBlock);
 
     return ImageBlockResponse.fromEntity(imageBlock);
@@ -81,7 +80,7 @@ public class ImageBlockService {
     return originalFilename.substring(pos + 1);
   }
 
-  public void modifyImageBlock(UUID pageId, Long blockId, ModifyImageBlock modifyImageBlock) {}
+  public void modifyImageBlock(UUID pageId, Long blockId, ImageBlockDTO imageBlockDTO) {}
 
   public void deleteImageBlock(UUID pageId, Long blockId) {}
 }

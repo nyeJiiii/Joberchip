@@ -4,9 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityExistsException;
 import kr.joberchip.core.share.block.TextBlock;
 import kr.joberchip.core.share.page.SharePage;
-import kr.joberchip.server.v1.share.block.dto.create.CreateTextBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyTextBlock;
-import kr.joberchip.server.v1.share.block.dto.response.TextBlockResponse;
+import kr.joberchip.server.v1.share.block.controller.dto.TextBlockDTO;
+import kr.joberchip.server.v1.share.block.controller.dto.TextBlockResponse;
 import kr.joberchip.server.v1.share.block.repository.TextBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +21,8 @@ public class TextBlockService {
   private final TextBlockRepository textBlockRepository;
 
   @Transactional
-  public TextBlockResponse createTextBlock(UUID pageId, CreateTextBlock createTextBlock) {
-    TextBlock newTextBlock = createTextBlock.toEntity();
+  public TextBlockResponse createTextBlock(UUID pageId, TextBlockDTO textBlockDTO) {
+    TextBlock newTextBlock = textBlockDTO.toEntity();
 
     textBlockRepository.save(newTextBlock);
 
@@ -35,7 +34,7 @@ public class TextBlockService {
     return TextBlockResponse.fromEntity(newTextBlock);
   }
 
-  public void modifyTextBlock(UUID pageId, UUID blockId, ModifyTextBlock modifyTextBlock) {
+  public void modifyTextBlock(UUID pageId, UUID blockId, TextBlockDTO textBlockDTO) {
   }
 
   public void deleteTextBlock(UUID pageId, UUID blockId) {

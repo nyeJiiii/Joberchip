@@ -2,8 +2,7 @@ package kr.joberchip.server.v1.share.block.controller;
 
 import java.util.UUID;
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.share.block.dto.create.CreateVideoBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyVideoBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.VideoBlockDTO;
 import kr.joberchip.server.v1.share.block.service.VideoBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +18,10 @@ public class VideoBlockController {
 
   @PostMapping
   public ApiResponse.Result<Object> createVideoBlock(
-      @PathVariable UUID pageId, @RequestParam CreateVideoBlock createVideoBlock) {
+      @PathVariable UUID pageId, @RequestParam VideoBlockDTO videoBlockDTO) {
 
-    videoBlockService.uploadVideo(createVideoBlock);
-    videoBlockService.createVideoBlock(pageId, createVideoBlock);
+    videoBlockService.uploadVideo(videoBlockDTO);
+    videoBlockService.createVideoBlock(pageId, videoBlockDTO);
 
     return ApiResponse.success();
   }
@@ -31,9 +30,9 @@ public class VideoBlockController {
   public ApiResponse.Result<Object> modifyVideoBlock(
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      @RequestBody ModifyVideoBlock modifyVideoBlock) {
+      @RequestBody VideoBlockDTO videoBlockDTO) {
 
-    videoBlockService.modifyVideoBlock(pageId, blockId, modifyVideoBlock);
+    videoBlockService.modifyVideoBlock(pageId, blockId, videoBlockDTO);
 
     return ApiResponse.success();
   }

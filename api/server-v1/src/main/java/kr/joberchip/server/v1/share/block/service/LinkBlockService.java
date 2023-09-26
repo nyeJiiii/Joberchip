@@ -4,9 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.share.block.LinkBlock;
 import kr.joberchip.core.share.page.SharePage;
-import kr.joberchip.server.v1.share.block.dto.create.CreateLinkBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyLinkBlock;
-import kr.joberchip.server.v1.share.block.dto.response.LinkBlockResponse;
+import kr.joberchip.server.v1.share.block.controller.dto.LinkBlockDTO;
+import kr.joberchip.server.v1.share.block.controller.dto.LinkBlockResponse;
 import kr.joberchip.server.v1.share.block.repository.LinkBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class LinkBlockService {
   private final SharePageRepository sharePageRepository;
 
   @Transactional
-  public LinkBlockResponse createLinkBlock(UUID pageId, CreateLinkBlock createLinkBlock) {
+  public LinkBlockResponse createLinkBlock(UUID pageId, LinkBlockDTO createLinkBlock) {
     LinkBlock newLinkBlock = createLinkBlock.toEntity();
     linkBlockRepository.save(newLinkBlock);
 
@@ -36,5 +35,5 @@ public class LinkBlockService {
 
   public void deleteLinkBlock(UUID pageId, UUID blockId) {}
 
-  public void modifyLinkBlock(UUID pageId, UUID blockId, ModifyLinkBlock modifyLinkBlock) {}
+  public void modifyLinkBlock(UUID pageId, UUID blockId, LinkBlockDTO linkBlockDTO) {}
 }

@@ -2,8 +2,7 @@ package kr.joberchip.server.v1.share.block.controller;
 
 import java.util.UUID;
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.share.block.dto.create.CreateTextBlock;
-import kr.joberchip.server.v1.share.block.dto.modify.ModifyTextBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.TextBlockDTO;
 import kr.joberchip.server.v1.share.block.service.TextBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +19,9 @@ public class TextBlockController {
 
   @PostMapping
   public ResponseEntity<ApiResponse.Result<Object>> createTextBlock(
-      @PathVariable UUID pageId, @RequestBody CreateTextBlock createTextBlock) {
+      @PathVariable UUID pageId, @RequestBody TextBlockDTO textBlockDTO) {
 
-    textBlockService.createTextBlock(pageId, createTextBlock);
+    textBlockService.createTextBlock(pageId, textBlockDTO);
 
     return ResponseEntity.ok(ApiResponse.success());
   }
@@ -31,8 +30,8 @@ public class TextBlockController {
   public ApiResponse.Result<Object> modifyTextBlock(
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      @RequestBody ModifyTextBlock modifyTextBlock) {
-    textBlockService.modifyTextBlock(pageId, blockId, modifyTextBlock);
+      @RequestBody TextBlockDTO textBlockDTO) {
+    textBlockService.modifyTextBlock(pageId, blockId, textBlockDTO);
 
     return ApiResponse.success();
   }

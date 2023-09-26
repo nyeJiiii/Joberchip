@@ -1,4 +1,4 @@
-package kr.joberchip.server.v1.share.block.dto.response;
+package kr.joberchip.server.v1.share.block.controller.dto;
 
 import java.util.UUID;
 import kr.joberchip.core.share.block.ImageBlock;
