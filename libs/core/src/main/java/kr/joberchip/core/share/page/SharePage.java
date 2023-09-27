@@ -1,5 +1,9 @@
 package kr.joberchip.core.share.page;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
+import javax.persistence.*;
 import kr.joberchip.core.share.BaseObject;
 import kr.joberchip.core.share.block.*;
 import kr.joberchip.core.storage.ProfileImageFile;
@@ -7,11 +11,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "share_page_tb")
