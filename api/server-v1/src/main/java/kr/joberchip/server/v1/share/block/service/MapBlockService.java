@@ -46,6 +46,7 @@ public class MapBlockService {
 
     @Transactional
     public void modifyMapBlock(UUID blockId, CreateMapBlock modifiedMapBlock) {
+        isBlock(blockId);
         mapBlockRepository.updateAllById(
                 modifiedMapBlock.getAddress(),
                 modifiedMapBlock.getLatitude(),
@@ -59,6 +60,11 @@ public class MapBlockService {
 
     @Transactional
     public void deleteMapBlock(UUID blockId) {
+        isBlock(blockId);
         mapBlockRepository.deleteById(blockId);
+    }
+
+    private void isBlock(UUID blockId) {
+        mapBlockRepository.findById(blockId).orElseThrow(EntityNotFoundException::new);
     }
 }
