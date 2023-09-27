@@ -15,13 +15,21 @@ public class CreateMapBlock {
     private Double latitude;
     @NotNull(message = ErrorMessage.NOT_EMPTY)
     private Double longitude;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Integer x;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Integer y;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Integer height;
+    @NotNull(message = ErrorMessage.NOT_EMPTY)
+    private Integer width;
 
     public MapBlock toEntity() {
         return MapBlock.builder()
-                .address(address)
-                .latitude(latitude)
-                .longitude(longitude)
-                .build();
+            .address(address)
+            .latitude(latitude)
+            .longitude(longitude)
+            .build();
     }
 
 }
