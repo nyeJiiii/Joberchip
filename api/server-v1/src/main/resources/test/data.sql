@@ -18,149 +18,234 @@ values ('user5', '{bcrypt}$2a$10$YC.lqsJc6stMpZu.Hzfctu0oEPCrRZmJsZ7ua8He6r6RbN2
     사용자 user1 의 space 생성
     해당 space내의 최상위 sharepage 생성
 */
-SET @user1_space = UUID_TO_BIN(UUID(), TRUE);
-insert into space_tb (space_id, creator_id, created_by , created_at, modified_at, modified_by)
+SET
+@user1_space = UUID_TO_BIN(UUID(), TRUE);
+insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user1_space, 1, 'user1', '2023-09-26', '2023-09-26', 'user1');
 
-SET @user1_page1 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
-values (@user1_page1, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 0, 1, 2, @user1_space, 1, "[user1]<1>제목입니다.", "[user1]<1>설명입니다.");
+/*
+    사용자 user1 의 스페이스 참여 정보 등록 (기본 스페이스 default)
+ */
+insert into space_user_info_tb (participation_type, space_id, user_id)
+values ('DEFAULT', @user1_space, 1);
 
-UPDATE space_tb SET page_id =  @user1_page1 WHERE space_id = @user1_space;
+
+SET
+@user1_page1 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, description)
+values (@user1_page1, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 0, 1, 2, @user1_space, 1, "[user1]<1>제목입니다.",
+        "[user1]<1>설명입니다.");
+
+UPDATE space_tb
+SET page_id = @user1_page1
+WHERE space_id = @user1_space;
 
 
 /*
     user1 의 최상위 sharePage에 텍스트블록, 링크블록, 지도블록, 페이지 생성
 */
-SET @user1_page1_text = UUID_TO_BIN(UUID(), TRUE);
-insert into text_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, content)
-values (@user1_page1_text, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 1, 2, 2, @user1_page1, 1, "[user1]<1>텍스트블록입니다.");
+SET
+@user1_page1_text = UUID_TO_BIN(UUID(), TRUE);
+insert into text_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, content)
+values (@user1_page1_text, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 1, 2, 2, @user1_page1, 1,
+        "[user1]<1>텍스트블록입니다.");
 
-SET @user1_page1_link = UUID_TO_BIN(UUID(), TRUE);
-insert into link_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, title, link, description)
-values (@user1_page1_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 3, 1, 1, @user1_page1, 1, "[user1]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
+SET
+@user1_page1_link = UUID_TO_BIN(UUID(), TRUE);
+insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, link, description)
+values (@user1_page1_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 3, 1, 1, @user1_page1, 1,
+        "[user1]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
 
-SET @user1_page1_map = UUID_TO_BIN(UUID(), TRUE);
-insert into map_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, address, latitude, longitude)
-values (@user1_page1_map, 'user1', '2023-09-26', 'user1', '2023-09-26', 1, 3, 1, 1, @user1_page1, 1, "미왕빌딩", 37.4955366, 127.0293521);
+SET
+@user1_page1_map = UUID_TO_BIN(UUID(), TRUE);
+insert into map_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                          parent_object_id, visible, address, latitude, longitude)
+values (@user1_page1_map, 'user1', '2023-09-26', 'user1', '2023-09-26', 1, 3, 1, 1, @user1_page1, 1, "미왕빌딩", 37.4955366,
+        127.0293521);
 
-SET @user1_page2 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
-values (@user1_page2, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 4, 1, 2, @user1_page1, 1, "[user1]<2>제목입니다.", "[user1]<2>설명입니다.");
+SET
+@user1_page2 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, description)
+values (@user1_page2, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 4, 1, 2, @user1_page1, 1, "[user1]<2>제목입니다.",
+        "[user1]<2>설명입니다.");
 
 
 /*
     user1 의 depth1 sharePage (@user1_page2)에 텍스트블록, 페이지, 지도블록 생성
 */
-SET @user1_page2_text = UUID_TO_BIN(UUID(), TRUE);
-insert into text_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, content)
-values (@user1_page2_text, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 0, 1, 1, @user1_page2, 1, "[user1]<2>텍스트블록입니다.");
+SET
+@user1_page2_text = UUID_TO_BIN(UUID(), TRUE);
+insert into text_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, content)
+values (@user1_page2_text, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 0, 1, 1, @user1_page2, 1,
+        "[user1]<2>텍스트블록입니다.");
 
-SET @user1_page3 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
-values (@user1_page3, 'user1', '2023-09-26', '2023-09-26', 'user1', 1, 0, 1, 1, @user1_page2, 1, "[user1]<3>제목입니다.", "[user1]<3>설명입니다.");
+SET
+@user1_page3 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, description)
+values (@user1_page3, 'user1', '2023-09-26', '2023-09-26', 'user1', 1, 0, 1, 1, @user1_page2, 1, "[user1]<3>제목입니다.",
+        "[user1]<3>설명입니다.");
 
-SET @user1_page2_map = UUID_TO_BIN(UUID(), TRUE);
-insert into map_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, address, latitude, longitude)
-values (@user1_page2_map, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 1, 2, 2, @user1_page2, 1, "반장떡볶이", 37.4967914, 127.030317);
+SET
+@user1_page2_map = UUID_TO_BIN(UUID(), TRUE);
+insert into map_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                          parent_object_id, visible, address, latitude, longitude)
+values (@user1_page2_map, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 1, 2, 2, @user1_page2, 1, "반장떡볶이",
+        37.4967914, 127.030317);
 
-SET @user1_page4 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
-values (@user1_page4, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 3, 1, 2, @user1_page2, 1, "[user1]<4>제목입니다.", "[user1]<4>설명입니다.");
+SET
+@user1_page4 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, description)
+values (@user1_page4, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 3, 1, 2, @user1_page2, 1, "[user1]<4>제목입니다.",
+        "[user1]<4>설명입니다.");
 
 
 /*
     user1 의 depth2 sharePage (@user1_page3)에 링크블록 생성
 */
-SET @user1_page3_link = UUID_TO_BIN(UUID(), TRUE);
-insert into link_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, title, link, description)
-values (@user1_page3_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 0, 2, 2, @user1_page3, 1, "[user1]<3>링크블록타이틀", "www.youtube.com", "[user1]<3>링크블록설명");
-
+SET
+@user1_page3_link = UUID_TO_BIN(UUID(), TRUE);
+insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, link, description)
+values (@user1_page3_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 0, 2, 2, @user1_page3, 1,
+        "[user1]<3>링크블록타이틀", "www.youtube.com", "[user1]<3>링크블록설명");
 
 
 /*
     사용자 user2 의 space 생성
     해당 space내의 최상위 sharepage 생성
 */
-SET @user2_space = UUID_TO_BIN(UUID(), TRUE);
-insert into space_tb (space_id, creator_id, created_by , created_at, modified_at, modified_by)
+SET
+@user2_space = UUID_TO_BIN(UUID(), TRUE);
+insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user2_space, 2, 'user2', '2023-09-26', '2023-09-26', 'user2');
 
-SET @user2_page1 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, visible, title, description)
-values (@user2_page1, 'user2', '2023-09-26', '2023-09-26', 'user2', 0, 0, 1, 2, 1, "[user2]<1>제목입니다.", "[user2]<1>설명입니다.");
+insert into space_user_info_tb (participation_type, space_id, user_id)
+values ('DEFAULT', @user2_space, 2),
+    ('PARTICIPANT', @user1_space, 2);
 
-UPDATE space_tb SET page_id =  @user2_page1 WHERE space_id = @user2_space;
-UPDATE share_page_tb SET parent_object_id =  @user1_space WHERE object_id = @user2_page1;
+SET
+@user2_page1 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           visible, title, description)
+values (@user2_page1, 'user2', '2023-09-26', '2023-09-26', 'user2', 0, 0, 1, 2, 1, "[user2]<1>제목입니다.",
+        "[user2]<1>설명입니다.");
+
+UPDATE space_tb
+SET page_id = @user2_page1
+WHERE space_id = @user2_space;
+UPDATE share_page_tb
+SET parent_object_id = @user1_space
+WHERE object_id = @user2_page1;
 
 
 /*
     user2 의 최상위 sharePage에 텍스트블록, 링크블록, 지도블록, 페이지 생성
 */
-SET @user2_page1_link = UUID_TO_BIN(UUID(), TRUE);
-insert into link_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, title, link, description)
-values (@user2_page1_link, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 0, 1, 2, @user2_page1, 1, "[user2]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
+SET
+@user2_page1_link = UUID_TO_BIN(UUID(), TRUE);
+insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, link, description)
+values (@user2_page1_link, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 0, 1, 2, @user2_page1, 1,
+        "[user2]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
 
-SET @user2_page1_map = UUID_TO_BIN(UUID(), TRUE);
-insert into map_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, address, latitude, longitude)
-values (@user2_page1_map, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 1, 1, 2, @user2_page1, 1, "산성역", 37.457001, 127.150027);
+SET
+@user2_page1_map = UUID_TO_BIN(UUID(), TRUE);
+insert into map_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                          parent_object_id, visible, address, latitude, longitude)
+values (@user2_page1_map, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 1, 1, 2, @user2_page1, 1, "산성역", 37.457001,
+        127.150027);
 
-SET @user2_page1_text = UUID_TO_BIN(UUID(), TRUE);
-insert into text_block_tb (object_id, created_by , created_at, modified_by, modified_at, x_pos, y_pos, height, width, parent_object_id, visible, content)
-values (@user2_page1_text, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 2, 1, 2, @user2_page1, 1, "[user2]<1>텍스트블록입니다.");
+SET
+@user2_page1_text = UUID_TO_BIN(UUID(), TRUE);
+insert into text_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
+                           parent_object_id, visible, content)
+values (@user2_page1_text, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 2, 1, 2, @user2_page1, 1,
+        "[user2]<1>텍스트블록입니다.");
 
-SET @user2_page2 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, parent_object_id, visible, title, description)
-values (@user2_page2, 'user2', '2023-09-26', '2023-09-26', 'user2', 0, 4, 1, 2, @user2_page1, 1, "[user2]<2>제목입니다.", "[user1]<2>설명입니다.");
+SET
+@user2_page2 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           parent_object_id, visible, title, description)
+values (@user2_page2, 'user2', '2023-09-26', '2023-09-26', 'user2', 0, 4, 1, 2, @user2_page1, 1, "[user2]<2>제목입니다.",
+        "[user1]<2>설명입니다.");
 
 
 /*
     사용자 user3 의 space 생성
     해당 space내의 최상위 sharepage 생성
 */
-SET @user3_space = UUID_TO_BIN(UUID(), TRUE);
-insert into space_tb (space_id, creator_id, created_by , created_at, modified_at, modified_by)
+SET
+@user3_space = UUID_TO_BIN(UUID(), TRUE);
+insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user3_space, 3, 'user3', '2023-09-26', '2023-09-26', 'user3');
 
-SET @user3_page1 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, visible, title, description)
-values (@user3_page1, 'user3', '2023-09-26', '2023-09-26', 'user3', 0, 0, 1, 2, 1, "[user3]<1>제목입니다.", "[user3]<1>설명입니다.");
+SET
+@user3_page1 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           visible, title, description)
+values (@user3_page1, 'user3', '2023-09-26', '2023-09-26', 'user3', 0, 0, 1, 2, 1, "[user3]<1>제목입니다.",
+        "[user3]<1>설명입니다.");
 
-UPDATE space_tb SET page_id =  @user3_page1 WHERE space_id = @user3_space;
-UPDATE share_page_tb SET parent_object_id =  @user3_space WHERE object_id = @user3_page1;
-
+UPDATE space_tb
+SET page_id = @user3_page1
+WHERE space_id = @user3_space;
+UPDATE share_page_tb
+SET parent_object_id = @user3_space
+WHERE object_id = @user3_page1;
 
 
 /*
     사용자 user4 의 space 생성
     해당 space내의 최상위 sharepage 생성
 */
-SET @user4_space = UUID_TO_BIN(UUID(), TRUE);
-insert into space_tb (space_id, creator_id, created_by , created_at, modified_at, modified_by)
+SET
+@user4_space = UUID_TO_BIN(UUID(), TRUE);
+insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user4_space, 4, 'user4', '2023-09-26', '2023-09-26', 'user4');
 
-SET @user4_page1 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, visible, title, description)
-values (@user4_page1, 'user4', '2023-09-26', '2023-09-26', 'user4', 0, 0, 1, 2, 1, "[user4]<1>제목입니다.", "[user4]<1>설명입니다.");
+SET
+@user4_page1 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           visible, title, description)
+values (@user4_page1, 'user4', '2023-09-26', '2023-09-26', 'user4', 0, 0, 1, 2, 1, "[user4]<1>제목입니다.",
+        "[user4]<1>설명입니다.");
 
-UPDATE space_tb SET page_id =  @user4_page1 WHERE space_id = @user4_space;
-UPDATE share_page_tb SET parent_object_id =  @user4_space WHERE object_id = @user4_page1;
-
+UPDATE space_tb
+SET page_id = @user4_page1
+WHERE space_id = @user4_space;
+UPDATE share_page_tb
+SET parent_object_id = @user4_space
+WHERE object_id = @user4_page1;
 
 
 /*
     사용자 user5 의 space 생성
     해당 space내의 최상위 sharepage 생성
 */
-SET @user5_space = UUID_TO_BIN(UUID(), TRUE);
-insert into space_tb (space_id, creator_id, created_by , created_at, modified_at, modified_by)
+SET
+@user5_space = UUID_TO_BIN(UUID(), TRUE);
+insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user5_space, 5, 'user5', '2023-09-26', '2023-09-26', 'user5');
 
-SET @user5_page1 = UUID_TO_BIN(UUID(), TRUE);
-insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width, visible, title, description)
-values (@user5_page1, 'user5', '2023-09-26', '2023-09-26', 'user5', 0, 0, 1, 2, 1, "[user5]<1>제목입니다.", "[user5]<1>설명입니다.");
+SET
+@user5_page1 = UUID_TO_BIN(UUID(), TRUE);
+insert into share_page_tb (object_id, created_by, created_at, modified_at, modified_by, x_pos, y_pos, height, width,
+                           visible, title, description)
+values (@user5_page1, 'user5', '2023-09-26', '2023-09-26', 'user5', 0, 0, 1, 2, 1, "[user5]<1>제목입니다.",
+        "[user5]<1>설명입니다.");
 
-UPDATE space_tb SET page_id =  @user5_page1 WHERE space_id = @user5_space;
-UPDATE share_page_tb SET parent_object_id =  @user5_space WHERE object_id = @user5_page1;
+UPDATE space_tb
+SET page_id = @user5_page1
+WHERE space_id = @user5_space;
+UPDATE share_page_tb
+SET parent_object_id = @user5_space
+WHERE object_id = @user5_page1;
 
 
