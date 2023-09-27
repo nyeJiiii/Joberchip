@@ -14,43 +14,25 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-//@RequestMapping("/v1/page/{pageId}/mapBlock")
+@RequestMapping("/v1/page")
 @RequiredArgsConstructor
 public class MapBlockController {
 
     private final MapBlockService mapBlockService;
 
-//    @PostMapping("/")
-//    public ResponseEntity<?> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
-//        mapBlockService.createMapBlock(newMapBlock);
-//        return ResponseEntity.ok().body(ApiResponse.success());
-//    }
-
-    @PostMapping("/")
-    public ResponseEntity<?> createMapBlock(@RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
-        mapBlockService.createMapBlock(newMapBlock);
+    @PostMapping("/{pageId}/mapBlock")
+    public ResponseEntity<?> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
+        mapBlockService.createMapBlock(pageId, newMapBlock);
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 
-//    @PutMapping("/{blockId}")
-//    public ResponseEntity<?> modifyMapBlock(@PathVariable UUID pageId, @PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
-//        mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
-//        return ResponseEntity.ok().body(ApiResponse.success());
-//    }
-
-    @PutMapping("/{blockId}")
+    @PutMapping("/mapBlock/{blockId}")
     public ResponseEntity<?> modifyMapBlock(@PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
         mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 
-//    @DeleteMapping("/{blockId}")
-//    public ResponseEntity<?> deleteMapBlock(@PathVariable UUID pageId, @PathVariable UUID blockId) {
-//        mapBlockService.deleteMapBlock(blockId);
-//        return ResponseEntity.ok().body(ApiResponse.success());
-//    }
-
-    @DeleteMapping("/{blockId}")
+    @DeleteMapping("/mapBlock/{blockId}")
     public ResponseEntity<?> deleteMapBlock(@PathVariable UUID blockId) {
         mapBlockService.deleteMapBlock(blockId);
         return ResponseEntity.ok().body(ApiResponse.success());
