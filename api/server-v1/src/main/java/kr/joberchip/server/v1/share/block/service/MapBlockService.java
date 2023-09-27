@@ -25,27 +25,33 @@ public class MapBlockService {
     @Transactional
     public void createMapBlock(UUID pageId, CreateMapBlock newMapBlock) {
         // pageId를 조회해 해당 페이지가 존재하는지 확인
-        SharePage parentPage =
-                sharePageRepository.findById(pageId).orElseThrow(() -> {
-                    log.error("존재하지 않는 pageID - pageId: {}", pageId);
-                    throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
-                });
+        SharePage parentPage = isPage(pageId);
 
-        // pageID가 존재한다면 mapBlock의 내용을 Entity로 변환, 위치정보 설정
+        // mapBlock의 내용을 Entity로 변환, 위치정보 저장
+        MapBlock mapBlock = getMapBlock(newMapBlock);
+
+        // 생성된 mapBlock을 mapBlockRepository에 save
+        MapBlock savedmapBlock = mapBlockRepository.save(mapBlock);
+
+        // Entity로 저장된 mapBlock의 parentPage값 참조, 해당 페이지의 Set<MapBlock>에 add
+        parentPage.addMapBlock(savedmapBlock);
+        log.info("UUID of NEW MAP BLOCK: " + savedmapBlock.getMapBlockId());
+    }
+
+    private SharePage isPage(UUID pageId) {
+        return sharePageRepository.findById(pageId).orElseThrow(() -> {
+            log.error("존재하지 않는 pageID - pageId: {}", pageId);
+            throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
+        });
+    }
+
+    private static MapBlock getMapBlock(CreateMapBlock newMapBlock) {
         MapBlock mapBlock = newMapBlock.toEntity();
         mapBlock.setX(newMapBlock.getX());
         mapBlock.setY(newMapBlock.getY());
         mapBlock.setHeight(newMapBlock.getHeight());
         mapBlock.setWidth(newMapBlock.getWidth());
-
-        // 생성된 mapBlock을 mapBlockRepository에 save
-        MapBlock savedmapBlock = mapBlockRepository.save(mapBlock);
-
-        // Entity로 저장된 mapBlock의 parentPage값 참조
-        // 해당 페이지의 Set<MapBlock>에 add
-        parentPage.addMapBlock(savedmapBlock);
-
-        log.info("UUID of NEW MAP BLOCK: " + savedmapBlock.getMapBlockId());
+        return mapBlock;
     }
 
     @Transactional
