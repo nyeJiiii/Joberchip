@@ -2,6 +2,7 @@ package kr.joberchip.server.v1.share.block.service;
 
 import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.core.share.page.SharePage;
+import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1.share.block.dto.create.CreateMapBlock;
 import kr.joberchip.server.v1.share.block.repository.MapBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
@@ -25,7 +26,10 @@ public class MapBlockService {
     public void createMapBlock(UUID pageId, CreateMapBlock newMapBlock) {
         // pageId를 조회해 해당 페이지가 존재하는지 확인
         SharePage parentPage =
-                sharePageRepository.findById(pageId).orElseThrow(EntityNotFoundException::new);
+                sharePageRepository.findById(pageId).orElseThrow(() -> {
+                    log.error("존재하지 않는 pageID - pageId: {}", pageId);
+                    throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
+                });
 
         // pageID가 존재한다면 mapBlock의 내용을 Entity로 변환, 위치정보 설정
         MapBlock mapBlock = newMapBlock.toEntity();
@@ -65,6 +69,9 @@ public class MapBlockService {
     }
 
     private void isBlock(UUID blockId) {
-        mapBlockRepository.findById(blockId).orElseThrow(EntityNotFoundException::new);
+        mapBlockRepository.findById(blockId).orElseThrow(() -> {
+            log.error("존재하지 않는 blockId - blockId: {}", blockId);
+            throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
+        });
     }
 }

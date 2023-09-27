@@ -12,4 +12,6 @@ public class ErrorMessage {
 
   // @Valid
   public static final String NOT_EMPTY = "비어있을 수 없습니다.";
+
+  public static final String ENTITY_NOT_FOUND = "해당 페이지를 찾을 수 없습니다.";
 }
