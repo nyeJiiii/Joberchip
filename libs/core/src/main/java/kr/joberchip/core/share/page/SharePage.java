@@ -42,6 +42,9 @@ public class SharePage extends BaseObject {
   @OneToMany(mappedBy = "parentObjectId", cascade = CascadeType.ALL)
   private Set<VideoBlock> videoBlocks = new LinkedHashSet<>();
 
+  @OneToMany(mappedBy = "parentObjectId", cascade = CascadeType.ALL)
+  private Set<MapBlock> mapBlocks = new LinkedHashSet<>();
+
   @OneToMany(mappedBy = "sharePage")
   private Set<PageHashtag> hashtags = new LinkedHashSet<>();
 
@@ -92,6 +95,11 @@ public class SharePage extends BaseObject {
   public void addVideoBlock(VideoBlock videoBlock) {
     videoBlock.setParentObjectId(this.getPageId());
     this.getVideoBlocks().add(videoBlock);
+  }
+
+  public void addMapBlock(MapBlock mapBlock) {
+    mapBlock.setParentObjectId(this.getPageId());
+    this.getMapBlocks().add(mapBlock);
   }
 
   public void addChildPage(SharePage sharePage) {
