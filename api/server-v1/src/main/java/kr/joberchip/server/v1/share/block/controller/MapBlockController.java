@@ -5,7 +5,6 @@ import kr.joberchip.server.v1.share.block.dto.create.CreateMapBlock;
 import kr.joberchip.server.v1.share.block.service.MapBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +20,27 @@ public class MapBlockController {
     private final MapBlockService mapBlockService;
 
     @PostMapping("/{pageId}/mapBlock")
-    public ResponseEntity<?> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
+    public ApiResponse.Result<Object> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
         mapBlockService.createMapBlock(pageId, newMapBlock);
-        return ResponseEntity.ok().body(ApiResponse.success());
+        return ApiResponse.success();
     }
 
     @PutMapping("/mapBlock/{blockId}")
-    public ResponseEntity<?> modifyMapBlock(@PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
+    public ApiResponse.Result<Object> modifyMapBlock(@PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
         mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
-        return ResponseEntity.ok().body(ApiResponse.success());
+        return ApiResponse.success();
     }
 
     @GetMapping("/mapBlock/{blockId}")
-    public ResponseEntity<?> changeVisible(@PathVariable UUID blockId) {
+    public ApiResponse.Result<Object> changeVisible(@PathVariable UUID blockId) {
         mapBlockService.changeVisible(blockId);
-        return ResponseEntity.ok().body(ApiResponse.success());
+        return ApiResponse.success();
     }
 
     @DeleteMapping("/mapBlock/{blockId}")
-    public ResponseEntity<?> deleteMapBlock(@PathVariable UUID blockId) {
+    public ApiResponse.Result<Object> deleteMapBlock(@PathVariable UUID blockId) {
         mapBlockService.deleteMapBlock(blockId);
-        return ResponseEntity.ok().body(ApiResponse.success());
+        return ApiResponse.success();
     }
 
 }
