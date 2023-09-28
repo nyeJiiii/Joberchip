@@ -17,17 +17,21 @@ public class MapBlock extends BaseObject {
 
   @Column(name = "address")
   @Getter
+  @Setter
   private String address;
 
   @Column(name = "latitude")
   @Getter
+  @Setter
   private Double latitude;
 
   @Column(name = "longitude")
   @Getter
+  @Setter
   private Double longitude;
 
   public UUID getMapBlockId() {
     return this.objectId;
   }
+
 }
