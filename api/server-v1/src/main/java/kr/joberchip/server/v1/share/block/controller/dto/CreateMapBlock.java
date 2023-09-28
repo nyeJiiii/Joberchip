@@ -24,12 +24,15 @@ public class CreateMapBlock {
     @NotNull(message = ErrorMessage.NOT_EMPTY)
     private Integer width;
 
-    public MapBlock toEntity() {
-        return MapBlock.builder()
-            .address(address)
-            .latitude(latitude)
-            .longitude(longitude)
-            .build();
+    public MapBlock setEntity(MapBlock mapBlock) {
+        mapBlock.setAddress(this.getAddress());
+        mapBlock.setLatitude(this.getLatitude());
+        mapBlock.setLongitude(this.getLongitude());
+        mapBlock.setX(this.getX());
+        mapBlock.setY(this.getY());
+        mapBlock.setHeight(this.getHeight());
+        mapBlock.setWidth(this.getWidth());
+        return mapBlock;
     }
 
 }
