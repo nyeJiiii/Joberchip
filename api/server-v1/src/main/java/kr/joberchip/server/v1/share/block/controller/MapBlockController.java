@@ -32,6 +32,12 @@ public class MapBlockController {
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 
+    @GetMapping("/mapBlock/{blockId}")
+    public ResponseEntity<?> changeVisible(@PathVariable UUID blockId) {
+        mapBlockService.changeVisible(blockId);
+        return ResponseEntity.ok().body(ApiResponse.success());
+    }
+
     @DeleteMapping("/mapBlock/{blockId}")
     public ResponseEntity<?> deleteMapBlock(@PathVariable UUID blockId) {
         mapBlockService.deleteMapBlock(blockId);

@@ -40,6 +40,11 @@ public class MapBlockService {
     }
 
     @Transactional
+    public void changeVisible(UUID blockId) {
+        isBlock(blockId).changeVisible();
+    }
+
+    @Transactional
     public void deleteMapBlock(UUID blockId) {
         isBlock(blockId);
         mapBlockRepository.deleteById(blockId);
