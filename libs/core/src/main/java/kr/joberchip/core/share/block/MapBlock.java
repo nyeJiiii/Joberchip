@@ -34,4 +34,7 @@ public class MapBlock extends BaseObject {
     return this.objectId;
   }
 
+  public void changeVisible() {
+    this.visible = !this.visible;
+  }
 }
