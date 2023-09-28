@@ -24,18 +24,25 @@ public class MapBlockService {
 
     @Transactional
     public void createMapBlock(UUID pageId, CreateMapBlock newMapBlock) {
-        // pageId를 조회해 해당 페이지가 존재하는지 확인
         SharePage parentPage = isPage(pageId);
-
-        // mapBlock의 내용을 Entity로 변환, 위치정보 저장
-        MapBlock mapBlock = getMapBlock(newMapBlock);
-
-        // 생성된 mapBlock을 mapBlockRepository에 save
-        MapBlock savedmapBlock = mapBlockRepository.save(mapBlock);
-
-        // Entity로 저장된 mapBlock의 parentPage값 참조, 해당 페이지의 Set<MapBlock>에 add
+        MapBlock savedmapBlock =
+                mapBlockRepository.save(
+                        newMapBlock.setEntity(new MapBlock())
+                );
         parentPage.addMapBlock(savedmapBlock);
         log.info("UUID of NEW MAP BLOCK: " + savedmapBlock.getMapBlockId());
+    }
+
+    @Transactional
+    public void modifyMapBlock(UUID blockId, CreateMapBlock modifiedMapBlock) {
+        MapBlock mapBlock = isBlock(blockId);
+        modifiedMapBlock.setEntity(mapBlock);
+    }
+
+    @Transactional
+    public void deleteMapBlock(UUID blockId) {
+        isBlock(blockId);
+        mapBlockRepository.deleteById(blockId);
     }
 
     private SharePage isPage(UUID pageId) {
@@ -45,37 +52,8 @@ public class MapBlockService {
         });
     }
 
-    private static MapBlock getMapBlock(CreateMapBlock newMapBlock) {
-        MapBlock mapBlock = newMapBlock.toEntity();
-        mapBlock.setX(newMapBlock.getX());
-        mapBlock.setY(newMapBlock.getY());
-        mapBlock.setHeight(newMapBlock.getHeight());
-        mapBlock.setWidth(newMapBlock.getWidth());
-        return mapBlock;
-    }
-
-    @Transactional
-    public void modifyMapBlock(UUID blockId, CreateMapBlock modifiedMapBlock) {
-        isBlock(blockId);
-        mapBlockRepository.updateAllById(
-                modifiedMapBlock.getAddress(),
-                modifiedMapBlock.getLatitude(),
-                modifiedMapBlock.getLongitude(),
-                modifiedMapBlock.getX(),
-                modifiedMapBlock.getY(),
-                modifiedMapBlock.getHeight(),
-                modifiedMapBlock.getWidth(),
-                blockId);
-    }
-
-    @Transactional
-    public void deleteMapBlock(UUID blockId) {
-        isBlock(blockId);
-        mapBlockRepository.deleteById(blockId);
-    }
-
-    private void isBlock(UUID blockId) {
-        mapBlockRepository.findById(blockId).orElseThrow(() -> {
+    private MapBlock isBlock(UUID blockId) {
+        return mapBlockRepository.findById(blockId).orElseThrow(() -> {
             log.error("존재하지 않는 blockId - blockId: {}", blockId);
             throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
         });
