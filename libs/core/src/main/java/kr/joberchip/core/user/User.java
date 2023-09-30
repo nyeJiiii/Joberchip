@@ -23,8 +23,18 @@ public class User {
   @Column(nullable = false)
   private String password;
 
+  @Setter
+  @Column(nullable = false)
+  private String nickname;
+
   @Builder.Default private String userRoles = "ROLE_USER";
 
   @OneToMany(mappedBy = "user")
   private List<SpaceUserInfo> spaceUserInfoList;
+
+  @PrePersist
+  protected void onCreate() {
+    nickname = username;
+  }
+
 }
