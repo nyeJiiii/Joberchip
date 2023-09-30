@@ -1,4 +1,4 @@
-package kr.joberchip.auth.v1.user.dto;
+package kr.joberchip.auth.v1.user.controller.dto;
 
 import kr.joberchip.auth.v1.errors.ErrorMessage;
 import lombok.Getter;

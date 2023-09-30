@@ -1,14 +1,14 @@
-package kr.joberchip.auth.v1.user.service;
+package kr.joberchip.server.v1.user.service;
 
-import kr.joberchip.auth.v1.errors.ErrorMessage;
-import kr.joberchip.auth.v1.errors.exception.DuplicatedUsernameException;
-import kr.joberchip.auth.v1.errors.exception.UserNotFoundException;
-import kr.joberchip.auth.v1.security.CustomUserDetails;
-import kr.joberchip.auth.v1.user.controller.dto.UserNickname;
-import kr.joberchip.auth.v1.user.controller.dto.UserRequest;
-import kr.joberchip.auth.v1.user.repository.UserRepository;
-import kr.joberchip.auth.v1.security.JwtTokenProvider;
 import kr.joberchip.core.user.User;
+import kr.joberchip.server.v1._config.security.CustomUserDetails;
+import kr.joberchip.server.v1._config.security.JwtProvider;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.DuplicatedUsernameException;
+import kr.joberchip.server.v1._errors.exceptions.UserNotFoundException;
+import kr.joberchip.server.v1.user.dto.UserNickname;
+import kr.joberchip.server.v1.user.dto.UserRequest;
+import kr.joberchip.server.v1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -42,7 +43,7 @@ public class UserService {
     public String login(UserRequest loginUser) {
         Optional<User> userOptional = checkUser(loginUser);
         User user = userOptional.get();
-        return JwtTokenProvider.create(user);
+        return JwtProvider.create(user);
     }
 
     private Optional<User> checkUser(UserRequest loginUser) {

@@ -2,8 +2,8 @@ package kr.joberchip.auth.v1.user.controller;
 
 import kr.joberchip.auth.v1._utils.ApiResponse;
 import kr.joberchip.auth.v1.security.CustomUserDetails;
-import kr.joberchip.auth.v1.user.dto.UserNickname;
-import kr.joberchip.auth.v1.user.dto.UserRequest;
+import kr.joberchip.auth.v1.user.controller.dto.UserNickname;
+import kr.joberchip.auth.v1.user.controller.dto.UserRequest;
 import kr.joberchip.auth.v1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -21,6 +23,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity(debug = true)
 public class ServerSecurityConfig {
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
+
   @Bean
   public AuthenticationManager authenticationManager(
       AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -60,10 +68,10 @@ public class ServerSecurityConfig {
         .authorizeRequests(
             expressionInterceptUrlRegistry ->
                 expressionInterceptUrlRegistry
-                    .antMatchers("/v1/user/testTokens")
-                    .permitAll()
-                    .antMatchers("/v1/**")
-                    .authenticated());
+                    .antMatchers("/v1/user/testTokens").permitAll()
+                    .antMatchers("/v1/join").permitAll()
+                    .antMatchers("/v1/login").permitAll()
+                    .antMatchers("/v1/**").authenticated());
 
     return http.build();
   }

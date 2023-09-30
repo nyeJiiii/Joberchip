@@ -14,4 +14,10 @@ public class ErrorMessage {
   public static final String NOT_EMPTY = "비어있을 수 없습니다.";
 
   public static final String ENTITY_NOT_FOUND = "해당 페이지를 찾을 수 없습니다.";
+
+  // 회원가입
+  public static final String DUPLICATED_USERNAME = "이미 사용중인 아이디입니다.";
+  // 로그인
+  public static final String USER_NOT_FOUND = "아이디 또는 비밀번호가 올바르지 않습니다.";
+
 }

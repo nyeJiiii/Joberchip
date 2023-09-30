@@ -1,7 +1,7 @@
-package kr.joberchip.auth.v1.user.dto;
+package kr.joberchip.server.v1.user.dto;
 
-import kr.joberchip.auth.v1.errors.ErrorMessage;
 import kr.joberchip.core.user.User;
+import kr.joberchip.server.v1._errors.ErrorMessage;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
