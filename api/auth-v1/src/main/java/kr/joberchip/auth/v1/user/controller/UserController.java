@@ -1,10 +1,13 @@
 package kr.joberchip.auth.v1.user.controller;
 
 import kr.joberchip.auth.v1._utils.ApiResponse;
+import kr.joberchip.auth.v1.security.CustomUserDetails;
+import kr.joberchip.auth.v1.user.dto.UserNickname;
 import kr.joberchip.auth.v1.user.dto.UserRequest;
 import kr.joberchip.auth.v1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +42,11 @@ public class UserController {
         return ResponseEntity.ok()
                 .header("Authorization", token)
                 .body(ApiResponse.success());
+    }
+
+    @PutMapping("/user/nickname")
+    public ApiResponse.Result<Object> modifyNickname(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody @Valid UserNickname userNickname, Errors errors) {
+        userService.modifyNickname(userDetails, userNickname);
+        return ApiResponse.success();
     }
 }

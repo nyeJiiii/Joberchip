@@ -3,6 +3,8 @@ package kr.joberchip.auth.v1.user.service;
 import kr.joberchip.auth.v1.errors.ErrorMessage;
 import kr.joberchip.auth.v1.errors.exception.DuplicatedUsernameException;
 import kr.joberchip.auth.v1.errors.exception.UserNotFoundException;
+import kr.joberchip.auth.v1.security.CustomUserDetails;
+import kr.joberchip.auth.v1.user.dto.UserNickname;
 import kr.joberchip.auth.v1.user.dto.UserRequest;
 import kr.joberchip.auth.v1.user.repository.UserRepository;
 import kr.joberchip.auth.v1.security.JwtTokenProvider;
@@ -60,5 +62,14 @@ public class UserService {
         } else {
             return userOptional;
         }
+    }
+
+    @Transactional
+    public void modifyNickname(CustomUserDetails userDetails, UserNickname nickname) {
+        userRepository.updateNicknameById(
+                            nickname.getNickname(),
+                            userRepository
+                                    .findByUsername(userDetails.getUsername())
+                                    .get().getUserId());
     }
 }
