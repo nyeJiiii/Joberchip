@@ -48,7 +48,7 @@ public class SecurityConfig {
                   .httpBasic().disable()
                   .apply(new CustomSecurityFilterManager());
         http.authorizeRequests()
-                .antMatchers("/user").authenticated()
+                .antMatchers("/v1/user").authenticated()
                 .anyRequest().permitAll();
 
         return http.build();
