@@ -36,4 +36,8 @@ public class LinkBlock extends BaseObject {
   public UUID getLinkBlockId() {
     return this.objectId;
   }
+
+  public void changeVisible() {
+    this.visible = !this.visible;
+  }
 }
