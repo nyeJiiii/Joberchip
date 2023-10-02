@@ -17,23 +17,16 @@ public class LinkBlock extends BaseObject {
   @Column(name = "title")
   private String title;
 
-  @Column(name = "description")
-  private String description;
-
   @Column(name = "link")
   @Lob
   private String link;
 
-  public static LinkBlock of(String title, String description, String link) {
-    return new LinkBlock(title, description, link);
+  public static LinkBlock of(String title, String link) {
+    return new LinkBlock(title, link);
   }
 
   public void modifyTitle(String title) {
     this.title = title;
-  }
-
-  public void modifyDescription(String description) {
-    this.description = description;
   }
 
   public void modifyLink(String link) {
