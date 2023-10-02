@@ -1,7 +1,7 @@
 package kr.joberchip.server.v1.share.block.controller;
 
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.share.block.dto.create.CreateMapBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.CreateMapBlock;
 import kr.joberchip.server.v1.share.block.service.MapBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

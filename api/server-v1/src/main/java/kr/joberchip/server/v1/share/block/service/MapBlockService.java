@@ -3,7 +3,7 @@ package kr.joberchip.server.v1.share.block.service;
 import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
-import kr.joberchip.server.v1.share.block.dto.create.CreateMapBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.CreateMapBlock;
 import kr.joberchip.server.v1.share.block.repository.MapBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
