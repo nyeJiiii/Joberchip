@@ -48,7 +48,10 @@ public class TextBlockService {
     return new TextBlockDTO.ReturnVisible(textBlock);
   }
 
-  public void deleteTextBlock(UUID pageId, UUID blockId) {
+  @Transactional
+  public void deleteTextBlock(UUID blockId) {
+    isBlock(blockId);
+    textBlockRepository.deleteById(blockId);
   }
 
   private SharePage isPage(UUID pageId) {
