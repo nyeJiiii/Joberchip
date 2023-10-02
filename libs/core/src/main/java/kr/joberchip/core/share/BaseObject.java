@@ -3,6 +3,8 @@ package kr.joberchip.core.share;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.*;
+
+import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,6 +22,7 @@ public abstract class BaseObject extends OnScreenLocation {
 
   @Column(name = "visible")
   @Setter
+  @Getter
   protected Boolean visible = Boolean.TRUE;
 
   @Override
