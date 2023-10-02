@@ -55,9 +55,9 @@ values (@user1_page1_text, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 1, 2
 SET
 @user1_page1_link = UUID_TO_BIN(UUID(), TRUE);
 insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
-                           parent_object_id, visible, title, link, description)
+                           parent_object_id, visible, title, link)
 values (@user1_page1_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 3, 1, 1, @user1_page1, 1,
-        "[user1]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
+        "[user1]<1>링크블록타이틀", "www.naver.com");
 
 SET
 @user1_page1_map = UUID_TO_BIN(UUID(), TRUE);
@@ -112,9 +112,9 @@ values (@user1_page4, 'user1', '2023-09-26', '2023-09-26', 'user1', 0, 3, 1, 2, 
 SET
 @user1_page3_link = UUID_TO_BIN(UUID(), TRUE);
 insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
-                           parent_object_id, visible, title, link, description)
+                           parent_object_id, visible, title, link)
 values (@user1_page3_link, 'user1', '2023-09-26', 'user1', '2023-09-26', 0, 0, 2, 2, @user1_page3, 1,
-        "[user1]<3>링크블록타이틀", "www.youtube.com", "[user1]<3>링크블록설명");
+        "[user1]<3>링크블록타이틀", "www.youtube.com");
 
 
 /*
@@ -151,9 +151,9 @@ WHERE object_id = @user2_page1;
 SET
 @user2_page1_link = UUID_TO_BIN(UUID(), TRUE);
 insert into link_block_tb (object_id, created_by, created_at, modified_by, modified_at, x_pos, y_pos, height, width,
-                           parent_object_id, visible, title, link, description)
+                           parent_object_id, visible, title, link)
 values (@user2_page1_link, 'user2', '2023-09-26', 'user2', '2023-09-26', 0, 0, 1, 2, @user2_page1, 1,
-        "[user2]<1>링크블록타이틀", "www.naver.com", "[user1]<1>링크블록설명");
+        "[user2]<1>링크블록타이틀", "www.naver.com");
 
 SET
 @user2_page1_map = UUID_TO_BIN(UUID(), TRUE);
