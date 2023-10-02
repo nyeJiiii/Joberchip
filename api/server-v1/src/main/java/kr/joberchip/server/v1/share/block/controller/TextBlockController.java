@@ -44,12 +44,9 @@ public class TextBlockController {
     return ApiResponse.success(textBlockService.changeVisible(blockId));
   }
 
-  @DeleteMapping("/{blockId}")
-  public ApiResponse.Result<Object> modifyTextBlock(
-      @PathVariable UUID pageId, @PathVariable UUID blockId) {
-
-    textBlockService.deleteTextBlock(pageId, blockId);
-
+  @DeleteMapping("/textBlock/{blockId}")
+  public ApiResponse.Result<Object> modifyTextBlock(@PathVariable UUID blockId) {
+    textBlockService.deleteTextBlock(blockId);
     return ApiResponse.success();
   }
 }
