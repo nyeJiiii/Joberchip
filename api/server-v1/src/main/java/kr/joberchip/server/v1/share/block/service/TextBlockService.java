@@ -31,7 +31,7 @@ public class TextBlockService {
                     newTextBlock.setEntity(new TextBlock())
             );
     parentPage.addTextBlock(savedTextBlock);
-    log.info("UUID of NEW MAP BLOCK: " + savedTextBlock.getTextBlockId());
+    log.info("UUID of NEW TEXT BLOCK: " + savedTextBlock.getTextBlockId());
   }
 
   @Transactional
