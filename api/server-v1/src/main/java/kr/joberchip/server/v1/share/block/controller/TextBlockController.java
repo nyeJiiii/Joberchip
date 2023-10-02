@@ -7,23 +7,26 @@ import kr.joberchip.server.v1.share.block.service.TextBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/page/{pageId}/textBlock")
+@RequestMapping("/v1/page")
 public class TextBlockController {
 
   private final TextBlockService textBlockService;
 
-  @PostMapping
-  public ResponseEntity<ApiResponse.Result<Object>> createTextBlock(
-      @PathVariable UUID pageId, @RequestBody TextBlockDTO textBlockDTO) {
+  @PostMapping("/{pageId}/textBlock")
+  public ApiResponse.Result<Object> createTextBlock(
+          @PathVariable UUID pageId, @RequestBody @Valid TextBlockDTO.Create newTextBlock, Errors errors) {
 
-    textBlockService.createTextBlock(pageId, textBlockDTO);
+    textBlockService.createTextBlock(pageId, newTextBlock);
 
-    return ResponseEntity.ok(ApiResponse.success());
+    return ApiResponse.success();
   }
 
   @PutMapping("/{blockId}")
