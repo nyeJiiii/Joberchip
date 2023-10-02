@@ -2,6 +2,9 @@ package kr.joberchip.core.user;
 
 import java.util.List;
 import javax.persistence.*;
+
+import kr.joberchip.core.storage.ProfileImageFile;
+import kr.joberchip.core.storage.UserProfileImageFile;
 import lombok.*;
 
 @Entity
@@ -26,6 +29,9 @@ public class User {
   @Setter
   @Column(nullable = false)
   private String nickname;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  private UserProfileImageFile userProfileImageFile;
 
   @Builder.Default private String userRoles = "ROLE_USER";
 

@@ -33,6 +33,9 @@ public class AttachedFile {
   @OneToOne(mappedBy = "attachedFile")
   private ProfileImageFile profileImageFile;
 
+  @OneToOne(mappedBy = "attachedFile")
+  private UserProfileImageFile userProfileImageFile;
+
   private AttachedFile(String contentType, String storedName) {
     this.contentType = contentType;
     this.storedName = storedName;
