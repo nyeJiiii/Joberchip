@@ -3,7 +3,7 @@ package kr.joberchip.server.v1.share.block.service;
 import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
-import kr.joberchip.server.v1.share.block.controller.dto.CreateMapBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.MapBlockDTO;
 import kr.joberchip.server.v1.share.block.repository.MapBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class MapBlockService {
     private final SharePageRepository sharePageRepository;
 
     @Transactional
-    public void createMapBlock(UUID pageId, CreateMapBlock newMapBlock) {
+    public void createMapBlock(UUID pageId, MapBlockDTO.Create newMapBlock) {
         SharePage parentPage = isPage(pageId);
         MapBlock savedmapBlock =
                 mapBlockRepository.save(
@@ -34,9 +34,14 @@ public class MapBlockService {
     }
 
     @Transactional
-    public void modifyMapBlock(UUID blockId, CreateMapBlock modifiedMapBlock) {
+    public void modifyMapBlock(UUID blockId, MapBlockDTO.Modify modifiedMapBlock) {
         MapBlock mapBlock = isBlock(blockId);
-        modifiedMapBlock.setEntity(mapBlock);
+        if(modifiedMapBlock.getAddress()!=null)
+            mapBlock.setAddress(modifiedMapBlock.getAddress());
+        if(modifiedMapBlock.getLatitude()!=null)
+            mapBlock.setLatitude(modifiedMapBlock.getLatitude());
+        if(modifiedMapBlock.getLongitude()!=null)
+            mapBlock.setLongitude(modifiedMapBlock.getLongitude());
     }
 
     @Transactional

@@ -1,7 +1,7 @@
 package kr.joberchip.server.v1.share.block.controller;
 
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.share.block.controller.dto.CreateMapBlock;
+import kr.joberchip.server.v1.share.block.controller.dto.MapBlockDTO;
 import kr.joberchip.server.v1.share.block.service.MapBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ public class MapBlockController {
     private final MapBlockService mapBlockService;
 
     @PostMapping("/{pageId}/mapBlock")
-    public ApiResponse.Result<Object> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid CreateMapBlock newMapBlock, Errors errors) {
+    public ApiResponse.Result<Object> createMapBlock(@PathVariable UUID pageId, @RequestBody @Valid MapBlockDTO.Create newMapBlock, Errors errors) {
         mapBlockService.createMapBlock(pageId, newMapBlock);
         return ApiResponse.success();
     }
 
     @PutMapping("/mapBlock/{blockId}")
-    public ApiResponse.Result<Object> modifyMapBlock(@PathVariable UUID blockId, @RequestBody @Valid CreateMapBlock modifiedMapBlock, Errors errors) {
+    public ApiResponse.Result<Object> modifyMapBlock(@PathVariable UUID blockId, @RequestBody MapBlockDTO.Modify modifiedMapBlock) {
         mapBlockService.modifyMapBlock(blockId, modifiedMapBlock);
         return ApiResponse.success();
     }
