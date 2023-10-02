@@ -27,4 +27,8 @@ public class TextBlock extends BaseObject {
   public UUID getTextBlockId() {
     return this.objectId;
   }
+
+  public void changeVisible() {
+    this.visible = !this.visible;
+  }
 }
