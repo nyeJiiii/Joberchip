@@ -1,10 +1,7 @@
 package kr.joberchip.core.user;
 
-import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
-
-import kr.joberchip.core.storage.ProfileImageFile;
-import kr.joberchip.core.storage.UserProfileImageFile;
 import lombok.*;
 
 @Entity
@@ -30,17 +27,23 @@ public class User {
   @Column(nullable = false)
   private String nickname;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  private UserProfileImageFile userProfileImageFile;
-
   @Builder.Default private String userRoles = "ROLE_USER";
-
-  @OneToMany(mappedBy = "user")
-  private List<SpaceUserInfo> spaceUserInfoList;
 
   @PrePersist
   protected void onCreate() {
     nickname = username;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return Objects.equals(userId, user.userId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userId);
+  }
 }

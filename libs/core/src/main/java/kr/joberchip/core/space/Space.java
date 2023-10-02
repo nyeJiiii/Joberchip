@@ -3,7 +3,7 @@ package kr.joberchip.core.space;
 import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.BaseEntity;
-import kr.joberchip.core.share.page.SharePage;
+import kr.joberchip.core.page.SharePage;
 import kr.joberchip.core.user.User;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -33,7 +33,7 @@ public class Space extends BaseEntity {
     this.mainPage = sharePage;
   }
 
-  public static Space createDefault(User creator) {
+  public static Space create(User creator) {
     return new Space(null, creator, null);
   }
 

@@ -1,8 +1,7 @@
-package kr.joberchip.core.share;
+package kr.joberchip.core;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import kr.joberchip.core.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +16,8 @@ public abstract class OnScreenLocation extends BaseEntity {
   protected Integer y;
 
   @Column(name = "width")
-  protected Integer width;
+  protected Integer w;
 
   @Column(name = "height")
-  protected Integer height;
+  protected Integer h;
 }

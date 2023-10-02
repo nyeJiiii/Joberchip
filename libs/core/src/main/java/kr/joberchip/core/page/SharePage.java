@@ -1,12 +1,11 @@
-package kr.joberchip.core.share.page;
+package kr.joberchip.core.page;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
-import kr.joberchip.core.share.BaseObject;
-import kr.joberchip.core.share.block.*;
-import kr.joberchip.core.storage.ProfileImageFile;
+import kr.joberchip.core.BaseObject;
+import kr.joberchip.core.block.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +22,10 @@ public class SharePage extends BaseObject {
 
   @Column(name = "description")
   private String description;
+
+  @Column(name = "profile_image_link")
+  @Lob
+  private String profileImageLink;
 
   @OneToMany(mappedBy = "parentObjectId", cascade = CascadeType.ALL)
   private Set<SharePage> childPages = new LinkedHashSet<>();
@@ -48,9 +51,6 @@ public class SharePage extends BaseObject {
   @OneToMany(mappedBy = "sharePage")
   private Set<PageHashtag> hashtags = new LinkedHashSet<>();
 
-  @OneToOne(mappedBy = "sharePage", cascade = CascadeType.ALL)
-  private ProfileImageFile profileImageFile;
-
   private SharePage(String title, String description) {
     this.title = title;
     this.description = description;
@@ -73,56 +73,68 @@ public class SharePage extends BaseObject {
   }
 
   public void addTextBlock(TextBlock textBlock) {
-    textBlock.setParentObjectId(this.getPageId());
+    textBlock.setParentObjectId(this.objectId);
     this.getTextBlocks().add(textBlock);
   }
 
   public void addTemplateBlock(TemplateBlock templateBlock) {
-    templateBlock.setParentObjectId(this.getPageId());
+    templateBlock.setParentObjectId(this.objectId);
     this.getTemplateBlocks().add(templateBlock);
   }
 
   public void addLinkBlock(LinkBlock linkBlock) {
-    linkBlock.setParentObjectId(this.getPageId());
+    linkBlock.setParentObjectId(this.objectId);
     this.getLinkBlocks().add(linkBlock);
   }
 
   public void addImageBlock(ImageBlock imageBlock) {
-    imageBlock.setParentObjectId(this.getPageId());
+    imageBlock.setParentObjectId(this.objectId);
     this.getImageBlocks().add(imageBlock);
   }
 
   public void addVideoBlock(VideoBlock videoBlock) {
-    videoBlock.setParentObjectId(this.getPageId());
+    videoBlock.setParentObjectId(this.objectId);
     this.getVideoBlocks().add(videoBlock);
   }
 
   public void addMapBlock(MapBlock mapBlock) {
-    mapBlock.setParentObjectId(this.getPageId());
+    mapBlock.setParentObjectId(this.objectId);
     this.getMapBlocks().add(mapBlock);
   }
 
   public void addChildPage(SharePage sharePage) {
-    sharePage.setParentObjectId(this.getPageId());
+    sharePage.setParentObjectId(this.objectId);
     this.getChildPages().add(sharePage);
-  }
-
-  public UUID getPageId() {
-    return this.objectId;
   }
 
   @Override
   public String toString() {
-    return getClass().getSimpleName()
-        + "\n{\n"
-        + "\ttitle = "
+    return "\nSharePage {\n"
+        + "title : '"
         + title
-        + ",\n"
-        + "\tdescription = "
+        + '\''
+        + ",\n description : '"
         + description
-        + ",\n"
-        + "\tprofileImageFile = "
-        + profileImageFile
+        + '\''
+        + ",\n profileImageLink : '"
+        + profileImageLink
+        + '\''
+        + ",\n childPages : "
+        + childPages
+        + ",\n textBlocks : "
+        + textBlocks
+        + ",\n templateBlocks : "
+        + templateBlocks
+        + ",\n linkBlocks : "
+        + linkBlocks
+        + ",\n imageBlocks : "
+        + imageBlocks
+        + ",\n videoBlocks : "
+        + videoBlocks
+        + ",\n mapBlocks : "
+        + mapBlocks
+        + ",\n hashtags : "
+        + hashtags
         + "\n}\n";
   }
 }

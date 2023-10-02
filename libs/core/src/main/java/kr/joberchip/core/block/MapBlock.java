@@ -1,6 +1,6 @@
-package kr.joberchip.core.share.block;
+package kr.joberchip.core.block;
 
-import kr.joberchip.core.share.BaseObject;
+import kr.joberchip.core.BaseObject;
 import lombok.*;
 
 import javax.persistence.Column;

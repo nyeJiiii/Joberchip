@@ -1,4 +1,4 @@
-package kr.joberchip.core.share.page;
+package kr.joberchip.core.page;
 
 import javax.persistence.*;
 import kr.joberchip.core.BaseEntity;

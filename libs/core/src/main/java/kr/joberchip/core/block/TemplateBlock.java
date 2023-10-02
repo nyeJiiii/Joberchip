@@ -1,10 +1,9 @@
-package kr.joberchip.core.share.block;
+package kr.joberchip.core.block;
 
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import kr.joberchip.core.share.BaseObject;
+import kr.joberchip.core.BaseObject;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +31,5 @@ public class TemplateBlock extends BaseObject {
 
   public void modifyDescription(String description) {
     this.description = description;
-  }
-
-  public UUID getTemplateBlockId() {
-    return this.objectId;
   }
 }

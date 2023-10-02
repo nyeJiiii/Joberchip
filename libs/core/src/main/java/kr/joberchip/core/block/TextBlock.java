@@ -1,8 +1,8 @@
-package kr.joberchip.core.share.block;
+package kr.joberchip.core.block;
 
 import java.util.UUID;
 import javax.persistence.*;
-import kr.joberchip.core.share.BaseObject;
+import kr.joberchip.core.BaseObject;
 import lombok.*;
 
 @Entity

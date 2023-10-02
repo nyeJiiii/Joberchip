@@ -1,14 +1,14 @@
-package kr.joberchip.core.share;
+package kr.joberchip.core;
 
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
+@Getter
 public abstract class BaseObject extends OnScreenLocation {
   @Id
   @GeneratedValue(generator = "uuid2")
@@ -22,7 +22,6 @@ public abstract class BaseObject extends OnScreenLocation {
 
   @Column(name = "visible")
   @Setter
-  @Getter
   protected Boolean visible = Boolean.TRUE;
 
   @Override
