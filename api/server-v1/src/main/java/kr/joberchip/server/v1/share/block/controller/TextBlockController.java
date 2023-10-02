@@ -22,20 +22,20 @@ public class TextBlockController {
 
   @PostMapping("/{pageId}/textBlock")
   public ApiResponse.Result<Object> createTextBlock(
-          @PathVariable UUID pageId, @RequestBody @Valid TextBlockDTO.Create newTextBlock, Errors errors) {
+          @PathVariable UUID pageId,
+          @RequestBody @Valid TextBlockDTO.Create newTextBlock,
+          Errors errors) {
 
     textBlockService.createTextBlock(pageId, newTextBlock);
 
     return ApiResponse.success();
   }
 
-  @PutMapping("/{blockId}")
+  @PutMapping("/textBlock/{blockId}")
   public ApiResponse.Result<Object> modifyTextBlock(
-      @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      @RequestBody TextBlockDTO textBlockDTO) {
-    textBlockService.modifyTextBlock(pageId, blockId, textBlockDTO);
-
+      @RequestBody TextBlockDTO.Modify modifiedTextBlock) {
+    textBlockService.modifyTextBlock(blockId, modifiedTextBlock);
     return ApiResponse.success();
   }
 
