@@ -6,7 +6,6 @@ import kr.joberchip.server.v1.share.block.controller.dto.LinkBlockDTO;
 import kr.joberchip.server.v1.share.block.service.LinkBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,17 +35,14 @@ public class LinkBlockController {
     return ApiResponse.success();
   }
 
-  @GetMapping("/mapBlock/{blockId}")
+  @GetMapping("/linkBlock/{blockId}")
   public ApiResponse.Result<Object> changeVisible(@PathVariable UUID blockId) {
     return ApiResponse.success(linkBlockService.changeVisible(blockId));
   }
 
-  @DeleteMapping("/{blockId}")
-  public ApiResponse.Result<Object> deleteLinkBlock(
-      @PathVariable UUID pageId, @PathVariable UUID blockId) {
-
-    linkBlockService.deleteLinkBlock(pageId, blockId);
-
+  @DeleteMapping("/linkBlock/{blockId}")
+  public ApiResponse.Result<Object> deleteLinkBlock(@PathVariable UUID blockId) {
+    linkBlockService.deleteLinkBlock(blockId);
     return ApiResponse.success();
   }
 }
