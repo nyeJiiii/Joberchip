@@ -45,8 +45,11 @@ public class MapBlockService {
     }
 
     @Transactional
-    public void changeVisible(UUID blockId) {
-        isBlock(blockId).changeVisible();
+    public MapBlockDTO.ReturnVisible changeVisible(UUID blockId) {
+        MapBlock mapBlock = isBlock(blockId);
+        mapBlock.changeVisible();
+        return new MapBlockDTO.ReturnVisible(mapBlock);
+
     }
 
     @Transactional

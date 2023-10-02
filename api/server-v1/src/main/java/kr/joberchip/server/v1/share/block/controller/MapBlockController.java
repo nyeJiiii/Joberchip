@@ -33,8 +33,8 @@ public class MapBlockController {
 
     @GetMapping("/mapBlock/{blockId}")
     public ApiResponse.Result<Object> changeVisible(@PathVariable UUID blockId) {
-        mapBlockService.changeVisible(blockId);
-        return ApiResponse.success();
+//         MapBlockDTO.ReturnVisible changeVisible = ;
+        return ApiResponse.success(mapBlockService.changeVisible(blockId));
     }
 
     @DeleteMapping("/mapBlock/{blockId}")
