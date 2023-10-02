@@ -13,6 +13,7 @@ import lombok.*;
 public class TextBlock extends BaseObject {
   @Column(name = "content")
   @Lob
+  @Setter
   private String content;
 
   public static TextBlock of(String content) {
