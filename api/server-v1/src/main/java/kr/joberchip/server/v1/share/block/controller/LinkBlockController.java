@@ -28,12 +28,11 @@ public class LinkBlockController {
     return ApiResponse.success();
   }
 
-  @PutMapping("/{blockId}")
+  @PutMapping("/linkBlock/{blockId}")
   public ApiResponse.Result<Object> modifyLinkBlock(
-      @PathVariable UUID pageId,
-      @PathVariable Long blockId,
-      @RequestBody LinkBlockDTO linkBlockDTO) {
-
+      @PathVariable UUID blockId,
+      @RequestBody LinkBlockDTO.Modify modifiedLinkBlock) {
+    linkBlockService.modifyLinkBlock(blockId, modifiedLinkBlock);
     return ApiResponse.success();
   }
 
