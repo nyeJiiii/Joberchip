@@ -32,6 +32,16 @@ public class TextBlockService {
     log.info("UUID of NEW MAP BLOCK: " + savedTextBlock.getTextBlockId());
   }
 
+  @Transactional
+  public void modifyTextBlock(UUID blockId, TextBlockDTO.Modify modifiedTextBlock) {
+    TextBlock textBlock = isBlock(blockId);
+    if(modifiedTextBlock.getContent()!=null)
+      textBlock.setContent(modifiedTextBlock.getContent());
+  }
+
+  public void deleteTextBlock(UUID pageId, UUID blockId) {
+  }
+
   private SharePage isPage(UUID pageId) {
     return sharePageRepository.findById(pageId).orElseThrow(() -> {
       log.error("존재하지 않는 pageID - pageId: {}", pageId);
@@ -39,9 +49,12 @@ public class TextBlockService {
     });
   }
 
-  public void modifyTextBlock(UUID pageId, UUID blockId, TextBlockDTO textBlockDTO) {
+
+  private TextBlock isBlock(UUID blockId) {
+    return textBlockRepository.findById(blockId).orElseThrow(() -> {
+      log.error("존재하지 않는 blockId - blockId: {}", blockId);
+      throw new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
+    });
   }
 
-  public void deleteTextBlock(UUID pageId, UUID blockId) {
-  }
 }
