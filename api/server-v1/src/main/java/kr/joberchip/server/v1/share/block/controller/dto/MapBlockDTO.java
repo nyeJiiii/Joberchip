@@ -3,6 +3,7 @@ package kr.joberchip.server.v1.share.block.controller.dto;
 import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class MapBlockDTO {
 
     @Getter
-    public class Create {
+    public static class Create {
         @NotNull(message = ErrorMessage.NOT_EMPTY)
         private String address;
         @NotNull(message = ErrorMessage.NOT_EMPTY)
@@ -39,10 +40,20 @@ public class MapBlockDTO {
     }
 
     @Getter
-    public class Modify {
+    public static class Modify {
         private String address;
         private Double latitude;
         private Double longitude;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class ReturnVisible {
+        private Boolean visible;
+
+        public ReturnVisible(MapBlock mapBlock) {
+            this.visible = mapBlock.getVisible();
+        }
     }
 
 }
