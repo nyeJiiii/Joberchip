@@ -49,7 +49,6 @@ public class MapBlockService {
         MapBlock mapBlock = isBlock(blockId);
         mapBlock.changeVisible();
         return new MapBlockDTO.ReturnVisible(mapBlock);
-
     }
 
     @Transactional

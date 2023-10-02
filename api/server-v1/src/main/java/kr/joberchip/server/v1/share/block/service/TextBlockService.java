@@ -3,9 +3,11 @@ package kr.joberchip.server.v1.share.block.service;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
+import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.core.share.block.TextBlock;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1.share.block.controller.dto.MapBlockDTO;
 import kr.joberchip.server.v1.share.block.controller.dto.TextBlockDTO;
 import kr.joberchip.server.v1.share.block.repository.TextBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
@@ -37,6 +39,13 @@ public class TextBlockService {
     TextBlock textBlock = isBlock(blockId);
     if(modifiedTextBlock.getContent()!=null)
       textBlock.setContent(modifiedTextBlock.getContent());
+  }
+
+  @Transactional
+  public TextBlockDTO.ReturnVisible changeVisible(UUID blockId) {
+    TextBlock textBlock = isBlock(blockId);
+    textBlock.changeVisible();
+    return new TextBlockDTO.ReturnVisible(textBlock);
   }
 
   public void deleteTextBlock(UUID pageId, UUID blockId) {
