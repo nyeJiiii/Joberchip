@@ -7,22 +7,25 @@ import kr.joberchip.server.v1.share.block.service.LinkBlockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/page/{pageId}/linkBlock")
+@RequestMapping("/v1/page")
 public class LinkBlockController {
   private final LinkBlockService linkBlockService;
 
-  @PostMapping
-  public ResponseEntity<ApiResponse.Result<Object>> createLinkBlock(
-      @PathVariable UUID pageId, @RequestBody LinkBlockDTO createLinkBlock) {
-
-    linkBlockService.createLinkBlock(pageId, createLinkBlock);
-
-    return ResponseEntity.ok(ApiResponse.success());
+  @PostMapping("/{pageId}/linkBlock")
+  public ApiResponse.Result<Object> createLinkBlock(
+          @PathVariable UUID pageId,
+          @RequestBody @Valid LinkBlockDTO.Create newLinkBlock,
+          Errors errors) {
+    linkBlockService.createLinkBlock(pageId, newLinkBlock);
+    return ApiResponse.success();
   }
 
   @PutMapping("/{blockId}")
