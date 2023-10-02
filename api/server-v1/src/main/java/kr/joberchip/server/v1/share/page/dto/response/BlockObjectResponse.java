@@ -49,7 +49,7 @@ public record BlockObjectResponse(
         linkBlock.getLinkBlockId(),
         BlockType.LINK,
         linkBlock.getTitle(),
-        linkBlock.getDescription(),
+        null,
         linkBlock.getLink(),
         linkBlock.getX(),
         linkBlock.getY(),
