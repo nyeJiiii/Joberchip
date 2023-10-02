@@ -39,6 +39,11 @@ public class TextBlockController {
     return ApiResponse.success();
   }
 
+  @GetMapping("/textBlock/{blockId}")
+  public ApiResponse.Result<Object> changeVisible(@PathVariable UUID blockId) {
+    return ApiResponse.success(textBlockService.changeVisible(blockId));
+  }
+
   @DeleteMapping("/{blockId}")
   public ApiResponse.Result<Object> modifyTextBlock(
       @PathVariable UUID pageId, @PathVariable UUID blockId) {
