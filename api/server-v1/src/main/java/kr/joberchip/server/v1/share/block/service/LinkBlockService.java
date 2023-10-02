@@ -3,9 +3,11 @@ package kr.joberchip.server.v1.share.block.service;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.share.block.LinkBlock;
+import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.core.share.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1.share.block.controller.dto.LinkBlockDTO;
+import kr.joberchip.server.v1.share.block.controller.dto.MapBlockDTO;
 import kr.joberchip.server.v1.share.block.repository.LinkBlockRepository;
 import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,13 @@ public class LinkBlockService {
       linkBlock.modifyTitle(modifiedLinkBlock.getTitle());
     if(modifiedLinkBlock.getLink()!=null)
       linkBlock.modifyLink(modifiedLinkBlock.getLink());
+  }
+
+  @Transactional
+  public LinkBlockDTO.ReturnVisible changeVisible(UUID blockId) {
+    LinkBlock linkBlock = isBlock(blockId);
+    linkBlock.changeVisible();
+    return new LinkBlockDTO.ReturnVisible(linkBlock);
   }
 
   public void deleteLinkBlock(UUID pageId, UUID blockId) {}

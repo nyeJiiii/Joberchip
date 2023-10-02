@@ -36,6 +36,11 @@ public class LinkBlockController {
     return ApiResponse.success();
   }
 
+  @GetMapping("/mapBlock/{blockId}")
+  public ApiResponse.Result<Object> changeVisible(@PathVariable UUID blockId) {
+    return ApiResponse.success(linkBlockService.changeVisible(blockId));
+  }
+
   @DeleteMapping("/{blockId}")
   public ApiResponse.Result<Object> deleteLinkBlock(
       @PathVariable UUID pageId, @PathVariable UUID blockId) {
