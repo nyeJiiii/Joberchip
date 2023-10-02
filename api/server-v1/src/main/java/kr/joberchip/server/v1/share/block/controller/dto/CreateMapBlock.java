@@ -1,4 +1,4 @@
-package kr.joberchip.server.v1.share.block.dto.create;
+package kr.joberchip.server.v1.share.block.controller.dto;
 
 import kr.joberchip.core.share.block.MapBlock;
 import kr.joberchip.server.v1._errors.ErrorMessage;
