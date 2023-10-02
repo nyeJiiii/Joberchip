@@ -26,3 +26,15 @@ spring:
     init:
       mode: always
       data-locations: classpath:test/data.sql
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+    region:
+      static: ${AWS_REGION_STATIC}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
