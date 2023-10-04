@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-  @ExceptionHandler({ApiServerException.class})
-  public ResponseEntity<ApiResponse.Result<Object>> globalException(ApiServerException ase) {
-    return new ResponseEntity<>(ase.body(), ase.status());
+  @ExceptionHandler({ApiClientException.class})
+  public ResponseEntity<ApiResponse.Result<Object>> globalClientException(ApiClientException ace) {
+    return new ResponseEntity<>(ace.body(), ace.status());
   }
 
-  @ExceptionHandler({ApiClientException.class})
-  public ResponseEntity<ApiResponse.Result<Object>> globalException(ApiClientException ase) {
+  @ExceptionHandler({ApiServerException.class})
+  public ResponseEntity<ApiResponse.Result<Object>> globalServerException(ApiServerException ase) {
     return new ResponseEntity<>(ase.body(), ase.status());
   }
 
@@ -41,8 +41,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse.Result<Object>> unknownServerError(Exception e) {
     ApiResponse.Result<Object> apiResult =
-            ApiResponse.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ApiResponse.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
   }
-
 }
