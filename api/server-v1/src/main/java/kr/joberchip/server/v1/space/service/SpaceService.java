@@ -1,17 +1,19 @@
 package kr.joberchip.server.v1.space.service;
 
-import java.util.List;
+import java.util.*;
 import javax.persistence.EntityNotFoundException;
-import kr.joberchip.core.share.page.SharePage;
-import kr.joberchip.core.space.types.ParticipationType;
+import kr.joberchip.core.page.SharePage;
 import kr.joberchip.core.space.Space;
-import kr.joberchip.core.user.SpaceUserInfo;
+import kr.joberchip.core.space.SpaceParticipationInfo;
+import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.core.user.User;
-import kr.joberchip.server.v1.share.page.repository.SharePageRepository;
-import kr.joberchip.server.v1.space.dto.ParticipatingInfo;
-import kr.joberchip.server.v1.space.dto.SpaceInvitation;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
+import kr.joberchip.server.v1.page.controller.dto.SharePageTreeResponseDTO;
+import kr.joberchip.server.v1.page.repository.SharePageRepository;
+import kr.joberchip.server.v1.space.controller.dto.ParticipationInfoResponseDTO;
+import kr.joberchip.server.v1.space.repository.SpaceParticipationInfoRepository;
 import kr.joberchip.server.v1.space.repository.SpaceRepository;
-import kr.joberchip.server.v1.user.repository.SpaceUserInfoRepository;
 import kr.joberchip.server.v1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,70 +24,109 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SpaceService {
-  private static final String defaultPageTitle = "의 스페이스";
-  private static final String defaultPageDescription = "의 스페이스입니다.";
 
   private final UserRepository userRepository;
   private final SpaceRepository spaceRepository;
   private final SharePageRepository sharePageRepository;
-  private final SpaceUserInfoRepository spaceUserInfoRepository;
+  private final SpaceParticipationInfoRepository spaceParticipationInfoRepository;
 
   @Transactional
-  public void create(Long userId) {
+  public UUID createSpace(Long userId, UUID defaultPageId) {
+
     User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
 
-    Space defaultSpace = Space.createDefault(user);
+    Space generatedSpace = Space.create(user);
 
-    spaceRepository.save(defaultSpace);
-    log.info("Default Space created : {}", defaultSpace);
-
-    SharePage defaultSharePage = generateDefaultSharePage(defaultSpace, user.getUsername());
-
-    defaultSpace.setMainPage(defaultSharePage);
-
-    if (spaceUserInfoRepository.existsByUser_UserIdAndParticipationType(
-        userId, ParticipationType.DEFAULT)) {
-      SpaceUserInfo memberInfo = SpaceUserInfo.of(defaultSpace, user, ParticipationType.OWNER);
-      spaceUserInfoRepository.save(memberInfo);
-      log.info("Space User Info : {}", memberInfo);
-    } else {
-      SpaceUserInfo memberInfo = SpaceUserInfo.of(defaultSpace, user);
-      spaceUserInfoRepository.save(memberInfo);
-      log.info("Space User Info : {}", memberInfo);
-    }
-
-    log.info("Default SharePage created : {}", defaultSharePage);
-  }
-
-  private SharePage generateDefaultSharePage(Space defaultSpace, String username) {
     SharePage defaultSharePage =
-        SharePage.of(
-            defaultSpace.getSpaceId(),
-            username + defaultPageTitle,
-            username + defaultPageDescription);
+        sharePageRepository
+            .findSharePageByObjectId(defaultPageId)
+            .orElseThrow(EntityNotFoundException::new);
 
-    sharePageRepository.save(defaultSharePage);
+    generatedSpace.setMainPage(defaultSharePage);
 
-    return defaultSharePage;
+    spaceRepository.save(generatedSpace);
+
+    return generatedSpace.getSpaceId();
   }
 
   @Transactional(readOnly = true)
-  public List<ParticipatingInfo> getParticipatingInfo(Long userId) {
-    return spaceUserInfoRepository.findAllByUser_UserId(userId).stream()
-        .map(ParticipatingInfo::fromEntity)
-        .toList();
+  public List<ParticipationInfoResponseDTO> getParticipatingInfo(Long userId) {
+    List<ParticipationInfoResponseDTO> participationInfoResponseDTOS = new ArrayList<>();
+
+    spaceParticipationInfoRepository
+        .findAllByUserId(userId)
+        .forEach(
+            spaceParticipationInfo -> {
+              Space space =
+                  spaceRepository.findById(spaceParticipationInfo.getSpaceId()).orElseThrow();
+              participationInfoResponseDTOS.add(
+                  ParticipationInfoResponseDTO.of(
+                      spaceParticipationInfo.getSpaceId(),
+                      space.getMainPage().getObjectId(),
+                      space.getMainPage().getTitle(),
+                      spaceParticipationInfo.getParticipationType()));
+            });
+
+    return participationInfoResponseDTOS;
   }
 
   @Transactional
-  public void invite(SpaceInvitation spaceInvitation) {
-    User user =
-        userRepository.findById(spaceInvitation.userId()).orElseThrow(EntityNotFoundException::new);
+  public void deleteSpace(Long userId, UUID spaceId) {
 
-    Space space =
-        spaceRepository
-            .findById(spaceInvitation.spaceId())
+    SpaceParticipationInfo spaceParticipationInfo =
+        spaceParticipationInfoRepository
+            .findByUserIdAndSpaceId(userId, spaceId)
             .orElseThrow(EntityNotFoundException::new);
 
-    SpaceUserInfo.of(space, user, ParticipationType.PARTICIPANT);
+    if (spaceParticipationInfo.getParticipationType() == ParticipationType.PARTICIPANT) {
+      throw new ApiClientException(ErrorMessage.FORBIDDEN);
+    }
+
+    spaceParticipationInfoRepository.deleteAllBySpaceId(spaceId);
+  }
+
+  // TODO : 조회 쿼리 최적화 할 수 있는 방법이 있을까?
+  @Transactional(readOnly = true)
+  public SharePageTreeResponseDTO.PageTreeNode spaceSharePageTree(UUID spaceId) {
+    try {
+      SharePage mainPage =
+          spaceRepository.findById(spaceId).orElseThrow(EntityNotFoundException::new).getMainPage();
+
+      SharePageTreeResponseDTO.PageTreeNode rootNode =
+          SharePageTreeResponseDTO.PageTreeNode.of(
+              mainPage.getParentObjectId(), mainPage.getObjectId(), mainPage.getTitle());
+
+      Queue<SharePageTreeResponseDTO.PageTreeNode> nodesQueue = new LinkedList<>();
+
+      nodesQueue.add(rootNode);
+
+      while (!nodesQueue.isEmpty()) {
+        SharePageTreeResponseDTO.PageTreeNode currentNode = nodesQueue.poll();
+        SharePage currentPage =
+            sharePageRepository
+                .findSharePageByObjectId(currentNode.pageId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        if (currentPage.getChildPages() != null) {
+          currentPage
+              .getChildPages()
+              .forEach(
+                  childPage -> {
+                    SharePageTreeResponseDTO.PageTreeNode childNode =
+                        SharePageTreeResponseDTO.PageTreeNode.of(
+                            childPage.getParentObjectId(),
+                            childPage.getObjectId(),
+                            childPage.getTitle());
+                    nodesQueue.add(childNode);
+                    currentNode.addChild(childNode);
+                  });
+        }
+      }
+
+      return rootNode;
+    } catch (EntityNotFoundException ene) {
+      log.info(ene.getMessage());
+      throw new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND);
+    }
   }
 }
