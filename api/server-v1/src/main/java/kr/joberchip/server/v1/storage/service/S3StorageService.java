@@ -41,6 +41,7 @@ public class S3StorageService {
 
     if (!"PNG".equalsIgnoreCase(ext)
         && !"JPEG".equalsIgnoreCase(ext)
+        && !"JPG".equalsIgnoreCase(ext)
         && !"MP4".equalsIgnoreCase(ext)) {
       throw new ApiClientException(ErrorMessage.FORBIDDEN);
     }
