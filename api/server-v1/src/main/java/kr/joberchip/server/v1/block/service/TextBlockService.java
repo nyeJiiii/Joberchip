@@ -40,6 +40,7 @@ public class TextBlockService {
         textBlockRepository.findById(blockId).orElseThrow(EntityExistsException::new);
 
     if (textBlockDTO.content() != null) textBlock.setContent(textBlock.getContent());
+    if (textBlockDTO.visible() != null) textBlock.setVisible(textBlock.getVisible());
 
     textBlockRepository.save(textBlock);
 

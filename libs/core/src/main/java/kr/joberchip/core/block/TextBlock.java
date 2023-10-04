@@ -16,13 +16,14 @@ public class TextBlock extends BaseObject {
   @Setter
   private String content;
 
-  public static TextBlock of(String content, Integer x, Integer y, Integer w, Integer h) {
+  public static TextBlock of(String content, Integer x, Integer y, Integer w, Integer h, Boolean visible) {
     TextBlock generated = new TextBlock(content);
 
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
+    generated.setVisible(visible);
 
     return generated;
   }

@@ -8,8 +8,9 @@ public record TextBlockDTO(
        @RequestParam Integer x,
        @RequestParam Integer y,
        @RequestParam Integer w,
-       @RequestParam Integer h) {
+       @RequestParam Integer h,
+       @RequestParam Boolean visible) {
   public TextBlock toEntity() {
-    return TextBlock.of(content, x, y, w, h);
+    return TextBlock.of(content, x, y, w, h, visible);
   }
 }
