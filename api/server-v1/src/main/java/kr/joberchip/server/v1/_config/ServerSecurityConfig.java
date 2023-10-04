@@ -68,10 +68,26 @@ public class ServerSecurityConfig {
         .authorizeRequests(
             expressionInterceptUrlRegistry ->
                 expressionInterceptUrlRegistry
-                    .antMatchers("/v1/user/testTokens").permitAll()
-                    .antMatchers("/v1/join").permitAll()
-                    .antMatchers("/v1/login").permitAll()
-                    .antMatchers("/v1/**").authenticated());
+                    .antMatchers("/v1/user/testTokens", "/v1/user/join", "/v1/user/login")
+                    .permitAll()
+                    .antMatchers(
+                        "/v1/page/new",
+                        "/v1/space/**",
+                        "/v1/**/textBlock",
+                        "/v1/**/textBlock/**",
+                        "/v1/**/linkBlock",
+                        "/v1/**/linkBlock/**",
+                        "/v1/**/templateBlock",
+                        "/v1/**/templateBlock/**",
+                        "/v1/**/mapBlock",
+                        "/v1/**/mapBlock/**",
+                        "/v1/**/imageBlock",
+                        "/v1/**/imageBlock/**",
+                        "/v1/**/videoBlock",
+                        "/v1/**/videoBlock/**")
+                    .authenticated()
+                    .antMatchers("/v1/page/**")
+                    .permitAll());
 
     return http.build();
   }
