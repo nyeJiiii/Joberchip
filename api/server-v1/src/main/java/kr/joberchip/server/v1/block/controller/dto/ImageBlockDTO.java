@@ -12,9 +12,10 @@ public record ImageBlockDTO(
     @RequestParam Integer x,
     @RequestParam Integer y,
     @RequestParam Integer w,
-    @RequestParam Integer h) {
+    @RequestParam Integer h,
+    @RequestParam Boolean visible) {
 
   public ImageBlock toEntity() {
-    return ImageBlock.of(title, description, x, y, w, h);
+    return ImageBlock.of(title, description, x, y, w, h, visible);
   }
 }

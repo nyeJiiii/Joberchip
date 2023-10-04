@@ -32,7 +32,7 @@ public class ImageBlockController {
       @RequestBody ImageBlockDTO imageBlockDTO) {
     BlockResponseDTO response = imageBlockService.modifyImageBlock(pageId, blockId, imageBlockDTO);
 
-    return ResponseEntity.ok(ApiResponse.success());
+    return ResponseEntity.ok(ApiResponse.success(response));
   }
 
   @DeleteMapping("/{blockId}")

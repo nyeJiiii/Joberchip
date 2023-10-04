@@ -27,13 +27,14 @@ public class ImageBlock extends BaseObject {
   }
 
   public static ImageBlock of(
-      String title, String description, Integer x, Integer y, Integer w, Integer h) {
+      String title, String description, Integer x, Integer y, Integer w, Integer h, Boolean visible) {
     ImageBlock generated = new ImageBlock(title, description);
 
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
+    generated.setVisible(visible);
 
     return generated;
   }

@@ -51,6 +51,9 @@ public class ImageBlockService {
       s3StorageService.delete(imageBlock.getImageLink());
       imageBlock.setImageLink(s3StorageService.store(imageBlockDTO.attachedImage()));
     }
+    if (imageBlockDTO.visible() != null) {
+      imageBlock.setVisible(imageBlockDTO.visible());
+    }
 
     imageBlockRepository.save(imageBlock);
 
