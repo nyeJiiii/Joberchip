@@ -26,7 +26,7 @@ values (@user1_space, 1, 'user1', '2023-09-26', '2023-09-26', 'user1');
 /*
     사용자 user1 의 스페이스 참여 정보 등록 (기본 스페이스 default)
  */
-insert into space_user_info_tb (participation_type, space_id, user_id)
+insert into space_participation_info_tb (participation_type, space_id, user_id)
 values ('DEFAULT', @user1_space, 1);
 
 
@@ -126,7 +126,7 @@ SET
 insert into space_tb (space_id, creator_id, created_by, created_at, modified_at, modified_by)
 values (@user2_space, 2, 'user2', '2023-09-26', '2023-09-26', 'user2');
 
-insert into space_user_info_tb (participation_type, space_id, user_id)
+insert into space_participation_info_tb (participation_type, space_id, user_id)
 values ('DEFAULT', @user2_space, 2),
     ('PARTICIPANT', @user1_space, 2);
 
