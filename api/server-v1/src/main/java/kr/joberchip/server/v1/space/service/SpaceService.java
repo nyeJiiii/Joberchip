@@ -4,8 +4,6 @@ import java.util.*;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.page.SharePage;
 import kr.joberchip.core.space.Space;
-import kr.joberchip.core.space.SpaceParticipationInfo;
-import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.core.user.User;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
@@ -30,10 +28,20 @@ public class SpaceService {
   private final SharePageRepository sharePageRepository;
   private final SpaceParticipationInfoRepository spaceParticipationInfoRepository;
 
+  /**
+   * 기본 페이지가 생성되어 있는 새로운 스페이스 생성
+   *
+   * @param userId 소유자 ID
+   * @param defaultPageId 기본 페이지 ID
+   * @return 생성된 스페이스 ID
+   */
   @Transactional
   public UUID createSpace(Long userId, UUID defaultPageId) {
 
-    User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.USER_ENTITY_NOT_FOUND));
 
     Space generatedSpace = Space.create(user);
 
@@ -71,18 +79,11 @@ public class SpaceService {
   }
 
   @Transactional
-  public void deleteSpace(Long userId, UUID spaceId) {
+  public void deleteSpace(UUID spaceId) {
 
-    SpaceParticipationInfo spaceParticipationInfo =
-        spaceParticipationInfoRepository
-            .findByUserIdAndSpaceId(userId, spaceId)
-            .orElseThrow(EntityNotFoundException::new);
+    spaceParticipationInfoRepository.deleteBySpaceId(spaceId);
 
-    if (spaceParticipationInfo.getParticipationType() == ParticipationType.PARTICIPANT) {
-      throw new ApiClientException(ErrorMessage.FORBIDDEN);
-    }
-
-    spaceParticipationInfoRepository.deleteAllBySpaceId(spaceId);
+    log.info("Deleted Space Id : {}", spaceId);
   }
 
   // TODO : 조회 쿼리 최적화 할 수 있는 방법이 있을까?

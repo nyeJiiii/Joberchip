@@ -13,7 +13,7 @@ public interface SpaceParticipationInfoRepository
     extends JpaRepository<SpaceParticipationInfo, Long> {
   List<SpaceParticipationInfo> findAllByUserId(Long userId);
 
-  void deleteAllBySpaceId(UUID spaceId);
+  void deleteBySpaceId(UUID spaceId);
 
   Optional<SpaceParticipationInfo> findByUserIdAndParticipationType(
       Long userId, ParticipationType participationType);
@@ -23,4 +23,7 @@ public interface SpaceParticipationInfoRepository
   boolean existsByUserIdAndSpaceId(Long userId, UUID spaceId);
 
   Optional<SpaceParticipationInfo> findByUserIdAndSpaceId(Long userId, UUID spaceId);
+  Optional<SpaceParticipationInfo> findByUserIdAndSpaceIdAndParticipationType(Long userId, UUID spaceId, ParticipationType participationType);
+  void deleteByUserIdAndSpaceId(Long userId, UUID spaceId);
+
 }

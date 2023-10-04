@@ -1,7 +1,6 @@
 package kr.joberchip.server.v1.space.service;
 
 import java.util.UUID;
-import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.space.SpaceParticipationInfo;
 import kr.joberchip.core.space.types.ParticipationType;
 import kr.joberchip.server.v1._errors.ErrorMessage;
@@ -23,52 +22,105 @@ public class SpaceParticipationInfoService {
 
   @Transactional
   public void registerOwnerInfo(Long userId, UUID spaceId) {
-    if (spaceParticipationInfoRepository.existsByUserIdAndParticipationType(
-        userId, ParticipationType.DEFAULT)) {
-
-      spaceParticipationInfoRepository.save(
-          SpaceParticipationInfo.of(userId, spaceId, ParticipationType.OWNER));
-
-      log.info("Owner Participation info registered : {}, {}", userId, spaceId);
-
-      return;
-    }
-
-    spaceParticipationInfoRepository.save(
-        SpaceParticipationInfo.of(userId, spaceId, ParticipationType.DEFAULT));
-
-    log.info("Default Participation info registered : {}, {}", userId, spaceId);
+    spaceParticipationInfoRepository
+        .findByUserIdAndParticipationType(userId, ParticipationType.DEFAULT)
+        .ifPresentOrElse(
+            spaceParticipationInfo -> {
+              spaceParticipationInfoRepository.save(
+                  SpaceParticipationInfo.of(userId, spaceId, ParticipationType.OWNER));
+              log.info(
+                  "Participation info registered : {}, {}, {}",
+                  userId,
+                  spaceId,
+                  ParticipationType.OWNER);
+            },
+            () -> {
+              spaceParticipationInfoRepository.save(
+                  SpaceParticipationInfo.of(userId, spaceId, ParticipationType.DEFAULT));
+              log.info(
+                  "Participation info registered : {}, {}, {}",
+                  userId,
+                  spaceId,
+                  ParticipationType.DEFAULT);
+            });
   }
 
   @Transactional
-  public void registerInvitation(Long requesterId, SpaceInviteRequestDTO spaceInviteRequestDTO) {
-    log.info("Request User Id : {}", requesterId);
+  public void registerInvitation(SpaceInviteRequestDTO spaceInviteRequestDTO) {
+    if (!userRepository.existsById(spaceInviteRequestDTO.userId()))
+      throw new ApiClientException(ErrorMessage.USER_ENTITY_NOT_FOUND);
 
-    log.info("Requester User info : {}", userRepository.findById(requesterId).orElseThrow());
     log.info(
         "Invited User info : {}",
-        userRepository.findById(spaceInviteRequestDTO.userId()).orElseThrow());
+        userRepository.findById(spaceInviteRequestDTO.userId()).orElse(null));
 
-    ParticipationType participationType =
-        spaceParticipationInfoRepository
-            .findByUserIdAndSpaceId(requesterId, spaceInviteRequestDTO.spaceId())
-            .orElseThrow(EntityNotFoundException::new)
-            .getParticipationType();
-
-    if (participationType == ParticipationType.PARTICIPANT)
-      throw new ApiClientException(ErrorMessage.FORBIDDEN);
-
-    if (spaceParticipationInfoRepository.existsByUserIdAndSpaceId(
-        spaceInviteRequestDTO.userId(), spaceInviteRequestDTO.spaceId())) {
-      throw new ApiClientException("Already invited user");
-    }
-
-    spaceParticipationInfoRepository.save(
-        SpaceParticipationInfo.of(
-            spaceInviteRequestDTO.userId(),
-            spaceInviteRequestDTO.spaceId(),
-            ParticipationType.PARTICIPANT));
+    spaceParticipationInfoRepository
+        .findByUserIdAndSpaceId(spaceInviteRequestDTO.userId(), spaceInviteRequestDTO.spaceId())
+        .ifPresentOrElse(
+            spaceParticipationInfo -> {
+              throw new ApiClientException(ErrorMessage.ALREADY_INVITED_USER);
+            },
+            () -> {
+              spaceParticipationInfoRepository.save(
+                  SpaceParticipationInfo.of(
+                      spaceInviteRequestDTO.userId(),
+                      spaceInviteRequestDTO.spaceId(),
+                      ParticipationType.PARTICIPANT));
+            });
 
     log.info("Invitation registered : {}", spaceInviteRequestDTO);
+  }
+
+  @Transactional
+  public void deleteParticipationInfo(Long userId, UUID spaceId) {
+    spaceParticipationInfoRepository.deleteByUserIdAndSpaceId(userId, spaceId);
+  }
+
+  @Transactional(readOnly = true)
+  public void checkOwner(Long userId, UUID spaceId) {
+    ParticipationType participationType =
+        spaceParticipationInfoRepository
+            .findByUserIdAndSpaceId(userId, spaceId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.NO_SPACE_PARTICIPATION_INFO))
+            .getParticipationType();
+
+    if (participationType != ParticipationType.OWNER) {
+      throw new ApiClientException(ErrorMessage.NOT_SPACE_OWNER);
+    }
+
+    log.info(
+        "Participation Info : userId - {}, spaceId - {}, participationType - {}",
+        userId,
+        spaceId,
+        participationType);
+  }
+
+  @Transactional(readOnly = true)
+  public void checkDefault(Long userId, UUID spaceId) {
+    ParticipationType participationType =
+        spaceParticipationInfoRepository
+            .findByUserIdAndSpaceId(userId, spaceId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.NO_SPACE_PARTICIPATION_INFO))
+            .getParticipationType();
+
+    if (participationType == ParticipationType.DEFAULT) {
+      throw new ApiClientException(ErrorMessage.DEFAULT_SPACE_CANNOT_REMOVE);
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public void checkOwnerOrDefault(Long userId, UUID spaceId) {
+    ParticipationType participationType =
+        spaceParticipationInfoRepository
+            .findByUserIdAndSpaceId(userId, spaceId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.NO_SPACE_PARTICIPATION_INFO))
+            .getParticipationType();
+
+    if (participationType != ParticipationType.DEFAULT
+        && participationType != ParticipationType.OWNER) {
+      throw new ApiClientException(ErrorMessage.NOT_SPACE_OWNER);
+    }
+
+    log.info("Participation Type checked : userId - {}, spaceId - {}", userId, spaceId);
   }
 }
