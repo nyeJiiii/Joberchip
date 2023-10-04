@@ -54,12 +54,8 @@ public class SharePage extends BaseObject {
   private SharePage(String title, String description) {
     this.title = title;
     this.description = description;
-  }
-
-  private SharePage(UUID parentObjectId, String title, String description) {
-    this.parentObjectId = parentObjectId;
-    this.title = title;
-    this.description = description;
+    this.profileImageLink =
+        "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png";
   }
 
   public static SharePage of(String title, String description) {
