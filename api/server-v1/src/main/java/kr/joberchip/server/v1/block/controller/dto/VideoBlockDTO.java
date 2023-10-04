@@ -13,11 +13,12 @@ public record VideoBlockDTO(
     @RequestParam Integer x,
     @RequestParam Integer y,
     @RequestParam Integer w,
-    @RequestParam Integer h) {
+    @RequestParam Integer h,
+    @RequestParam Boolean visible) {
 
   public VideoBlock toEntity() {
-    if ("".equals(videoLink)) return VideoBlock.of(title, description);
+    if ("".equals(videoLink)) return VideoBlock.of(title, description, x, y, w, h, visible);
 
-    return VideoBlock.of(title, description, videoLink);
+    return VideoBlock.of(title, description, videoLink, x, y, w, h, visible);
   }
 }

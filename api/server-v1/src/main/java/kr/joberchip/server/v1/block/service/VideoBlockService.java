@@ -51,6 +51,7 @@ public class VideoBlockService {
       s3StorageService.delete(videoBlock.getVideoLink());
       videoBlock.setVideoLink(s3StorageService.store(videoBlockDTO.attachedVideo()));
     }
+    if (videoBlockDTO.visible() != null) videoBlock.setVisible(videoBlockDTO.visible());
 
     videoBlockRepository.save(videoBlock);
 
