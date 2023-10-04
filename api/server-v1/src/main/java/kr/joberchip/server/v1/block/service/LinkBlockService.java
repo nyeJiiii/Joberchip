@@ -34,7 +34,7 @@ public class LinkBlockService {
   }
 
   @Transactional
-  public BlockResponseDTO modifyLinkBlock(UUID blockId, LinkBlockRequestDTO modifyRequestDTO) {
+  public BlockResponseDTO modifyLinkBlock(UUID pageId, UUID blockId, LinkBlockRequestDTO modifyRequestDTO) {
 
     LinkBlock target =
         linkBlockRepository.findById(blockId).orElseThrow(EntityNotFoundException::new);

@@ -32,7 +32,7 @@ public class LinkBlockController {
       @PathVariable UUID blockId,
       @RequestBody LinkBlockRequestDTO modifyRequestDTO) {
 
-    BlockResponseDTO responseDTO = linkBlockService.modifyLinkBlock(blockId, modifyRequestDTO);
+    BlockResponseDTO responseDTO = linkBlockService.modifyLinkBlock(pageId, blockId, modifyRequestDTO);
 
     return ResponseEntity.ok(ApiResponse.success(responseDTO));
   }
