@@ -2,7 +2,6 @@ package kr.joberchip.core.page;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.BaseObject;
 import kr.joberchip.core.block.*;
@@ -58,14 +57,21 @@ public class SharePage extends BaseObject {
         "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png";
   }
 
-  public static SharePage of(String title, String description) {
-    return new SharePage(title, description);
+  public static SharePage of(
+      String title, String description, Integer x, Integer y, Integer w, Integer h) {
+
+    SharePage generated = new SharePage(title, description);
+
+    generated.setX(x);
+    generated.setY(y);
+    generated.setX(w);
+    generated.setX(h);
+
+    return generated;
   }
 
-  public static SharePage of(UUID parentObjectId, String title, String description) {
-    SharePage generated = SharePage.of(title, description);
-    generated.setParentObjectId(parentObjectId);
-    return generated;
+  public static SharePage of(String title, String description) {
+    return new SharePage(title, description);
   }
 
   public void addTextBlock(TextBlock textBlock) {
