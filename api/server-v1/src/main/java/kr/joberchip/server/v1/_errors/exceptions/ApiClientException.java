@@ -4,6 +4,11 @@ import kr.joberchip.server.v1._utils.ApiResponse;
 import org.springframework.http.HttpStatus;
 
 public class ApiClientException extends RuntimeException {
+
+  public ApiClientException(String detailMessage) {
+    super(detailMessage);
+  }
+
   public ApiClientException(String field, String detailMessage) {
     super(field + " : " + detailMessage);
   }
