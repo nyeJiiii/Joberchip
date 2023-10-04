@@ -8,7 +8,6 @@ on:
 env:
   S3_BUCKET_NAME: joberchip-s3 #S3 버킷 생성시 설정
   API_DEV_SERVER_RESOURCE_PATH: ./api/server-v1/src/main/resources/application-dev.yml #api-server-v1 module
-  AUTH_DEV_SERVER_RESOURCE_PATH: ./api/auth-v1/src/main/resources/application-dev.yml #api-auth-v1 module
   CODE_DEPLOY_APPLICATION_NAME: joberchip-be-deploy
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: joberchip-be-deploy-group
 
@@ -30,24 +29,15 @@ jobs:
         with:
           files: ${{ env.API_DEV_SERVER_RESOURCE_PATH}}
         env:
-          #          secret-key: ${{ secrets.JWT_SECRET_KEY }}
-          #          aes-key: ${{ secrets.AES_SECRET_KEY }}
+          jwt-secret-key: ${{ secrets.JWT_SECRET_KEY }}
           spring.datasource.url: ${{ secrets.DB_URL }}
           spring.datasource.username: ${{ secrets.DB_USER }}
           spring.datasource.password: ${{ secrets.DB_PASSWORD}}
           spring.datasource.driver-class-name: ${{ secrets.DB_DRIVER }}
-
-      - name: Set auth server yaml file
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: ${{ env.AUTH_DEV_SERVER_RESOURCE_PATH}}
-        env:
-          #          secret-key: ${{ secrets.JWT_SECRET_KEY }}
-          #          aes-key: ${{ secrets.AES_SECRET_KEY }}
-          spring.datasource.url: ${{ secrets.DB_URL }}
-          spring.datasource.username: ${{ secrets.DB_USER }}
-          spring.datasource.password: ${{ secrets.DB_PASSWORD}}
-          spring.datasource.driver-class-name: ${{ secrets.DB_DRIVER }}
+          cloud.aws.s3.bucket: ${{ secrets.AWS_BUCKET_NAME }}
+          cloud.aws.region.static : ${{ secrets.AWS_REGION }}
+          cloud.aws.credentials.access-key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          cloud.aws.credentials.secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
