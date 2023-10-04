@@ -1,6 +1,5 @@
 package kr.joberchip.core.block;
 
-import java.util.UUID;
 import javax.persistence.*;
 import kr.joberchip.core.BaseObject;
 import lombok.*;
@@ -10,25 +9,21 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
+@Setter
 public class TextBlock extends BaseObject {
   @Column(name = "content")
   @Lob
   @Setter
   private String content;
 
-  public static TextBlock of(String content) {
-    return new TextBlock(content);
-  }
+  public static TextBlock of(String content, Integer x, Integer y, Integer w, Integer h) {
+    TextBlock generated = new TextBlock(content);
 
-  public void modifyContent(String content) {
-    this.content = content;
-  }
+    generated.setX(x);
+    generated.setY(y);
+    generated.setW(w);
+    generated.setH(h);
 
-  public UUID getTextBlockId() {
-    return this.objectId;
-  }
-
-  public void changeVisible() {
-    this.visible = !this.visible;
+    return generated;
   }
 }

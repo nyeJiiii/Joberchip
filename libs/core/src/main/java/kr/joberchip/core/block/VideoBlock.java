@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class VideoBlock extends BaseObject {
   @Column(name = "title")
   private String title;
@@ -20,19 +21,28 @@ public class VideoBlock extends BaseObject {
   @Lob
   private String videoLink;
 
-  public static VideoBlock of(String title, String description, String videoLink) {
-    return new VideoBlock(title, description, videoLink);
-  }
-
-  public void modifyTitle(String title) {
+  private VideoBlock(String title, String description) {
     this.title = title;
-  }
-
-  public void modifyDescription(String description) {
     this.description = description;
   }
 
-  public void modifyVideoLink(String videoLink) {
-    this.videoLink = videoLink;
+  public static VideoBlock of(String title, String description) {
+    return new VideoBlock(title, description);
+  }
+
+  public static VideoBlock of(
+      String title, String description, Integer x, Integer y, Integer w, Integer h) {
+    VideoBlock generated = new VideoBlock(title, description);
+
+    generated.setX(x);
+    generated.setY(y);
+    generated.setW(w);
+    generated.setH(h);
+
+    return generated;
+  }
+
+  public static VideoBlock of(String title, String description, String videoLink) {
+    return new VideoBlock(title, description, videoLink);
   }
 }

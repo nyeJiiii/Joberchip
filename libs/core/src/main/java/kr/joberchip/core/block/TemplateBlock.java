@@ -4,16 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import kr.joberchip.core.BaseObject;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "template_block_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class TemplateBlock extends BaseObject {
   @Column(name = "title")
   private String title;
@@ -21,15 +19,24 @@ public class TemplateBlock extends BaseObject {
   @Column(name = "description")
   private String description;
 
-  public static TemplateBlock of(String title, String description) {
-    return new TemplateBlock(title, description);
-  }
+  @Column(name = "link")
+  private String link;
 
-  public void modifyTitle(String title) {
+  private TemplateBlock(String title, String description) {
     this.title = title;
+    this.description = description;
   }
 
-  public void modifyDescription(String description) {
-    this.description = description;
+  public static TemplateBlock of(
+      String title, String description, Integer x, Integer y, Integer w, Integer h) {
+
+    TemplateBlock generated = new TemplateBlock(title, description);
+
+    generated.setX(x);
+    generated.setY(y);
+    generated.setW(w);
+    generated.setH(h);
+
+    return generated;
   }
 }

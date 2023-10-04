@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
+@Setter
 public class ImageBlock extends BaseObject {
   @Column(name = "title")
   private String title;
@@ -20,19 +21,20 @@ public class ImageBlock extends BaseObject {
   @Lob
   private String imageLink;
 
-  public static ImageBlock of(String title, String description, String imageLink) {
-    return new ImageBlock(title, description, imageLink);
-  }
-
-  public void modifyTitle(String title) {
+  private ImageBlock(String title, String description) {
     this.title = title;
-  }
-
-  public void modifyDescription(String description) {
     this.description = description;
   }
 
-  public void modifyLink(String imageLink) {
-    this.imageLink = imageLink;
+  public static ImageBlock of(
+      String title, String description, Integer x, Integer y, Integer w, Integer h) {
+    ImageBlock generated = new ImageBlock(title, description);
+
+    generated.setX(x);
+    generated.setY(y);
+    generated.setW(w);
+    generated.setH(h);
+
+    return generated;
   }
 }

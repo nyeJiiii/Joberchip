@@ -1,40 +1,44 @@
 package kr.joberchip.core.block;
 
-import kr.joberchip.core.BaseObject;
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.UUID;
+import kr.joberchip.core.BaseObject;
+import lombok.*;
 
 @Entity
 @Table(name = "map_block_tb")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Getter
+@Setter
 public class MapBlock extends BaseObject {
 
   @Column(name = "address")
-  @Getter
-  @Setter
   private String address;
 
   @Column(name = "latitude")
-  @Getter
-  @Setter
   private Double latitude;
 
   @Column(name = "longitude")
-  @Getter
-  @Setter
   private Double longitude;
 
-  public UUID getMapBlockId() {
-    return this.objectId;
-  }
+  public static MapBlock of(
+      String address,
+      Double latitude,
+      Double longitude,
+      Integer x,
+      Integer y,
+      Integer w,
+      Integer h) {
 
-  public void changeVisible() {
-    this.visible = !this.visible;
+    MapBlock generated = new MapBlock(address, latitude, longitude);
+
+    generated.setX(x);
+    generated.setY(y);
+    generated.setW(w);
+    generated.setH(h);
+
+    return generated;
   }
 }
