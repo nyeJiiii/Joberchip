@@ -4,6 +4,7 @@ public enum BlockType {
   PAGE,
   TEXT,
   LINK,
+  MAP,
   TEMPLATE,
   IMAGE,
   VIDEO;

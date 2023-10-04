@@ -79,7 +79,7 @@ public record BlockResponseDTO(
   public static BlockResponseDTO fromEntity(MapBlock mapBlock) {
     return new BlockResponseDTO(
         mapBlock.getObjectId(),
-        BlockType.TEMPLATE,
+        BlockType.MAP,
         mapBlock.getAddress(),
         null,
         "{ \"latitude\" : "
