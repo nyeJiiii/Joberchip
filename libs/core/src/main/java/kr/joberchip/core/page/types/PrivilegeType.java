@@ -1,7 +1,6 @@
 package kr.joberchip.core.page.types;
 
 public enum PrivilegeType {
-  READ,
-  EDIT, // 편집
-  DELETE // 삭제
+  READ, // 읽기만 가능
+  EDIT; // 읽기, 수정, 삭제 가능
 }
