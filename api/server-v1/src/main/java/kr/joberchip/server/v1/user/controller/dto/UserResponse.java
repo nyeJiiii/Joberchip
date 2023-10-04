@@ -1,4 +1,4 @@
-package kr.joberchip.server.v1.user.dto;
+package kr.joberchip.server.v1.user.controller.dto;
 
 import kr.joberchip.core.user.User;
 import lombok.Getter;
