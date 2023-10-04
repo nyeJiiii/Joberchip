@@ -44,7 +44,7 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: ./gradlew clean :api-server-v1:buildNeeded :api-auth-v1:buildNeeded --stacktrace --info -x test
+        run: ./gradlew clean :api-server-v1:buildNeeded --stacktrace --info -x test
         shell: bash
 
       - name: Make zip file
