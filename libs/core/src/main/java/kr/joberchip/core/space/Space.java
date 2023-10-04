@@ -45,7 +45,7 @@ public class Space extends BaseEntity {
         + ", creator : "
         + creator.getUsername()
         + ", mainPage : "
-        + (this.mainPage != null ? mainPage.getPageId() : null)
+        + (this.mainPage != null ? mainPage.getObjectId() : null)
         + " }";
   }
 }
