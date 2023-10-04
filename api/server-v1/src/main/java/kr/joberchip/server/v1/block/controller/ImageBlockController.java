@@ -26,10 +26,10 @@ public class ImageBlockController {
   }
 
   @PutMapping("/{blockId}")
-  public ResponseEntity<ApiResponse.Result<Object>> modifyImageBlock(
+  public ResponseEntity<ApiResponse.Result<BlockResponseDTO>> modifyImageBlock(
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      @RequestBody ImageBlockDTO imageBlockDTO) {
+      ImageBlockDTO imageBlockDTO) {
     BlockResponseDTO response = imageBlockService.modifyImageBlock(pageId, blockId, imageBlockDTO);
 
     return ResponseEntity.ok(ApiResponse.success(response));
