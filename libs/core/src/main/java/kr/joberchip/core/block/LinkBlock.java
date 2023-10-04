@@ -24,7 +24,7 @@ public class LinkBlock extends BaseObject {
   private String link;
 
   public static LinkBlock of(
-      String title, String description, String link, Integer x, Integer y, Integer w, Integer h) {
+      String title, String description, String link, Integer x, Integer y, Integer w, Integer h, Boolean visible) {
 
     LinkBlock generated = new LinkBlock(title, description, link);
 
@@ -32,6 +32,7 @@ public class LinkBlock extends BaseObject {
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
+    generated.setVisible(visible);
 
     return generated;
   }

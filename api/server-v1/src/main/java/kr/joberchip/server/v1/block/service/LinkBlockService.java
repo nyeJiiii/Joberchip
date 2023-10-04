@@ -46,6 +46,8 @@ public class LinkBlockService {
 
     if (modifyRequestDTO.link() != null) target.modifyLink(modifyRequestDTO.link());
 
+    if (modifyRequestDTO.visible() != null) target.setVisible(modifyRequestDTO.visible());
+
     linkBlockRepository.save(target);
 
     return BlockResponseDTO.fromEntity(target);
