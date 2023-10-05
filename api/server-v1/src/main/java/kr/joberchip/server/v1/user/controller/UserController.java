@@ -3,9 +3,8 @@ package kr.joberchip.server.v1.user.controller;
 import javax.validation.Valid;
 import kr.joberchip.server.v1._config.security.CustomUserDetails;
 import kr.joberchip.server.v1._utils.ApiResponse;
-import kr.joberchip.server.v1.user.controller.dto.UserNickname;
-import kr.joberchip.server.v1.user.controller.dto.UserProfileRequestDTO;
-import kr.joberchip.server.v1.user.controller.dto.UserProfileResponseDTO;
+import kr.joberchip.server.v1.user.controller.dto.UpdateUserRequestDTO;
+import kr.joberchip.server.v1.user.controller.dto.UpdateUserResponseDTO;
 import kr.joberchip.server.v1.user.controller.dto.UserRequest;
 import kr.joberchip.server.v1.user.service.UserService;
 import lombok.*;
@@ -34,19 +33,11 @@ public class UserController {
     return ResponseEntity.ok().header("Authorization", token).body(ApiResponse.success());
   }
 
-  @PutMapping("/nickname")
-  public ApiResponse.Result<Object> modifyNickname(
-      @AuthenticationPrincipal CustomUserDetails userDetails,
-      @RequestBody @Valid UserNickname userNickname,
-      Errors errors) {
-    userService.modifyNickname(userDetails, userNickname);
-    return ApiResponse.success();
-  }
-
-  @PutMapping("/{userId}")
-  public ResponseEntity<ApiResponse.Result<UserProfileResponseDTO>> updateUserProfile(
-      UserProfileRequestDTO userProfileRequestDTO) {
-    UserProfileResponseDTO responseDTO = userService.updateProfile(userProfileRequestDTO);
+  @PutMapping("/update")
+  public ResponseEntity<ApiResponse.Result<UpdateUserResponseDTO>> updateUserInfo(
+          @AuthenticationPrincipal CustomUserDetails loginUser,
+          UpdateUserRequestDTO updateUserRequestDTO) {
+    UpdateUserResponseDTO responseDTO = userService.updateUserInfo(loginUser, updateUserRequestDTO);
 
     return ResponseEntity.ok(ApiResponse.success(responseDTO));
   }

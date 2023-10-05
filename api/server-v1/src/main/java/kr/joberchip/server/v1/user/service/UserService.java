@@ -7,9 +7,9 @@ import kr.joberchip.server.v1._config.security.JwtProvider;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.DuplicatedUsernameException;
 import kr.joberchip.server.v1._errors.exceptions.UserNotFoundException;
-import kr.joberchip.server.v1.user.controller.dto.UserProfileResponseDTO;
-import kr.joberchip.server.v1.user.controller.dto.UserNickname;
-import kr.joberchip.server.v1.user.controller.dto.UserProfileRequestDTO;
+import kr.joberchip.server.v1.storage.service.S3StorageService;
+import kr.joberchip.server.v1.user.controller.dto.UpdateUserResponseDTO;
+import kr.joberchip.server.v1.user.controller.dto.UpdateUserRequestDTO;
 import kr.joberchip.server.v1.user.controller.dto.UserRequest;
 import kr.joberchip.server.v1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,7 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final S3StorageService s3StorageService;
 
   @Transactional
   public void join(UserRequest newUser) {
@@ -67,13 +68,17 @@ public class UserService {
   }
 
   @Transactional
-  public void modifyNickname(CustomUserDetails userDetails, UserNickname nickname) {
-    userRepository.updateNicknameById(
-        nickname.getNickname(),
-        userRepository.findByUsername(userDetails.getUsername()).get().getUserId());
-  }
+  public UpdateUserResponseDTO updateUserInfo(CustomUserDetails loginUser, UpdateUserRequestDTO updateUserRequestDTO) {
+    User user = userRepository.findByUsername(loginUser.getUsername())
+            .orElseThrow(() -> new UserNotFoundException(ErrorMessage.USER_ENTITY_NOT_FOUND));
 
-  public UserProfileResponseDTO updateProfile(UserProfileRequestDTO userProfileRequestDTO) {
-    return null;
+    if(updateUserRequestDTO.nickname() != null) user.setNickname(updateUserRequestDTO.nickname());
+    if(updateUserRequestDTO.profileImageLink() != null) {
+      s3StorageService.delete(user.getProfileImageLink());
+      user.setProfileImageLink(s3StorageService.store(updateUserRequestDTO.profileImageLink()));
+    }
+
+    userRepository.save(user);
+    return UpdateUserResponseDTO.fromEntity(user);
   }
 }
