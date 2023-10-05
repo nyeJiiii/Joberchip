@@ -1,7 +1,6 @@
 package kr.joberchip.server.v1.block.service;
 
 import java.util.UUID;
-import javax.persistence.EntityExistsException;
 import kr.joberchip.core.block.TextBlock;
 import kr.joberchip.core.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
@@ -47,7 +46,9 @@ public class TextBlockService {
   @Transactional
   public BlockResponseDTO modifyTextBlock(UUID blockId, TextBlockDTO textBlockDTO) {
     TextBlock textBlock =
-        textBlockRepository.findById(blockId).orElseThrow(EntityExistsException::new);
+        textBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
     if (textBlockDTO.content() != null) textBlock.setContent(textBlockDTO.content());
     if (textBlockDTO.visible() != null) textBlock.setVisible(textBlockDTO.visible());
