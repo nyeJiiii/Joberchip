@@ -37,6 +37,7 @@ public class User {
   @PrePersist
   protected void onCreate() {
     nickname = username;
+    profileImageLink = "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png";
   }
 
   @Override
