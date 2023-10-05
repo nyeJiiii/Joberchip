@@ -197,110 +197,120 @@ public class SharePageService {
         .forEach(
             blockDTO -> {
               switch (blockDTO.blockType()) {
-                case PAGE -> {
-                  sharePageRepository
-                      .findSharePageByObjectId(blockDTO.blockId())
-                      .ifPresent(
-                          sharePage -> {
-                            sharePage.setX(blockDTO.x());
-                            sharePage.setY(blockDTO.y());
-                            sharePage.setW(blockDTO.w());
-                            sharePage.setH(blockDTO.h());
-                            sharePageRepository.save(sharePage);
-                          });
-                }
-                case TEXT -> {
-                  textBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          textBlock -> {
-                            textBlock.setX(blockDTO.x());
-                            textBlock.setY(blockDTO.y());
-                            textBlock.setW(blockDTO.w());
-                            textBlock.setH(blockDTO.h());
-                            textBlockRepository.save(textBlock);
-                          });
-                }
-                case LINK -> {
-                  linkBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          linkBlock -> {
-                            linkBlock.setX(blockDTO.x());
-                            linkBlock.setY(blockDTO.y());
-                            linkBlock.setW(blockDTO.w());
-                            linkBlock.setH(blockDTO.h());
-                            linkBlockRepository.save(linkBlock);
-                          });
-                }
-                case TEMPLATE -> {
-                  templateBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          templateBlock -> {
-                            templateBlock.setX(blockDTO.x());
-                            templateBlock.setY(blockDTO.y());
-                            templateBlock.setW(blockDTO.w());
-                            templateBlock.setH(blockDTO.h());
-                            templateBlockRepository.save(templateBlock);
-                          });
-                }
-                case MAP -> {
-                  mapBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          mapBlock -> {
-                            mapBlock.setX(blockDTO.x());
-                            mapBlock.setY(blockDTO.y());
-                            mapBlock.setW(blockDTO.w());
-                            mapBlock.setH(blockDTO.h());
-                            mapBlockRepository.save(mapBlock);
-                          });
-                }
-                case IMAGE -> {
-                  imageBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          imageBlock -> {
-                            imageBlock.setX(blockDTO.x());
-                            imageBlock.setY(blockDTO.y());
-                            imageBlock.setW(blockDTO.w());
-                            imageBlock.setH(blockDTO.h());
-                            imageBlockRepository.save(imageBlock);
-                          });
-                }
-                case VIDEO -> {
-                  videoBlockRepository
-                      .findById(blockDTO.blockId())
-                      .ifPresent(
-                          videoBlock -> {
-                            videoBlock.setX(blockDTO.x());
-                            videoBlock.setY(blockDTO.y());
-                            videoBlock.setW(blockDTO.w());
-                            videoBlock.setH(blockDTO.h());
-                            videoBlockRepository.save(videoBlock);
-                          });
-                }
+                case PAGE -> sharePageRepository
+                    .findSharePageByObjectId(blockDTO.blockId())
+                    .ifPresent(
+                        sharePage -> {
+                          sharePage.setX(blockDTO.x());
+                          sharePage.setY(blockDTO.y());
+                          sharePage.setW(blockDTO.w());
+                          sharePage.setH(blockDTO.h());
+                          sharePageRepository.save(sharePage);
+                        });
+
+                case TEXT -> textBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        textBlock -> {
+                          textBlock.setX(blockDTO.x());
+                          textBlock.setY(blockDTO.y());
+                          textBlock.setW(blockDTO.w());
+                          textBlock.setH(blockDTO.h());
+                          textBlockRepository.save(textBlock);
+                        });
+
+                case LINK -> linkBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        linkBlock -> {
+                          linkBlock.setX(blockDTO.x());
+                          linkBlock.setY(blockDTO.y());
+                          linkBlock.setW(blockDTO.w());
+                          linkBlock.setH(blockDTO.h());
+                          linkBlockRepository.save(linkBlock);
+                        });
+
+                case TEMPLATE -> templateBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        templateBlock -> {
+                          templateBlock.setX(blockDTO.x());
+                          templateBlock.setY(blockDTO.y());
+                          templateBlock.setW(blockDTO.w());
+                          templateBlock.setH(blockDTO.h());
+                          templateBlockRepository.save(templateBlock);
+                        });
+
+                case MAP -> mapBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        mapBlock -> {
+                          mapBlock.setX(blockDTO.x());
+                          mapBlock.setY(blockDTO.y());
+                          mapBlock.setW(blockDTO.w());
+                          mapBlock.setH(blockDTO.h());
+                          mapBlockRepository.save(mapBlock);
+                        });
+
+                case IMAGE -> imageBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        imageBlock -> {
+                          imageBlock.setX(blockDTO.x());
+                          imageBlock.setY(blockDTO.y());
+                          imageBlock.setW(blockDTO.w());
+                          imageBlock.setH(blockDTO.h());
+                          imageBlockRepository.save(imageBlock);
+                        });
+
+                case VIDEO -> videoBlockRepository
+                    .findById(blockDTO.blockId())
+                    .ifPresent(
+                        videoBlock -> {
+                          videoBlock.setX(blockDTO.x());
+                          videoBlock.setY(blockDTO.y());
+                          videoBlock.setW(blockDTO.w());
+                          videoBlock.setH(blockDTO.h());
+                          videoBlockRepository.save(videoBlock);
+                        });
               }
             });
   }
 
-  public SharePageDetailResponseDTO modify(
-      Long userId, UUID pageId, SharePageModifyDTO sharePageModifyDTO) {
+  public SharePageDetailResponseDTO modify(UUID pageId, SharePageModifyDTO sharePageModifyDTO) {
     SharePage currentPage =
         sharePageRepository
             .findById(pageId)
             .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
 
     if (sharePageModifyDTO.title() != null) currentPage.setTitle(sharePageModifyDTO.title());
+
     if (sharePageModifyDTO.description() != null)
       currentPage.setTitle(sharePageModifyDTO.description());
+
     if (sharePageModifyDTO.profileImage() != null) {
       s3StorageService.delete(currentPage.getProfileImageLink());
       currentPage.setProfileImageLink(s3StorageService.store(sharePageModifyDTO.profileImage()));
     }
+
     if (sharePageModifyDTO.visible() != null) {
       currentPage.setVisible(sharePageModifyDTO.visible());
+    }
+
+    if (sharePageModifyDTO.parentPageId() != null
+        && sharePageModifyDTO.parentPageId() != currentPage.getParentObjectId()) {
+
+      SharePage beforeParent =
+          sharePageRepository
+              .findById(currentPage.getParentObjectId())
+              .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+      beforeParent.getChildPages().remove(currentPage);
+
+      SharePage afterParent =
+          sharePageRepository
+              .findById(sharePageModifyDTO.parentPageId())
+              .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+      afterParent.addChildPage(currentPage);
     }
 
     sharePageRepository.save(currentPage);

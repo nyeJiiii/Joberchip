@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/page")
 @RequiredArgsConstructor
 public class SharePageController {
-  private final SharePageRepository sharePageRepository;
   private final SharePageService sharePageService;
   private final SharePagePrivilegeService sharePagePrivilegeService;
 
@@ -123,7 +122,7 @@ public class SharePageController {
     sharePagePrivilegeService.checkEditPrivilege(loginUser.user().getUserId(), pageId);
 
     SharePageDetailResponseDTO response =
-        sharePageService.modify(loginUser.user().getUserId(), pageId, sharePageModifyDTO);
+        sharePageService.modify(pageId, sharePageModifyDTO);
 
     return ApiResponse.success(response);
   }
