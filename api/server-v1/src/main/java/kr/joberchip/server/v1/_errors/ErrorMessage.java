@@ -20,4 +20,22 @@ public class ErrorMessage {
   // 로그인
   public static final String USER_NOT_FOUND = "아이디 또는 비밀번호가 올바르지 않습니다.";
 
+  // 조회 관련
+  public static final String USER_ENTITY_NOT_FOUND = "해당 유저를 찾을 수 없습니다.";
+  public static final String SHARE_PAGE_ENTITY_NOT_FOUND = "해당 페이지를 찾을 수 없습니다.";
+  public static final String BLOCK_ENTITY_NOT_FOUND = "해당 블록를 찾을 수 없습니다.";
+  public static final String PRIVILEGE_ENTITY_NOT_FOUND = "권한이 등록되어 있지 않습니다.";
+  public static final String SPACE_ENTITY_NOT_FOUND = "해당 스페이스를 찾을 수 없습니다.";
+  public static final String NOT_VISIBLE_SHARE_PAGE= "비공개 페이지.";
+
+  // 스페이스 관련
+  public static final String ALREADY_INVITED_USER = "해당 스페이스 참여 중인 유저입니다.";
+  public static final String NOT_SPACE_OWNER = "해당 스페이스 소유자가 아닙니다.";
+  public static final String NO_SPACE_PARTICIPATION_INFO = "해당 스페이스 참여 정보가 없습니다.";
+  public static final String DEFAULT_SPACE_CANNOT_REMOVE = "기본 스페이스는 삭제할 수 없습니다.";
+
+  // 페이지 권한 관련
+  public static final String NO_PRIVILEGE = "해당 권한이 없습니다.";
+  public static final String INVALID_PRIVILEGE = "해당 권한이 없습니다.";
+  public static final String EDIT_PRIVILEGE_NOT_FOUND = "해당 페이지에 대한 편집 권한이 없습니다.";
 }
