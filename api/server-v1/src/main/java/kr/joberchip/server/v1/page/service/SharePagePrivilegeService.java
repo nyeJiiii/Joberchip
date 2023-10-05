@@ -7,6 +7,7 @@ import kr.joberchip.core.page.types.PrivilegeType;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.page.controller.dto.SharePagePrivilegeDTO;
+import kr.joberchip.server.v1.page.controller.dto.SharePagePrivilegeResponseDTO;
 import kr.joberchip.server.v1.page.repository.SharePagePrivilegeRepository;
 import kr.joberchip.server.v1.page.repository.SharePageRepository;
 import kr.joberchip.server.v1.space.controller.dto.SpaceInviteRequestDTO;
@@ -71,11 +72,16 @@ public class SharePagePrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public PrivilegeType getPrivilege(Long userId, UUID pageId) {
-    return sharePagePrivilegeRepository
-        .findByUserIdAndSharePageId(userId, pageId)
-        .orElseThrow(() -> new ApiClientException(ErrorMessage.PRIVILEGE_ENTITY_NOT_FOUND))
-        .getPrivilegeType();
+  public SharePagePrivilegeResponseDTO getPrivilege(Long userId, UUID pageId) {
+    if (!sharePageRepository.existsById(pageId))
+      throw new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND);
+
+    SharePagePrivilege sharePagePrivilege =
+        sharePagePrivilegeRepository.findByUserIdAndSharePageId(userId, pageId).orElse(null);
+
+    return sharePagePrivilege != null
+        ? SharePagePrivilegeResponseDTO.fromEntity(sharePagePrivilege)
+        : null;
   }
 
   @Transactional(readOnly = true)

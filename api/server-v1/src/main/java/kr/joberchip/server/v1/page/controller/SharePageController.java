@@ -8,7 +8,6 @@ import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1._utils.ApiResponse;
 import kr.joberchip.server.v1.page.controller.dto.*;
-import kr.joberchip.server.v1.page.repository.SharePageRepository;
 import kr.joberchip.server.v1.page.service.SharePagePrivilegeService;
 import kr.joberchip.server.v1.page.service.SharePageService;
 import lombok.RequiredArgsConstructor;
@@ -121,13 +120,25 @@ public class SharePageController {
     log.info("[SharePageController] SharePageRequestDTO : {}", sharePageModifyDTO);
     sharePagePrivilegeService.checkEditPrivilege(loginUser.user().getUserId(), pageId);
 
-    SharePageDetailResponseDTO response =
-        sharePageService.modify(pageId, sharePageModifyDTO);
+    SharePageDetailResponseDTO response = sharePageService.modify(pageId, sharePageModifyDTO);
 
     return ApiResponse.success(response);
   }
 
-  @PostMapping("/privilege")
+  @GetMapping("/{pageId}/privilege")
+  public ApiResponse.Result<SharePagePrivilegeResponseDTO> getPrivilege(
+      @AuthenticationPrincipal CustomUserDetails loginUser, @PathVariable UUID pageId) {
+
+    log.info("[SharePageController] Login User : {}", loginUser);
+    log.info("[SharePageController] Page Id : {}", pageId);
+
+    SharePagePrivilegeResponseDTO response =
+        sharePagePrivilegeService.getPrivilege(loginUser.user().getUserId(), pageId);
+
+    return ApiResponse.success(response);
+  }
+
+  @PutMapping("/{pageId}/privilege")
   public ApiResponse.Result<SharePagePrivilegeDTO> modifyPrivilege(
       @AuthenticationPrincipal CustomUserDetails loginUser,
       @RequestBody SharePagePrivilegeDTO sharePagePrivilegeDTO,
