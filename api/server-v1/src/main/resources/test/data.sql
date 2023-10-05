@@ -2,16 +2,16 @@
   user_tb dummy
   password = '0000'
 */
+insert into user_tb (username, password, nickname, user_roles, profile_image_link)
+values ('user1', '{bcrypt}$2a$10$B9YJT9AtusUZJAnmgznu1OX1kI.8TDizhfCPYCUQMOWat6K1s4oM.', 'user1', 'ROLE_USER', "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png");
 insert into user_tb (username, password, nickname, user_roles)
-values ('user1', '{bcrypt}$2a$10$B9YJT9AtusUZJAnmgznu1OX1kI.8TDizhfCPYCUQMOWat6K1s4oM.', 'user1', 'ROLE_USER');
+values ('user2', '{bcrypt}$2a$10$s0CMkutBLP.k5mz4rI5T/e0tOj9WWUDXBTYqsM4AQ3NS/30OphvIa', 'user2', 'ROLE_USER', "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png");
 insert into user_tb (username, password, nickname, user_roles)
-values ('user2', '{bcrypt}$2a$10$s0CMkutBLP.k5mz4rI5T/e0tOj9WWUDXBTYqsM4AQ3NS/30OphvIa', 'user2', 'ROLE_USER');
+values ('user3', '{bcrypt}$2a$10$85RcQmwBZQNLvI31sbGiN.KbtDIGxFnBuKkRNXEbFh6PpMdv8vY3.', 'user3', 'ROLE_USER', "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png");
 insert into user_tb (username, password, nickname, user_roles)
-values ('user3', '{bcrypt}$2a$10$85RcQmwBZQNLvI31sbGiN.KbtDIGxFnBuKkRNXEbFh6PpMdv8vY3.', 'user3', 'ROLE_USER');
+values ('user4', '{bcrypt}$2a$10$TU81VtR4POmoLoHyZVJCme5NwNEMfHKYZmKpiJdqBRNdF0qVzRwUS', 'user4', 'ROLE_USER', "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png");
 insert into user_tb (username, password, nickname, user_roles)
-values ('user4', '{bcrypt}$2a$10$TU81VtR4POmoLoHyZVJCme5NwNEMfHKYZmKpiJdqBRNdF0qVzRwUS', 'user4', 'ROLE_USER');
-insert into user_tb (username, password, nickname, user_roles)
-values ('user5', '{bcrypt}$2a$10$YC.lqsJc6stMpZu.Hzfctu0oEPCrRZmJsZ7ua8He6r6RbN2i4jUZO', 'user5', 'ROLE_USER');
+values ('user5', '{bcrypt}$2a$10$YC.lqsJc6stMpZu.Hzfctu0oEPCrRZmJsZ7ua8He6r6RbN2i4jUZO', 'user5', 'ROLE_USER', "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png");
 
 set
 @user1_id = (select user_id from user_tb where username='user1');
