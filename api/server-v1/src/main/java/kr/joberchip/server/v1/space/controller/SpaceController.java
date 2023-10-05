@@ -92,6 +92,9 @@ public class SpaceController {
 
     spaceParticipationInfoService.registerInvitation(spaceInviteRequestDTO);
 
+    sharePagePrivilegeService.registerGivenPrivilegeForAllSpaceSubPage(
+        spaceInviteRequestDTO, PrivilegeType.READ);
+
     return ApiResponse.success();
   }
 }
