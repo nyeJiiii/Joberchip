@@ -43,7 +43,7 @@ public class S3StorageService {
         && !"JPEG".equalsIgnoreCase(ext)
         && !"JPG".equalsIgnoreCase(ext)
         && !"MP4".equalsIgnoreCase(ext)) {
-      throw new ApiClientException(ErrorMessage.FORBIDDEN);
+      throw new ApiClientException(ErrorMessage.INVALID_FILE_EXTENSION);
     }
 
     String s3key = generateRandomFileNameWithExtension(ext);
