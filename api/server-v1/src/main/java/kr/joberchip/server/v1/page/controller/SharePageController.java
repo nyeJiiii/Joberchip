@@ -1,5 +1,6 @@
 package kr.joberchip.server.v1.page.controller;
 
+import java.util.Objects;
 import java.util.UUID;
 import javax.validation.Valid;
 import kr.joberchip.core.page.types.PrivilegeType;
@@ -7,7 +8,9 @@ import kr.joberchip.server.v1._config.security.CustomUserDetails;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1._utils.ApiResponse;
+import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.page.controller.dto.*;
+import kr.joberchip.server.v1.page.repository.SharePageRepository;
 import kr.joberchip.server.v1.page.service.SharePagePrivilegeService;
 import kr.joberchip.server.v1.page.service.SharePageService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/page")
 @RequiredArgsConstructor
 public class SharePageController {
+  private final SharePageRepository sharePageRepository;
   private final SharePageService sharePageService;
   private final SharePagePrivilegeService sharePagePrivilegeService;
 
@@ -88,7 +92,7 @@ public class SharePageController {
    * @return 생성된 페이지 정보
    */
   @PostMapping("/new")
-  public ApiResponse.Result<Object> createSharePage(
+  public ApiResponse.Result<BlockResponseDTO> createSharePage(
       @AuthenticationPrincipal CustomUserDetails loginUser,
       @RequestBody @Valid SharePageRequestDTO createSharePageRequestDTO,
       Errors errors) {
@@ -106,7 +110,12 @@ public class SharePageController {
     sharePagePrivilegeService.registerPrivilege(
         loginUser.user().getUserId(), generatedPageId, PrivilegeType.EDIT);
 
-    return ApiResponse.success();
+    BlockResponseDTO response =
+        BlockResponseDTO.fromEntity(
+            Objects.requireNonNull(
+                sharePageRepository.findSharePageByObjectId(generatedPageId).orElse(null)));
+
+    return ApiResponse.success(response);
   }
 
   @PutMapping("/{pageId}")
