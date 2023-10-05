@@ -286,7 +286,7 @@ public class SharePageService {
     if (sharePageModifyDTO.title() != null) currentPage.setTitle(sharePageModifyDTO.title());
 
     if (sharePageModifyDTO.description() != null)
-      currentPage.setTitle(sharePageModifyDTO.description());
+      currentPage.setDescription(sharePageModifyDTO.description());
 
     if (sharePageModifyDTO.profileImage() != null) {
       s3StorageService.delete(currentPage.getProfileImageLink());
