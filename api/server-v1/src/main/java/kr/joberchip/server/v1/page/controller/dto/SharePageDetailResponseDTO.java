@@ -8,12 +8,20 @@ import kr.joberchip.core.page.types.PrivilegeType;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 
 public record SharePageDetailResponseDTO(
-    String title, String description, PrivilegeType privilege, Set<BlockResponseDTO> children) {
+    String title,
+    String description,
+    String profileImageLink,
+    PrivilegeType privilege,
+    Set<BlockResponseDTO> children) {
   public static SharePageDetailResponseDTO fromEntityWithPrivilege(
       SharePage sharePage, PrivilegeType privilege) {
     SharePageDetailResponseDTO response =
         new SharePageDetailResponseDTO(
-            sharePage.getTitle(), sharePage.getDescription(), privilege, new LinkedHashSet<>());
+            sharePage.getTitle(),
+            sharePage.getDescription(),
+            sharePage.getProfileImageLink(),
+            privilege,
+            new LinkedHashSet<>());
 
     if (privilege == PrivilegeType.EDIT) {
       addAllChildren(response, sharePage);
@@ -28,7 +36,11 @@ public record SharePageDetailResponseDTO(
   public static SharePageDetailResponseDTO fromEntity(SharePage sharePage) {
     SharePageDetailResponseDTO response =
         new SharePageDetailResponseDTO(
-            sharePage.getTitle(), sharePage.getDescription(), null, new LinkedHashSet<>());
+            sharePage.getTitle(),
+            sharePage.getDescription(),
+            sharePage.getProfileImageLink(),
+            null,
+            new LinkedHashSet<>());
 
     addVisibleChildren(response, sharePage);
 
