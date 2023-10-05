@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityExistsException;
 import kr.joberchip.core.block.TextBlock;
 import kr.joberchip.core.page.SharePage;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.TextBlockDTO;
 import kr.joberchip.server.v1.block.repository.TextBlockRepository;
@@ -22,20 +24,28 @@ public class TextBlockService {
 
   @Transactional
   public BlockResponseDTO createTextBlock(UUID pageId, TextBlockDTO textBlockDTO) {
+
+    SharePage parentPage =
+        sharePageRepository
+            .findById(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+
     TextBlock newTextBlock = textBlockDTO.toEntity();
 
     textBlockRepository.save(newTextBlock);
 
-    SharePage parentPage =
-            sharePageRepository.findById(pageId).orElseThrow(EntityExistsException::new);
-
     parentPage.addTextBlock(newTextBlock);
+
+    log.info(
+        "[TextBlockService] Text Block Created : blockId - {}, content - {}",
+        newTextBlock.getObjectId(),
+        newTextBlock.getContent());
 
     return BlockResponseDTO.fromEntity(newTextBlock);
   }
 
   @Transactional
-  public BlockResponseDTO modifyTextBlock(UUID pageId, UUID blockId, TextBlockDTO textBlockDTO) {
+  public BlockResponseDTO modifyTextBlock(UUID blockId, TextBlockDTO textBlockDTO) {
     TextBlock textBlock =
         textBlockRepository.findById(blockId).orElseThrow(EntityExistsException::new);
 
@@ -49,6 +59,19 @@ public class TextBlockService {
 
   @Transactional
   public void deleteTextBlock(UUID pageId, UUID blockId) {
-    textBlockRepository.deleteById(blockId);
+    SharePage parentPage =
+        sharePageRepository
+            .findById(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+
+    TextBlock textBlock =
+        textBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
+
+    parentPage.getTextBlocks().remove(textBlock);
+    textBlockRepository.delete(textBlock);
+
+    log.info("[TextBlockService] Delete Text block Id - {}", blockId);
   }
 }

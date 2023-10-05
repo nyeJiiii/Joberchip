@@ -13,17 +13,15 @@ import lombok.*;
 public class TextBlock extends BaseObject {
   @Column(name = "content")
   @Lob
-  @Setter
   private String content;
 
-  public static TextBlock of(String content, Integer x, Integer y, Integer w, Integer h, Boolean visible) {
+  public static TextBlock of(String content, Integer x, Integer y, Integer w, Integer h) {
     TextBlock generated = new TextBlock(content);
 
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
-    generated.setVisible(visible);
 
     return generated;
   }
