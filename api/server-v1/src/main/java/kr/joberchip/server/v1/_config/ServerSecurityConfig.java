@@ -7,6 +7,7 @@ import kr.joberchip.server.v1._errors.exceptions.filter.Exception403;
 import kr.joberchip.server.v1._utils.FilterResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -68,26 +69,16 @@ public class ServerSecurityConfig {
         .authorizeRequests(
             expressionInterceptUrlRegistry ->
                 expressionInterceptUrlRegistry
+                    .antMatchers(HttpMethod.GET, "/v1/page/**")
+                    .permitAll()
                     .antMatchers("/v1/user/testTokens", "/v1/user/join", "/v1/user/login")
                     .permitAll()
-                    .antMatchers(
-                        "/v1/page/new",
-                        "/v1/space/**",
-                        "/v1/**/textBlock",
-                        "/v1/**/textBlock/**",
-                        "/v1/**/linkBlock",
-                        "/v1/**/linkBlock/**",
-                        "/v1/**/templateBlock",
-                        "/v1/**/templateBlock/**",
-                        "/v1/**/mapBlock",
-                        "/v1/**/mapBlock/**",
-                        "/v1/**/imageBlock",
-                        "/v1/**/imageBlock/**",
-                        "/v1/**/videoBlock",
-                        "/v1/**/videoBlock/**")
+                    .antMatchers(HttpMethod.POST)
                     .authenticated()
-                    .antMatchers("/v1/page/**")
-                    .permitAll());
+                    .antMatchers(HttpMethod.PUT)
+                    .authenticated()
+                    .antMatchers(HttpMethod.DELETE)
+                    .authenticated());
 
     return http.build();
   }
