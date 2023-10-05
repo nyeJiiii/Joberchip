@@ -54,6 +54,11 @@ public class TextBlockService {
 
     textBlockRepository.save(textBlock);
 
+    log.info(
+        "[TextBlockService] Text Block Updated : content - {}, visible - {}",
+        textBlock.getContent(),
+        textBlock.getVisible());
+
     return BlockResponseDTO.fromEntity(textBlock);
   }
 
