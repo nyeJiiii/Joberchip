@@ -38,4 +38,11 @@ public class ErrorMessage {
   public static final String NO_PRIVILEGE = "해당 권한이 없습니다.";
   public static final String INVALID_PRIVILEGE = "해당 권한이 없습니다.";
   public static final String EDIT_PRIVILEGE_NOT_FOUND = "해당 페이지에 대한 편집 권한이 없습니다.";
+
+  // 비디오 블록 관련
+  public static final String DUPLICATED_LINK_AND_ATTACHED_FILE = "링크와 파일을 동시에 첨부할 수 없습니다.";
+  public static final String INVALID_VIDEO_BLOCK_REQUEST = "링크 또는 파일을 첨부해야 합니다.";
+
+  // 파일 첨부 관련
+  public static final String INVALID_FILE_EXTENSION = "첨부할 수 없는 파일 확장자입니다.";
 }
