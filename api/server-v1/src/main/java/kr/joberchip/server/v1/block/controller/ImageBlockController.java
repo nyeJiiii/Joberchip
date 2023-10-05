@@ -22,9 +22,9 @@ public class ImageBlockController {
 
   @PostMapping
   public ApiResponse.Result<BlockResponseDTO> createImageBlock(
-          @AuthenticationPrincipal CustomUserDetails loginUser,
-          @PathVariable UUID pageId,
-          @RequestBody ImageBlockDTO imageBlockDTO) {
+      @AuthenticationPrincipal CustomUserDetails loginUser,
+      @PathVariable UUID pageId,
+      ImageBlockDTO imageBlockDTO) {
 
     log.info("[ImageBlockController][POST] Current Username : {}", loginUser.user().getUsername());
     log.info("[ImageBlockController][POST] Current Page Id : {}", pageId);
@@ -39,10 +39,10 @@ public class ImageBlockController {
 
   @PutMapping("/{blockId}")
   public ApiResponse.Result<BlockResponseDTO> modifyImageBlock(
-          @AuthenticationPrincipal CustomUserDetails loginUser,
-          @PathVariable UUID pageId,
-          @PathVariable UUID blockId,
-          @RequestBody ImageBlockDTO imageBlockDTO) {
+      @AuthenticationPrincipal CustomUserDetails loginUser,
+      @PathVariable UUID pageId,
+      @PathVariable UUID blockId,
+      ImageBlockDTO imageBlockDTO) {
 
     log.info("[ImageBlockController][PUT] Current Username : {}", loginUser.user().getUsername());
     log.info("[ImageBlockController][PUT] Current Page Id : {}", pageId);
@@ -58,9 +58,9 @@ public class ImageBlockController {
 
   @DeleteMapping("/{blockId}")
   public ApiResponse.Result<Object> deleteImageBlock(
-          @AuthenticationPrincipal CustomUserDetails loginUser,
-          @PathVariable UUID pageId,
-          @PathVariable UUID blockId) {
+      @AuthenticationPrincipal CustomUserDetails loginUser,
+      @PathVariable UUID pageId,
+      @PathVariable UUID blockId) {
 
     log.info("[ImageBlockController][DELETE] Current Username : {}", loginUser.user().getUsername());
     log.info("[ImageBlockController][DELETE] Current Page Id : {}", pageId);
