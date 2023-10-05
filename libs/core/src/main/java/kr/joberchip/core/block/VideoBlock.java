@@ -50,11 +50,14 @@ public class VideoBlock extends BaseObject {
       Integer y,
       Integer w,
       Integer h) {
-    VideoBlock generated = new VideoBlock(title, description);
+
+    VideoBlock generated = new VideoBlock(title, description, videoLink);
+
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
-    return new VideoBlock(title, description, videoLink);
+
+    return generated;
   }
 }
