@@ -10,6 +10,7 @@ import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 public record SharePageDetailResponseDTO(
     String title,
     String description,
+    Boolean visible,
     String profileImageLink,
     PrivilegeType privilege,
     Set<BlockResponseDTO> children) {
@@ -19,6 +20,7 @@ public record SharePageDetailResponseDTO(
         new SharePageDetailResponseDTO(
             sharePage.getTitle(),
             sharePage.getDescription(),
+            sharePage.getVisible(),
             sharePage.getProfileImageLink(),
             privilege,
             new LinkedHashSet<>());
@@ -38,6 +40,7 @@ public record SharePageDetailResponseDTO(
         new SharePageDetailResponseDTO(
             sharePage.getTitle(),
             sharePage.getDescription(),
+            sharePage.getVisible(),
             sharePage.getProfileImageLink(),
             null,
             new LinkedHashSet<>());
