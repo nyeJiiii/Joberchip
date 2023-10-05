@@ -13,6 +13,7 @@ import kr.joberchip.server.v1.storage.service.S3StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -23,6 +24,7 @@ public class VideoBlockService {
   private final SharePageRepository sharePageRepository;
   private final S3StorageService s3StorageService;
 
+  @Transactional
   public BlockResponseDTO createVideoBlock(UUID pageId, VideoBlockDTO videoBlockDTO) {
 
     SharePage parentPage =
@@ -44,6 +46,7 @@ public class VideoBlockService {
     return BlockResponseDTO.fromEntity(videoBlock);
   }
 
+  @Transactional
   public BlockResponseDTO modifyVideoBlock(UUID blockId, VideoBlockDTO videoBlockDTO) {
     VideoBlock videoBlock =
         videoBlockRepository
@@ -53,6 +56,11 @@ public class VideoBlockService {
     if (videoBlockDTO.title() != null) videoBlock.setTitle(videoBlockDTO.title());
 
     if (videoBlockDTO.description() != null) videoBlock.setDescription(videoBlockDTO.description());
+
+    if (videoBlockDTO.videoLink() != null) {
+      s3StorageService.delete(videoBlock.getVideoLink());
+      videoBlock.setVideoLink(videoBlockDTO.videoLink());
+    }
 
     if (videoBlockDTO.attachedVideo() != null) {
       s3StorageService.delete(videoBlock.getVideoLink());
@@ -66,6 +74,7 @@ public class VideoBlockService {
     return BlockResponseDTO.fromEntity(videoBlock);
   }
 
+  @Transactional
   public void deleteVideoBlock(UUID pageId, UUID blockId) {
     SharePage sharePage =
         sharePageRepository

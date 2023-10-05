@@ -42,7 +42,7 @@ public class VideoBlockController {
       @AuthenticationPrincipal CustomUserDetails loginUser,
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      @RequestBody VideoBlockDTO videoBlockRequestDTO) {
+      VideoBlockDTO videoBlockRequestDTO) {
 
     log.info("[TextBlockController] Login User : {}", loginUser);
     log.info("[TextBlockController] Current Page Id : {}", pageId);
