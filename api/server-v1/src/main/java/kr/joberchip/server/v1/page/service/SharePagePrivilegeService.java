@@ -106,10 +106,9 @@ public class SharePagePrivilegeService {
         .orElseThrow(() -> new ApiClientException(ErrorMessage.NO_PRIVILEGE));
 
     log.info(
-        "Privilege Checked : userId - {}, pageId - {}, privilege type - {}",
+        "[SharePagePrivilegeService][checkReadPrivilege] Privilege Checked : userId - {}, pageId - {}",
         userId,
-        pageId,
-        PrivilegeType.READ);
+        pageId);
   }
 
   @Transactional(readOnly = true)
@@ -120,10 +119,9 @@ public class SharePagePrivilegeService {
         .orElseThrow(() -> new ApiClientException(ErrorMessage.NO_PRIVILEGE));
 
     log.info(
-        "Privilege Checked : userId - {}, pageId - {}, privilege type - {}",
+        "[SharePagePrivilegeService][checkEditPrivilege] Privilege Checked : userId - {}, pageId - {}",
         userId,
-        pageId,
-        PrivilegeType.EDIT);
+        pageId);
   }
 
   public void registerGivenPrivilegeForAllSpaceSubPage(
@@ -131,10 +129,10 @@ public class SharePagePrivilegeService {
 
     Long targetUserId = spaceInviteRequestDTO.userId();
 
-    if (userRepository.existsById(targetUserId))
+    if (!userRepository.existsById(targetUserId))
       throw new ApiClientException(ErrorMessage.USER_ENTITY_NOT_FOUND);
 
-    if (spaceRepository.existsById(spaceInviteRequestDTO.spaceId()))
+    if (!spaceRepository.existsById(spaceInviteRequestDTO.spaceId()))
       throw new ApiClientException(ErrorMessage.SPACE_ENTITY_NOT_FOUND);
 
     UUID currentPageId =

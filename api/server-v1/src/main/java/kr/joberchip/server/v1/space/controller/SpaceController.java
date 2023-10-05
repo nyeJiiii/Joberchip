@@ -29,20 +29,19 @@ public class SpaceController {
   @PostMapping("/new")
   public ApiResponse.Result<Object> createSpace(
       @AuthenticationPrincipal CustomUserDetails loginUser) {
-
-    log.info("[SpaceController] loginUser : {}", loginUser);
-
     UUID defaultPageId = sharePageService.createDefaultPage(loginUser.user().getUserId());
 
-    log.info("[SpaceController] Generated Default Page Id : {}", defaultPageId);
-
     sharePagePrivilegeService.registerPrivilege(
-        loginUser.user().getUserId(), defaultPageId, PrivilegeType.EDIT);
+            loginUser.user().getUserId(), defaultPageId, PrivilegeType.EDIT);
 
     UUID generatedSpaceId = spaceService.createSpace(loginUser.user().getUserId(), defaultPageId);
-    log.info("[SpaceController] Generated Space Id : {}", generatedSpaceId);
 
     spaceParticipationInfoService.registerOwnerInfo(loginUser.user().getUserId(), generatedSpaceId);
+
+    log.info("[SpaceController][POST] Create Space - Current Username : {}", loginUser.user().getUsername());
+    log.info("[SpaceController][POST] Create Space - Generated Default Page Id : {}", defaultPageId);
+    log.info("[SpaceController][POST] Create Space - Generated Space Id : {}", generatedSpaceId);
+
 
     return ApiResponse.success();
   }

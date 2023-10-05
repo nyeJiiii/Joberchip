@@ -3,7 +3,7 @@ package kr.joberchip.server.v1.block.controller.dto;
 import java.util.UUID;
 import kr.joberchip.core.block.LinkBlock;
 
-public record LinkBlockRequestDTO(
+public record LinkBlockDTO(
     UUID pageId,
     String title,
     String description,
@@ -15,6 +15,6 @@ public record LinkBlockRequestDTO(
     Boolean visible) {
 
   public LinkBlock toEntity() {
-    return LinkBlock.of(title, description, link, x, y, w, h, visible);
+    return LinkBlock.of(title, description, link, x, y, w, h);
   }
 }

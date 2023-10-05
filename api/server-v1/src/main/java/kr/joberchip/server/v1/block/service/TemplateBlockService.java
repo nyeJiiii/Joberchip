@@ -3,39 +3,31 @@ package kr.joberchip.server.v1.block.service;
 import java.util.UUID;
 import kr.joberchip.core.block.TemplateBlock;
 import kr.joberchip.core.page.SharePage;
-import kr.joberchip.core.page.types.PrivilegeType;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.TemplateBlockDTO;
 import kr.joberchip.server.v1.block.repository.TemplateBlockRepository;
-import kr.joberchip.server.v1.page.repository.SharePagePrivilegeRepository;
 import kr.joberchip.server.v1.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TemplateBlockService {
-  private final SharePagePrivilegeRepository sharePagePrivilegeRepository;
   private final SharePageRepository sharePageRepository;
   private final TemplateBlockRepository templateBlockRepository;
 
-  public BlockResponseDTO createTemplateBlock(
-      Long userId, UUID pageId, TemplateBlockDTO templateBlockDTO) {
-
-    PrivilegeType privilegeType =
-        sharePagePrivilegeRepository
-            .findByUserIdAndSharePageId(userId, pageId)
-            .orElseThrow(() -> new ApiClientException(ErrorMessage.FORBIDDEN))
-            .getPrivilegeType();
+  @Transactional
+  public BlockResponseDTO createTemplateBlock(UUID pageId, TemplateBlockDTO templateBlockDTO) {
 
     SharePage sharePage =
         sharePageRepository
             .findById(pageId)
-            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
 
     TemplateBlock newTemplateBlock = templateBlockDTO.toEntity();
     templateBlockRepository.save(newTemplateBlock);
@@ -44,19 +36,25 @@ public class TemplateBlockService {
     return BlockResponseDTO.fromEntity(newTemplateBlock);
   }
 
-  public BlockResponseDTO modifyTemplateBlock(
-      Long userId, UUID pageId, UUID blockId, TemplateBlockDTO templateBlockDTO) {
+  @Transactional
+  public BlockResponseDTO modifyTemplateBlock(UUID blockId, TemplateBlockDTO templateBlockDTO) {
 
     TemplateBlock templateBlock =
         templateBlockRepository
             .findById(blockId)
             .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
+    if (templateBlockDTO.title() != null) templateBlock.setTitle(templateBlockDTO.title());
+    if (templateBlockDTO.description() != null)
+      templateBlock.setDescription(templateBlockDTO.description());
+    if (templateBlockDTO.visible() != null) templateBlock.setVisible(templateBlockDTO.visible());
 
+    templateBlockRepository.save(templateBlock);
 
-    return null;
+    return BlockResponseDTO.fromEntity(templateBlock);
   }
 
+  @Transactional
   public void deleteTemplateBlock(UUID pageId, UUID blockId) {
     SharePage sharePage =
         sharePageRepository

@@ -1,10 +1,10 @@
 package kr.joberchip.server.v1.block.service;
 
 import java.util.UUID;
-import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.block.MapBlock;
 import kr.joberchip.core.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.MapBlockDTO;
 import kr.joberchip.server.v1.block.repository.MapBlockRepository;
@@ -23,9 +23,12 @@ public class MapBlockService {
   private final SharePageRepository sharePageRepository;
 
   @Transactional
-  public BlockResponseDTO createMapBlock(UUID pageId, MapBlockDTO.Create crateMapBlockDTO) {
+  public BlockResponseDTO createMapBlock(UUID pageId, MapBlockDTO crateMapBlockDTO) {
+
     SharePage parentPage =
-            getParentPage(pageId);
+        sharePageRepository
+            .findSharePageByObjectId(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
 
     MapBlock newMapBlock = crateMapBlockDTO.toEntity();
 
@@ -37,30 +40,17 @@ public class MapBlockService {
     return BlockResponseDTO.fromEntity(newMapBlock);
   }
 
-  private SharePage getParentPage(UUID pageId) {
-    return sharePageRepository
-            .findSharePageByObjectId(pageId)
-            .orElseThrow(EntityNotFoundException::new);
-  }
-
   @Transactional
-  public BlockResponseDTO modifyMapBlock(
-      UUID pageId, UUID blockId, MapBlockDTO.Modify modifyMapBlockDTO) {
+  public BlockResponseDTO modifyMapBlock(UUID blockId, MapBlockDTO modifyMapBlockDTO) {
     MapBlock mapBlock =
         mapBlockRepository
             .findById(blockId)
-            .orElseThrow(
-                () -> {
-                  log.error("존재하지 않는 blockId - blockId: {}", blockId);
-                  return new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND);
-                });
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
-    if (modifyMapBlockDTO.getAddress() != null) mapBlock.setAddress(modifyMapBlockDTO.getAddress());
-    if (modifyMapBlockDTO.getLatitude() != null)
-      mapBlock.setLatitude(modifyMapBlockDTO.getLatitude());
-    if (modifyMapBlockDTO.getLongitude() != null)
-      mapBlock.setLongitude(modifyMapBlockDTO.getLongitude());
-    if (modifyMapBlockDTO.getVisible() != null) mapBlock.setVisible(modifyMapBlockDTO.getVisible());
+    if (modifyMapBlockDTO.address() != null) mapBlock.setAddress(modifyMapBlockDTO.address());
+    if (modifyMapBlockDTO.latitude() != null) mapBlock.setLatitude(modifyMapBlockDTO.latitude());
+    if (modifyMapBlockDTO.longitude() != null) mapBlock.setLongitude(modifyMapBlockDTO.longitude());
+    if (modifyMapBlockDTO.visible() != null) mapBlock.setVisible(modifyMapBlockDTO.visible());
 
     mapBlockRepository.save(mapBlock);
 
@@ -68,7 +58,19 @@ public class MapBlockService {
   }
 
   @Transactional
-  public void deleteMapBlock(UUID blockId) {
-    mapBlockRepository.deleteById(blockId);
+  public void deleteMapBlock(UUID pageId, UUID blockId) {
+    SharePage parentPage =
+        sharePageRepository
+            .findById(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+
+    MapBlock mapBlock =
+        mapBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
+
+    parentPage.getMapBlocks().remove(mapBlock);
+
+    mapBlockRepository.delete(mapBlock);
   }
 }

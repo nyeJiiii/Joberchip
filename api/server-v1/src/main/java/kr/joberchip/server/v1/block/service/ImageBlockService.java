@@ -44,7 +44,7 @@ public class ImageBlockService {
     return BlockResponseDTO.fromEntity(imageBlock);
   }
 
-  public BlockResponseDTO modifyImageBlock(UUID pageId, UUID blockId, ImageBlockDTO imageBlockDTO) {
+  public BlockResponseDTO modifyImageBlock(UUID blockId, ImageBlockDTO imageBlockDTO) {
 
     ImageBlock imageBlock =
         imageBlockRepository.findByObjectId(blockId).orElseThrow(EntityNotFoundException::new);

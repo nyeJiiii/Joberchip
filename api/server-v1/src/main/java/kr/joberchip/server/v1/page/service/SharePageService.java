@@ -178,7 +178,7 @@ public class SharePageService {
       SharePage parent =
           sharePageRepository
               .findById(currentNode.parentId())
-              .orElseThrow(EntityNotFoundException::new);
+                  .orElse(null);
 
       SharePageTreeResponseDTO.PageTreeNode parentNode =
           SharePageTreeResponseDTO.PageTreeNode.of(

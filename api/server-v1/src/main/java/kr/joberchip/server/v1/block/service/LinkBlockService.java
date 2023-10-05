@@ -7,7 +7,7 @@ import kr.joberchip.core.page.SharePage;
 import kr.joberchip.server.v1._errors.ErrorMessage;
 import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
-import kr.joberchip.server.v1.block.controller.dto.LinkBlockRequestDTO;
+import kr.joberchip.server.v1.block.controller.dto.LinkBlockDTO;
 import kr.joberchip.server.v1.block.repository.LinkBlockRepository;
 import kr.joberchip.server.v1.page.repository.SharePageRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class LinkBlockService {
   private final SharePageRepository sharePageRepository;
 
   @Transactional
-  public BlockResponseDTO createLinkBlock(UUID pageId, LinkBlockRequestDTO createLinkBlock) {
+  public BlockResponseDTO createLinkBlock(UUID pageId, LinkBlockDTO createLinkBlock) {
     LinkBlock newLinkBlock = createLinkBlock.toEntity();
     linkBlockRepository.save(newLinkBlock);
 
@@ -36,37 +36,37 @@ public class LinkBlockService {
   }
 
   @Transactional
-  public BlockResponseDTO modifyLinkBlock(UUID pageId, UUID blockId, LinkBlockRequestDTO modifyRequestDTO) {
+  public BlockResponseDTO modifyLinkBlock(UUID blockId, LinkBlockDTO modifyRequestDTO) {
 
-    LinkBlock target =
-        linkBlockRepository.findById(blockId).orElseThrow(EntityNotFoundException::new);
+    LinkBlock linkBlock =
+        linkBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
-    if (modifyRequestDTO.title() != null) target.modifyTitle(modifyRequestDTO.title());
-
+    if (modifyRequestDTO.title() != null) linkBlock.setTitle(modifyRequestDTO.title());
     if (modifyRequestDTO.description() != null)
-      target.modifyDescription(modifyRequestDTO.description());
+      linkBlock.setDescription(modifyRequestDTO.description());
+    if (modifyRequestDTO.link() != null) linkBlock.setLink(modifyRequestDTO.link());
+    if (modifyRequestDTO.visible() != null) linkBlock.setVisible(modifyRequestDTO.visible());
 
-    if (modifyRequestDTO.link() != null) target.modifyLink(modifyRequestDTO.link());
+    linkBlockRepository.save(linkBlock);
 
-    if (modifyRequestDTO.visible() != null) target.setVisible(modifyRequestDTO.visible());
-
-    linkBlockRepository.save(target);
-
-    return BlockResponseDTO.fromEntity(target);
+    return BlockResponseDTO.fromEntity(linkBlock);
   }
 
+  @Transactional
   public void deleteLinkBlock(UUID pageId, UUID blockId) {
+    SharePage parentPage =
+        sharePageRepository
+            .findSharePageByObjectId(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
+
     LinkBlock block =
         linkBlockRepository
             .findById(blockId)
-            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
-    SharePage parent =
-        sharePageRepository
-            .findSharePageByObjectId(pageId)
-            .orElseThrow(EntityNotFoundException::new);
-
-    parent.getLinkBlocks().remove(block);
+    parentPage.getLinkBlocks().remove(block);
 
     linkBlockRepository.delete(block);
   }

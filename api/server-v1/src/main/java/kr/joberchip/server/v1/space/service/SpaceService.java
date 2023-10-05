@@ -48,11 +48,13 @@ public class SpaceService {
     SharePage defaultSharePage =
         sharePageRepository
             .findSharePageByObjectId(defaultPageId)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SHARE_PAGE_ENTITY_NOT_FOUND));
 
     generatedSpace.setMainPage(defaultSharePage);
-
     spaceRepository.save(generatedSpace);
+
+    defaultSharePage.setParentObjectId(generatedSpace.getSpaceId());
+    sharePageRepository.save(defaultSharePage);
 
     return generatedSpace.getSpaceId();
   }

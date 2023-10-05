@@ -73,6 +73,8 @@ public class SharePageController {
   public ApiResponse.Result<SharePageTreeResponseDTO.PageTreeNode> pageBreadCrumbBar(
       @PathVariable UUID pageId) {
 
+    log.info("[SharePageController][GET] BreadCrumbBar for Page Id : {}", pageId);
+
     SharePageTreeResponseDTO.PageTreeNode response = sharePageService.getPageBreadCrumbBar(pageId);
 
     return ApiResponse.success(response);
@@ -86,13 +88,13 @@ public class SharePageController {
    * @return 생성된 페이지 정보
    */
   @PostMapping("/new")
-  public ApiResponse.Result<SharePageProfileImageResponseDTO> createSharePage(
+  public ApiResponse.Result<Object> createSharePage(
       @AuthenticationPrincipal CustomUserDetails loginUser,
       @RequestBody @Valid SharePageRequestDTO createSharePageRequestDTO,
       Errors errors) {
 
-    log.info("[SharePageController] CustomUserDetails : {}", loginUser);
-    log.info("[SharePageController] SharePageRequestDTO : {}", createSharePageRequestDTO);
+    log.info("[SharePageController][POST] Current Username : {}", loginUser.user().getUsername());
+    log.info("[SharePageController][POST] {}", createSharePageRequestDTO);
 
     // 하위 페이지를 생성하기 위해서는 선택된 페이지에 대한 수정 권한이 있어야 함.
     sharePagePrivilegeService.checkEditPrivilege(
@@ -139,8 +141,9 @@ public class SharePageController {
   }
 
   @PutMapping("/{pageId}/privilege")
-  public ApiResponse.Result<SharePagePrivilegeDTO> modifyPrivilege(
+  public ApiResponse.Result<Object> modifyPrivilege(
       @AuthenticationPrincipal CustomUserDetails loginUser,
+      @PathVariable UUID pageId,
       @RequestBody SharePagePrivilegeDTO sharePagePrivilegeDTO,
       Errors errors) {
 
