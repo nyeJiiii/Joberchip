@@ -49,8 +49,8 @@ public class TextBlockService {
     TextBlock textBlock =
         textBlockRepository.findById(blockId).orElseThrow(EntityExistsException::new);
 
-    if (textBlockDTO.content() != null) textBlock.setContent(textBlock.getContent());
-    if (textBlockDTO.visible() != null) textBlock.setVisible(textBlock.getVisible());
+    if (textBlockDTO.content() != null) textBlock.setContent(textBlockDTO.content());
+    if (textBlockDTO.visible() != null) textBlock.setVisible(textBlockDTO.visible());
 
     textBlockRepository.save(textBlock);
 
