@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.block.ImageBlock;
 import kr.joberchip.core.page.SharePage;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.ImageBlockDTO;
 import kr.joberchip.server.v1.block.repository.ImageBlockRepository;
@@ -24,12 +26,14 @@ public class ImageBlockService {
 
   @Transactional
   public BlockResponseDTO createImageBlock(UUID pageId, ImageBlockDTO imageBlockDTO) {
+    log.info("ImageBlockDTO : {}", imageBlockDTO);
 
     SharePage parentPage =
         sharePageRepository.findById(pageId).orElseThrow(EntityNotFoundException::new);
 
     ImageBlock imageBlock = imageBlockDTO.toEntity();
     String link = s3StorageService.store(imageBlockDTO.attachedImage());
+    log.info("link : {}", link);
 
     imageBlock.setImageLink(link);
 
@@ -64,12 +68,19 @@ public class ImageBlockService {
     SharePage sharePage =
         sharePageRepository
             .findSharePageByObjectId(pageId)
-            .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
 
-    ImageBlock imageBlock = imageBlockRepository.findByObjectId(blockId).orElseThrow(EntityNotFoundException::new);
+    log.info("[ImageBlockController] Current SharePage : {}", sharePage);
+
+    ImageBlock imageBlock =
+        imageBlockRepository
+            .findByObjectId(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
+
     s3StorageService.delete(imageBlock.getImageLink());
 
-    imageBlockRepository.deleteById(blockId);
     sharePage.getImageBlocks().remove(imageBlock);
+
+    imageBlockRepository.delete(imageBlock);
   }
 }

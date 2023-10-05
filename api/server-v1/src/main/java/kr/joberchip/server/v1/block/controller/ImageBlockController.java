@@ -30,6 +30,7 @@ public class ImageBlockController {
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
       ImageBlockDTO imageBlockDTO) {
+
     BlockResponseDTO response = imageBlockService.modifyImageBlock(pageId, blockId, imageBlockDTO);
 
     return ResponseEntity.ok(ApiResponse.success(response));
@@ -38,6 +39,7 @@ public class ImageBlockController {
   @DeleteMapping("/{blockId}")
   public ResponseEntity<ApiResponse.Result<Object>> deleteImageBlock(
       @PathVariable UUID pageId, @PathVariable UUID blockId) {
+
     imageBlockService.deleteImageBlock(pageId, blockId);
 
     return ResponseEntity.ok(ApiResponse.success());

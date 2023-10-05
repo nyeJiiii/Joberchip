@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.block.VideoBlock;
 import kr.joberchip.core.page.SharePage;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.VideoBlockDTO;
 import kr.joberchip.server.v1.block.repository.VideoBlockRepository;
@@ -58,7 +60,25 @@ public class VideoBlockService {
     return BlockResponseDTO.fromEntity(videoBlock);
   }
 
-  public void deleteVideoBlock(UUID pageId, UUID blockId) {}
+  public void deleteVideoBlock(UUID pageId, UUID blockId) {
+    SharePage sharePage =
+        sharePageRepository
+            .findSharePageByObjectId(pageId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
+
+    log.info("[ImageBlockController] Current SharePage : {}", sharePage);
+
+    VideoBlock videoBlock =
+        videoBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
+
+    s3StorageService.delete(videoBlock.getVideoLink());
+
+    sharePage.getVideoBlocks().remove(videoBlock);
+
+    videoBlockRepository.delete(videoBlock);
+  }
 
   // 영상 업로드
   //  public void uploadVideo(VideoBlockRequestDTO videoBlockRequestDTO) {

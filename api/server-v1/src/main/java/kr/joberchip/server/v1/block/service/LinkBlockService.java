@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 import kr.joberchip.core.block.LinkBlock;
 import kr.joberchip.core.page.SharePage;
+import kr.joberchip.server.v1._errors.ErrorMessage;
+import kr.joberchip.server.v1._errors.exceptions.ApiClientException;
 import kr.joberchip.server.v1.block.controller.dto.BlockResponseDTO;
 import kr.joberchip.server.v1.block.controller.dto.LinkBlockRequestDTO;
 import kr.joberchip.server.v1.block.repository.LinkBlockRepository;
@@ -55,7 +57,9 @@ public class LinkBlockService {
 
   public void deleteLinkBlock(UUID pageId, UUID blockId) {
     LinkBlock block =
-        linkBlockRepository.findById(blockId).orElseThrow(EntityNotFoundException::new);
+        linkBlockRepository
+            .findById(blockId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND));
 
     SharePage parent =
         sharePageRepository
