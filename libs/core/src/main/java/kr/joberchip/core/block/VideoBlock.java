@@ -31,33 +31,30 @@ public class VideoBlock extends BaseObject {
   }
 
   public static VideoBlock of(
-      String title, String description, Integer x, Integer y, Integer w, Integer h, Boolean visible) {
+      String title, String description, Integer x, Integer y, Integer w, Integer h) {
     VideoBlock generated = new VideoBlock(title, description);
 
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
-    generated.setVisible(visible);
 
     return generated;
   }
 
   public static VideoBlock of(
-          String title,
-          String description,
-          String videoLink,
-          Integer x,
-          Integer y,
-          Integer w,
-          Integer h,
-          Boolean visible) {
+      String title,
+      String description,
+      String videoLink,
+      Integer x,
+      Integer y,
+      Integer w,
+      Integer h) {
     VideoBlock generated = new VideoBlock(title, description);
     generated.setX(x);
     generated.setY(y);
     generated.setW(w);
     generated.setH(h);
-    generated.setVisible(visible);
     return new VideoBlock(title, description, videoLink);
   }
 }

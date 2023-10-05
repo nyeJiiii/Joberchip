@@ -17,8 +17,8 @@ public record VideoBlockDTO(
     @RequestParam Boolean visible) {
 
   public VideoBlock toEntity() {
-    if ("".equals(videoLink)) return VideoBlock.of(title, description, x, y, w, h, visible);
+    if (videoLink == null || "".equalsIgnoreCase(videoLink)) return VideoBlock.of(title, description, x, y, w, h);
 
-    return VideoBlock.of(title, description, videoLink, x, y, w, h, visible);
+    return VideoBlock.of(title, description, videoLink, x, y, w, h);
   }
 }
