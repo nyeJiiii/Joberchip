@@ -5,15 +5,13 @@ import java.util.Set;
 import javax.persistence.*;
 import kr.joberchip.core.BaseObject;
 import kr.joberchip.core.block.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "share_page_tb")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@Setter
 @Getter
 public class SharePage extends BaseObject {
   @Column(name = "title")
@@ -59,15 +57,22 @@ public class SharePage extends BaseObject {
 
   public static SharePage of(
       String title, String description, Integer x, Integer y, Integer w, Integer h) {
-
     SharePage generated = new SharePage(title, description);
 
     generated.setX(x);
     generated.setY(y);
-    generated.setX(w);
-    generated.setX(h);
+    generated.setW(w);
+    generated.setH(h);
 
     return generated;
+  }
+
+  @PrePersist
+  public void setImageLink() {
+    if (this.profileImageLink == null) {
+      this.profileImageLink =
+          "https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png";
+    }
   }
 
   public static SharePage of(String title, String description) {
