@@ -64,6 +64,13 @@ public record SharePageDetailResponseDTO(
           .forEach(response.children::add);
     }
 
+    if (sharePage.getMapBlocks() != null) {
+      sharePage.getMapBlocks().stream()
+          .filter(BaseObject::getVisible)
+          .map(BlockResponseDTO::fromEntity)
+          .forEach(response.children::add);
+    }
+
     if (sharePage.getImageBlocks() != null) {
       sharePage.getImageBlocks().stream()
           .filter(BaseObject::getVisible)
@@ -100,6 +107,12 @@ public record SharePageDetailResponseDTO(
 
     if (sharePage.getLinkBlocks() != null) {
       sharePage.getLinkBlocks().stream()
+          .map(BlockResponseDTO::fromEntity)
+          .forEach(response.children::add);
+    }
+
+    if (sharePage.getMapBlocks() != null) {
+      sharePage.getMapBlocks().stream()
           .map(BlockResponseDTO::fromEntity)
           .forEach(response.children::add);
     }

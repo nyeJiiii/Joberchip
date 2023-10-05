@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SharePageService {
+  private final MapBlockRepository mapBlockRepository;
   private final VideoBlockRepository videoBlockRepository;
   private final ImageBlockRepository imageBlockRepository;
   private final TemplateBlockRepository templateBlockRepository;
@@ -242,6 +243,18 @@ public class SharePageService {
                             templateBlock.setW(blockDTO.w());
                             templateBlock.setH(blockDTO.h());
                             templateBlockRepository.save(templateBlock);
+                          });
+                }
+                case MAP -> {
+                  mapBlockRepository
+                      .findById(blockDTO.blockId())
+                      .ifPresent(
+                          mapBlock -> {
+                            mapBlock.setX(blockDTO.x());
+                            mapBlock.setY(blockDTO.y());
+                            mapBlock.setW(blockDTO.w());
+                            mapBlock.setH(blockDTO.h());
+                            mapBlockRepository.save(mapBlock);
                           });
                 }
                 case IMAGE -> {
