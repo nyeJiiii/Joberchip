@@ -27,6 +27,11 @@ public class User {
   @Column(nullable = false)
   private String nickname;
 
+  @Column(name = "profile_image_link")
+  @Lob
+  @Setter
+  private String profileImageLink;
+
   @Builder.Default private String userRoles = "ROLE_USER";
 
   @PrePersist
