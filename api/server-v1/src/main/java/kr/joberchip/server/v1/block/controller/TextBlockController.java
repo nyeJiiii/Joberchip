@@ -41,7 +41,8 @@ public class TextBlockController {
       @AuthenticationPrincipal CustomUserDetails loginUser,
       @PathVariable UUID pageId,
       @PathVariable UUID blockId,
-      TextBlockDTO textBlockDTO) {
+      @RequestBody TextBlockDTO textBlockDTO) {
+
     log.info("[TextBlockController] Login User : {}", loginUser);
     log.info("[TextBlockController] Current Page Id : {}", pageId);
 
