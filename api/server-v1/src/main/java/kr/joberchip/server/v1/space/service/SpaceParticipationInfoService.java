@@ -68,7 +68,7 @@ public class SpaceParticipationInfoService {
                       ParticipationType.PARTICIPANT));
             });
 
-    log.info("Invitation registered : {}", spaceInviteRequestDTO);
+    log.info("[SpaceParticipationInfoService] Invitation registered : {}", spaceInviteRequestDTO);
   }
 
   @Transactional
@@ -121,6 +121,9 @@ public class SpaceParticipationInfoService {
       throw new ApiClientException(ErrorMessage.NOT_SPACE_OWNER);
     }
 
-    log.info("Participation Type checked : userId - {}, spaceId - {}", userId, spaceId);
+    log.info(
+        "[SpaceParticipationInfoService] Participation Type checked : userId - {}, spaceId - {}",
+        userId,
+        spaceId);
   }
 }
