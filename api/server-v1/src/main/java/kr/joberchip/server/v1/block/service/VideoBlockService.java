@@ -26,6 +26,11 @@ public class VideoBlockService {
 
   @Transactional
   public BlockResponseDTO createVideoBlock(UUID pageId, VideoBlockDTO videoBlockDTO) {
+    if (videoBlockDTO.videoLink() == null && videoBlockDTO.attachedVideo() == null)
+      throw new ApiClientException(ErrorMessage.INVALID_VIDEO_BLOCK_REQUEST);
+
+    if (videoBlockDTO.videoLink() != null && videoBlockDTO.attachedVideo() != null)
+      throw new ApiClientException(ErrorMessage.DUPLICATED_LINK_AND_ATTACHED_FILE);
 
     SharePage parentPage =
         sharePageRepository
@@ -48,13 +53,18 @@ public class VideoBlockService {
 
   @Transactional
   public BlockResponseDTO modifyVideoBlock(UUID blockId, VideoBlockDTO videoBlockDTO) {
+    if (videoBlockDTO.videoLink() == null && videoBlockDTO.attachedVideo() == null)
+      throw new ApiClientException(ErrorMessage.INVALID_VIDEO_BLOCK_REQUEST);
+
+    if (videoBlockDTO.videoLink() != null && videoBlockDTO.attachedVideo() != null)
+      throw new ApiClientException(ErrorMessage.DUPLICATED_LINK_AND_ATTACHED_FILE);
+
     VideoBlock videoBlock =
         videoBlockRepository
             .findById(blockId)
             .orElseThrow(() -> new ApiClientException(ErrorMessage.BLOCK_ENTITY_NOT_FOUND));
 
     if (videoBlockDTO.title() != null) videoBlock.setTitle(videoBlockDTO.title());
-
     if (videoBlockDTO.description() != null) videoBlock.setDescription(videoBlockDTO.description());
 
     if (videoBlockDTO.videoLink() != null) {
