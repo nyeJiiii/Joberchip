@@ -168,40 +168,45 @@
 ### 2. 시스템 아키텍쳐
 ### 3. 패키지 구조
 ```markdown
-📦 joberchip
-├─ api 
-│  ├─ auth
-│  │  └─ src
-│  │     └─ main
-│  │        └─ java
-│  │           └─ kr
-│  │              └─ joberchip
-│  │                 └─ auth
-│  │                    └─ JCAuthApplication
-│  └─ server
-│     └─ src
-│        └─ main
-│           └─ java
-│              └─ kr
-│                 └─ joberchip
-│                    └─ server
-│                       ├─ _config
-│                       ├─ _utils
-│                       ├─ space
-│                       └─ JCServerApplication
-├─ docker
-└─ libs
-   └─ core
+📦 joberchip-be
+└─ api
+   └─ server-v1
       └─ src
-         └─ main
-            └─ java
-               └─ kr
-                  └─ joberchip
-                     ├─ file
-                     ├─ space
-                     │  ├─ block
-                     │  └─ page
-                     └─ user
+         ├─ main
+         │  ├─ java.kr.joberchip.server.v1
+         │  │  ├─ _config
+         │  │  │  └─ security
+         │  │  ├─ _errors
+         │  │  │  └─ exceptions
+         │  │  ├─ _utils
+         │  │  ├─ block
+         │  │  │  ├─ controller
+         │  │  │  │  └─ dto
+         │  │  │  ├─ repository
+         │  │  │  └─ service
+         │  │  ├─ page
+         │  │  │  ├─ controller
+         │  │  │  │  └─ dto
+         │  │  │  ├─ repository
+         │  │  │  └─ service
+         │  │  ├─ space
+         │  │  │  ├─ controller
+         │  │  │  │  └─ dto
+         │  │  │  ├─ repository
+         │  │  │  └─ service
+         │  │  ├─ storage
+         │  │  ├─ user
+         │  │  │  ├─ controller
+         │  │  │  ├─ repository
+         │  │  │  └─ service
+         │  │  └─ JCServerApplication.java
+         │  └─ resource
+         └─ lib
+            ├─ block
+            │  └─ ImageBlock.java
+            ├─ BaseEntit
+            ├─ BaseObject.java
+            └─ OnScreenLocation.java
 ```
 <br></br>
 
