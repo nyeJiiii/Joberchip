@@ -207,7 +207,6 @@
 
 ## 📝 API 명세서
 <p>
-<img width="" alt="" src="">
-<img width="" alt="" src="">
-
+<img width="700" alt="api명세1" src="https://github.com/atsunsetree/joberchip-be/assets/128345842/9472ee2f-c135-4227-9608-62aa3373cf7e">
+<img width="700" alt="api명세2" src="https://github.com/atsunsetree/joberchip-be/assets/128345842/61e86356-c0eb-4c5f-a11f-7eb3fa4076c3">
 </p>
