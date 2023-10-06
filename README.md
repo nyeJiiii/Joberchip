@@ -1,7 +1,7 @@
+<div align=center>
+
 # [🧋자버칩프라푸치노 사이트🧋](http://ec2-34-228-10-85.compute-1.amazonaws.com/)
 **``` 임시 로그아웃 버튼을 누르면 새로운 User로 작성이 가능합니다 ```** <br>
-
-<div align=left>
 
 <img height="300" src="https://github.com/atsunsetree/joberchip-be/assets/128345842/02fd1980-6e18-4863-b148-b053bfc101ef"></img>
 
@@ -19,7 +19,7 @@
 > **개요** : 기업(Jober) 측으로부터 프로젝트 요구사항을 받아 공유페이지를 기능 개선했습니다. <br/>
 > **기간** : 2023. 09. 18. ~ 2023. 10. 06. <br/>
 > **백엔드 요구사항** : <br/>
->  <img width="300" src="https://github.com/atsunsetree/joberchip-be/assets/128345842/31519597-c794-45e0-b125-c902b60bc1c6"> <br/>
+>  <img width="450" src="https://github.com/atsunsetree/joberchip-be/assets/128345842/31519597-c794-45e0-b125-c902b60bc1c6"> <br/>
 > **기타** : 패스트캠퍼스 부트캠프의 PM&UXUI&FE&BE 협업으로 진행된 기업연계 파이널 프로젝트입니다. <br><br/>
 
 
@@ -34,12 +34,12 @@
 **BACK-END**
 |[신용호](https://github.com/gdtknight)(👑)|[김용원](https://github.com/Horaiz-UQ)|[박장희](https://github.com/jeanparkk)|[최해솔](https://github.com/atsunsetree)|[한혜지](https://github.com/nyeJiiii)|
 |:---:|:---:|:---:|:---:|:---:|
-|<a href="https://github.com/gdtknight"><img src="https://avatars.githubusercontent.com/u/115003898?v=4" width=100px alt="신용호">|<a href="https://github.com/Horaiz-UQ"><img src="https://avatars.githubusercontent.com/u/116620881?v=4" width=100px alt="김용원">|<a href="https://github.com/jeanparkk"><img src="https://avatars.githubusercontent.com/u/119830820?v=4" width=100px alt="박장희">|<a href="https://github.com/atsunsetree"><img src="https://avatars.githubusercontent.com/u/128345842?v=4" width=100px alt="최해솔">|<a href="https://github.com/nyeJiiii"><img src="https://avatars.githubusercontent.com/u/128347921?v=4" width=100px alt="한혜지">|
+|<a href="https://github.com/gdtknight"><img src="https://avatars.githubusercontent.com/u/115003898?v=4" width=150px alt="신용호">|<a href="https://github.com/Horaiz-UQ"><img src="https://avatars.githubusercontent.com/u/116620881?v=4" width=150px alt="김용원">|<a href="https://github.com/jeanparkk"><img src="https://avatars.githubusercontent.com/u/119830820?v=4" width=150px alt="박장희">|<a href="https://github.com/atsunsetree"><img src="https://avatars.githubusercontent.com/u/128345842?v=4" width=150px alt="최해솔">|<a href="https://github.com/nyeJiiii"><img src="https://avatars.githubusercontent.com/u/128347921?v=4" width=150px alt="한혜지">|
 
 **FRONT-END**
 |[정태욱](https://github.com/peacepiece7)(👑)|[김다슬](https://github.com/7581058-UQ)|[박철민](https://github.com/DICEPT)|[백지욱](https://github.com/atsunsetree)|[주하림](https://github.com/nyeJiiii)|
 |:---:|:---:|:---:|:---:|:---:|
-|<a href="https://github.com/gdtknight"><img src="https://avatars.githubusercontent.com/u/73880776?v=4" width=100px alt="정태욱">|<a href="https://github.com/Horaiz-UQ"><img src="https://avatars.githubusercontent.com/u/100559990?v=4" width=100px alt="김다슬">|<a href="https://github.com/DICEPT"><img src="https://avatars.githubusercontent.com/u/106785596?v=4" width=100px alt="박철민">|<a href="https://github.com/beakjiuk"><img src="https://avatars.githubusercontent.com/u/83908991?v=4" width=100px alt="백지욱">|<a href="https://github.com/wngkfla01"><img src="https://avatars.githubusercontent.com/u/64509945?v=4" width=100px alt="주하림">|
+|<a href="https://github.com/gdtknight"><img src="https://avatars.githubusercontent.com/u/73880776?v=4" width=150px alt="정태욱">|<a href="https://github.com/Horaiz-UQ"><img src="https://avatars.githubusercontent.com/u/100559990?v=4" width=150px alt="김다슬">|<a href="https://github.com/DICEPT"><img src="https://avatars.githubusercontent.com/u/106785596?v=4" width=150px alt="박철민">|<a href="https://github.com/beakjiuk"><img src="https://avatars.githubusercontent.com/u/83908991?v=4" width=150px alt="백지욱">|<a href="https://github.com/wngkfla01"><img src="https://avatars.githubusercontent.com/u/64509945?v=4" width=150px alt="주하림">|
 
 <br></br>
 
