@@ -2,6 +2,7 @@ package kr.joberchip.server.v1.block.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.UUID;
+import javax.persistence.Lob;
 import kr.joberchip.core.block.*;
 import kr.joberchip.core.page.SharePage;
 import kr.joberchip.server.v1._utils.BlockType;
@@ -13,7 +14,7 @@ public record BlockResponseDTO(
     BlockType type,
     String title,
     String description,
-    String src,
+    @Lob String src,
     Integer x,
     Integer y,
     Integer w,

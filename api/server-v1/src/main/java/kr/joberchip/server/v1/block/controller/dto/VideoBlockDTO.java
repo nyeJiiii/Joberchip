@@ -4,10 +4,12 @@ import kr.joberchip.core.block.VideoBlock;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Lob;
+
 public record VideoBlockDTO(
     @RequestPart String title,
     @RequestPart String description,
-    @RequestPart String videoLink,
+    @RequestPart @Lob String videoLink,
     @RequestPart MultipartFile attachedVideo,
     @RequestPart Integer x,
     @RequestPart Integer y,
