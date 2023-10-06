@@ -175,10 +175,7 @@ public class SharePageService {
             current.getParentObjectId(), current.getObjectId(), current.getTitle());
 
     while (sharePageRepository.existsById(currentNode.parentId())) {
-      SharePage parent =
-          sharePageRepository
-              .findById(currentNode.parentId())
-                  .orElse(null);
+      SharePage parent = sharePageRepository.findById(currentNode.parentId()).orElse(null);
 
       SharePageTreeResponseDTO.PageTreeNode parentNode =
           SharePageTreeResponseDTO.PageTreeNode.of(
@@ -320,21 +317,29 @@ public class SharePageService {
 
   @Transactional
   public void delete(UUID pageId) {
+
+    // 대상 페이지 조회
     Optional<SharePage> optionalSharePage = sharePageRepository.findSharePageByObjectId(pageId);
+
     if (optionalSharePage.isPresent()) {
-      Set<SharePage> children = optionalSharePage.get().getChildPages();
-      children.forEach(child -> delete(child.getObjectId()));
-      if (optionalSharePage.get().getProfileImageLink() != null
-          && optionalSharePage
-              .get()
-              .getProfileImageLink()
-              .equals("https://joberchip-s3.s3.ap-northeast-2.amazonaws.com/default_profile.png")) {
+
+      // 하위 페이지 존재시 경우 재귀 호출
+      optionalSharePage.get().getChildPages().forEach(child -> delete(child.getObjectId()));
+
+      if (optionalSharePage.get().getProfileImageLink() != null) {
+        String profileImageLink = optionalSharePage.get().getProfileImageLink();
+        String fileName =
+            profileImageLink.substring(
+                profileImageLink.lastIndexOf("/") + 1, profileImageLink.lastIndexOf("."));
+
+        // 페이지 프로필 이미지가 디폴트 이미지가 아닌 경우 해당 프로필 이미지 삭제
+        if (!fileName.contains("default")) {
+          s3StorageService.delete(optionalSharePage.get().getProfileImageLink());
+        }
+
+        // 페이지 및 권한 정보 모두 삭제
         sharePageRepository.deleteById(pageId);
-      } else if (optionalSharePage.get().getProfileImageLink() == null) {
-        sharePageRepository.deleteById(pageId);
-      } else {
-        s3StorageService.delete(optionalSharePage.get().getProfileImageLink());
-        sharePageRepository.deleteById(pageId);
+        sharePagePrivilegeRepository.deleteAllBySharePageId(pageId);
       }
     }
 

@@ -83,7 +83,7 @@ public class SpaceService {
   @Transactional
   public void deleteSpace(UUID spaceId) {
 
-    spaceParticipationInfoRepository.deleteBySpaceId(spaceId);
+    spaceRepository.deleteById(spaceId);
 
     log.info("Deleted Space Id : {}", spaceId);
   }
@@ -131,5 +131,13 @@ public class SpaceService {
       log.info(ene.getMessage());
       throw new ApiClientException(ErrorMessage.ENTITY_NOT_FOUND);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public SpaceInfoDTO getSpaceInfo(UUID spaceId) {
+    return SpaceInfoDTO.fromEntity(
+        spaceRepository
+            .findById(spaceId)
+            .orElseThrow(() -> new ApiClientException(ErrorMessage.SPACE_ENTITY_NOT_FOUND)));
   }
 }

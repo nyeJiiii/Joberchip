@@ -38,18 +38,20 @@ public class SharePageController {
   public ApiResponse.Result<SharePageDetailResponseDTO> pageDetails(
       @AuthenticationPrincipal CustomUserDetails loginUser, @PathVariable UUID pageId) {
 
-    log.info("[SharePageController] CustomUserDetails : {}", loginUser);
-    log.info("[SharePageController] pageId: {}", pageId);
-
     if (loginUser == null) {
+      log.info("[SharePageController][GET] Anonymous user");
+      log.info("[SharePageController][GET] Target Page Id - {}", pageId);
+
       SharePageDetailResponseDTO response = sharePageService.getDetails(pageId);
+
       return ApiResponse.success(response);
     }
 
+    log.info("[SharePageController][GET] Current username - {}", loginUser.getUsername());
+    log.info("[SharePageController][GET] Target Page Id - {}", pageId);
+
     SharePageDetailResponseDTO response =
         sharePageService.getDetails(loginUser.user().getUserId(), pageId);
-
-    log.info("[SharePageController] response : {}", response);
 
     return ApiResponse.success(response);
   }
@@ -60,13 +62,13 @@ public class SharePageController {
       @PathVariable UUID pageId,
       @RequestBody MoveBlockDTO moveBlockDTO) {
 
-    log.info("[SharePageController] CustomUserDetails : {}", loginUser);
-    log.info("[SharePageController] pageId: {}", pageId);
+    log.info("[SharePageController][POST] Move Blocks : Current username - {}", loginUser.getUsername());
+    log.info("[SharePageController][POST] Move Blocks : Target Page Id - {}", pageId);
+    log.info("[SharePageController][POST] Move Blocks : {}", moveBlockDTO);
 
     sharePagePrivilegeService.checkPrivilege(
         loginUser.user().getUserId(), pageId, PrivilegeType.EDIT);
 
-    log.info("Blocks : {}", moveBlockDTO);
 
     sharePageService.moveBlocks(moveBlockDTO);
 
@@ -77,7 +79,7 @@ public class SharePageController {
   public ApiResponse.Result<SharePageTreeResponseDTO.PageTreeNode> pageBreadCrumbBar(
       @PathVariable UUID pageId) {
 
-    log.info("[SharePageController][GET] BreadCrumbBar for Page Id : {}", pageId);
+    log.info("[SharePageController][GET] breadCrumbBar : Target Page Id - {}", pageId);
 
     SharePageTreeResponseDTO.PageTreeNode response = sharePageService.getPageBreadCrumbBar(pageId);
 
@@ -97,15 +99,15 @@ public class SharePageController {
       @RequestBody @Valid SharePageRequestDTO createSharePageRequestDTO,
       Errors errors) {
 
-    log.info("[SharePageController][POST] Current Username : {}", loginUser.user().getUsername());
-    log.info("[SharePageController][POST] {}", createSharePageRequestDTO);
+    log.info("[SharePageController][POST] Create SharePage : Current Username - {}", loginUser.user().getUsername());
+    log.info("[SharePageController][POST] Create SharePage : {}", createSharePageRequestDTO);
 
     // 하위 페이지를 생성하기 위해서는 선택된 페이지에 대한 수정 권한이 있어야 함.
     sharePagePrivilegeService.checkEditPrivilege(
         loginUser.user().getUserId(), createSharePageRequestDTO.parentPageId());
 
     UUID generatedPageId = sharePageService.create(createSharePageRequestDTO);
-    log.info("[SharePageController] Generated SharePageId : {}", generatedPageId);
+    log.info("[SharePageController][POST] Create SharePage : Generated SharePage Id - {}", generatedPageId);
 
     sharePagePrivilegeService.registerPrivilege(
         loginUser.user().getUserId(), generatedPageId, PrivilegeType.EDIT);

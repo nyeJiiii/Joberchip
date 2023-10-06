@@ -89,10 +89,9 @@ public class SpaceParticipationInfoService {
     }
 
     log.info(
-        "Participation Info : userId - {}, spaceId - {}, participationType - {}",
+        "[SpaceParticipationInfoService] OWNER checked : userId - {}, spaceId - {}",
         userId,
-        spaceId,
-        participationType);
+        spaceId);
   }
 
   @Transactional(readOnly = true)
@@ -106,6 +105,8 @@ public class SpaceParticipationInfoService {
     if (participationType == ParticipationType.DEFAULT) {
       throw new ApiClientException(ErrorMessage.DEFAULT_SPACE_CANNOT_REMOVE);
     }
+
+    log.info("[SpaceParticipationInfoService] not default space - {}", spaceId);
   }
 
   @Transactional(readOnly = true)
@@ -122,8 +123,9 @@ public class SpaceParticipationInfoService {
     }
 
     log.info(
-        "[SpaceParticipationInfoService] Participation Type checked : userId - {}, spaceId - {}",
+        "[SpaceParticipationInfoService] Participation Type checked : userId - {}, spaceId - {}, participation type - {}",
         userId,
-        spaceId);
+        spaceId,
+        participationType);
   }
 }
