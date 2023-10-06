@@ -148,6 +148,7 @@ public class SharePageService {
     return rootNode;
   }
 
+  @Transactional
   public UUID createDefaultPage(Long userId) {
     User user =
         userRepository
@@ -274,6 +275,7 @@ public class SharePageService {
             });
   }
 
+  @Transactional
   public SharePageDetailResponseDTO modify(UUID pageId, SharePageModifyDTO sharePageModifyDTO) {
     SharePage currentPage =
         sharePageRepository
@@ -286,7 +288,15 @@ public class SharePageService {
       currentPage.setDescription(sharePageModifyDTO.description());
 
     if (sharePageModifyDTO.profileImage() != null) {
-      s3StorageService.delete(currentPage.getProfileImageLink());
+        String profileImageLink = currentPage.getProfileImageLink();
+        String fileName =
+                profileImageLink.substring(
+                        profileImageLink.lastIndexOf("/") + 1, profileImageLink.lastIndexOf("."));
+
+        // 페이지 프로필 이미지가 디폴트 이미지가 아닌 경우 해당 프로필 이미지 삭제
+        if (!fileName.contains("default")) {
+            s3StorageService.delete(currentPage.getProfileImageLink());
+        }
       currentPage.setProfileImageLink(s3StorageService.store(sharePageModifyDTO.profileImage()));
     }
 
