@@ -10,5 +10,7 @@ public interface SharePagePrivilegeRepository extends JpaRepository<SharePagePri
 
   Optional<SharePagePrivilege> findByUserIdAndSharePageId(Long userId, UUID pageId);
 
+  void deleteAllBySharePageId(UUID pageId);
+
   boolean existsByUserIdAndSharePageId(Long userId, UUID pageId);
 }
