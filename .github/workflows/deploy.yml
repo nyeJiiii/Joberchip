@@ -1,9 +1,9 @@
-name: develop CI-CD
+name: release CD
 
 on:
   push:
     branches:
-      - develop
+      - release
 
 env:
   S3_BUCKET_NAME: joberchip-s3 #S3 버킷 생성시 설정
