@@ -111,7 +111,6 @@
 
 </p> <br></br>
 
-https://github.com/JoberChipFrappuccino/joberchip-be-demo/assets/128345842/6bfd712e-12ff-481f-b2af-90ed24b9345b
 
 ## 🖥️ 기능 소개
 ### 1. 스페이스
