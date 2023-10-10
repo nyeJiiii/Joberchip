@@ -10,7 +10,8 @@
 
 ## 🎞️ 프로젝트 시연 영상
 
-[![Video Label](http://img.youtube.com/vi/{}/0.jpg)](https://youtu.be/{}?si=zWJW0cSp2CfjvPSj)
+[![Video Label](http://img.youtube.com/vi/00k2Is_c4gw/0.jpg)](https://youtu.be/00k2Is_c4gw?si=zWJW0cSp2CfjvPSj)
+
 
 </div>
 <br><br>
@@ -110,12 +111,13 @@
 
 </p> <br></br>
 
+https://github.com/JoberChipFrappuccino/joberchip-be-demo/assets/128345842/6bfd712e-12ff-481f-b2af-90ed24b9345b
 
 ## 🖥️ 기능 소개
 ### 1. 스페이스
 | 기본생성 |  자동저장  | 템플릿 생성 |
 |:--:|:--:|:--:|
-|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b49db967-fd8d-4f9b-8814-5a8517cd5027" width=400/>|<img src="" width=/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/3b93e4db-3a39-4586-adef-83390a7ff796" width=400/>|<img src="" width=/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/f34fcf0a-1e1c-4edb-8de2-afef72c103d4" width=400/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b49db967-fd8d-4f9b-8814-5a8517cd5027" width=400/>|<img src="https://github.com/JoberChipFrappuccino/joberchip-be-demo/assets/128345842/6bfd712e-12ff-481f-b2af-90ed24b9345b" width=400/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/f34fcf0a-1e1c-4edb-8de2-afef72c103d4" width=400/>|
 
 <br>
 
