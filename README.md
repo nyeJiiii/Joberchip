@@ -110,11 +110,12 @@
 
 </p> <br></br>
 
+
 ## 🖥️ 기능 소개
 ### 1. 스페이스
 | 기본생성 |  자동저장  | 템플릿 생성 |
 |:--:|:--:|:--:|
-|<img src="" width=/>|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b49db967-fd8d-4f9b-8814-5a8517cd5027" width=400/>|<img src="" width=/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/3b93e4db-3a39-4586-adef-83390a7ff796" width=400/>|<img src="" width=/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/f34fcf0a-1e1c-4edb-8de2-afef72c103d4" width=400/>|
 
 <br>
 
@@ -122,25 +123,25 @@
 1️⃣ 링크 블럭
 |블럭 생성|블럭 수정|
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/330b2901-8173-43f1-9b13-0065db9952ac" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/a18107e8-43ef-49e1-828e-6e52da78748f" width=600/>|
 |설명|설명|
 
 2️⃣ 이미지 블럭
 |블럭 생성|블럭 수정|
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/89e56f56-716b-455e-82be-6adbbc73498e" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/bdb750a1-66a8-4dff-874b-5effa209a8cb" width=600/>|
 |설명|설명|
 
 3️⃣ 비디오 블럭
 |링크로 생성|파일로 생성 |
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/aa64d799-bef9-45cd-bafa-5d8699e83874" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/ec69c00d-cd5e-4ca7-9847-f7c27eb908d4" width=600/>|
 |설명|설명|
 
 4️⃣ 지도, 텍스트 블럭
 |지도 생성|텍스트 생성|
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b7c12bf1-9f9d-4cd9-a10f-e48dd691bb1d" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/aa897168-c5fc-430a-af77-58f78be927df" width=600/>|
 |설명|설명|
 
 <br>
@@ -148,12 +149,12 @@
 ### 3. 페이지
 |블럭 DnD|공개설정|
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/72a5d14f-ed5d-42d5-82d0-606ed6acba3f" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/c097b420-612f-42c7-b1ff-13b776a3fcb1" width=600/>|
 |설명|설명|
 
-|페이지 트리|페이지 경로|
+|페이지 트리|경로이동, 반응형|
 |:-----:|:-----:|
-|<img src="" width=/>|<img src="" width=/>|
+|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/e46d8a94-43a8-4575-9eb3-7095a910522d" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/767b1bc9-3f4c-4001-ab8b-6003bb401c78" width=600/>|
 |설명|설명|
 
 
