@@ -78,6 +78,8 @@ public class ServerSecurityConfig {
                     .antMatchers(HttpMethod.PUT)
                     .authenticated()
                     .antMatchers(HttpMethod.DELETE)
+                    .authenticated()
+                    .anyRequest()
                     .authenticated());
 
     return http.build();

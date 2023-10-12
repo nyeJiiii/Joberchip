@@ -5,6 +5,7 @@ import kr.joberchip.server.v1._config.security.CustomUserDetails;
 import kr.joberchip.server.v1._utils.ApiResponse;
 import kr.joberchip.server.v1.user.controller.dto.UpdateUserRequestDTO;
 import kr.joberchip.server.v1.user.controller.dto.UpdateUserResponseDTO;
+import kr.joberchip.server.v1.user.controller.dto.UserProfileDTO;
 import kr.joberchip.server.v1.user.controller.dto.UserRequest;
 import kr.joberchip.server.v1.user.service.UserService;
 import lombok.*;
@@ -35,10 +36,23 @@ public class UserController {
 
   @PutMapping("/update")
   public ResponseEntity<ApiResponse.Result<UpdateUserResponseDTO>> updateUserInfo(
-          @AuthenticationPrincipal CustomUserDetails loginUser,
-          UpdateUserRequestDTO updateUserRequestDTO) {
+      @AuthenticationPrincipal CustomUserDetails loginUser,
+      UpdateUserRequestDTO updateUserRequestDTO) {
     UpdateUserResponseDTO responseDTO = userService.updateUserInfo(loginUser, updateUserRequestDTO);
 
     return ResponseEntity.ok(ApiResponse.success(responseDTO));
+  }
+
+  @GetMapping("/profile")
+  public ApiResponse.Result<UserProfileDTO> userProfile(
+      @AuthenticationPrincipal CustomUserDetails loginUser) {
+
+    log.info("[UserController][GET] Login User - {}", loginUser.getUsername());
+
+    UserProfileDTO response = userService.getUserProfile(loginUser.user().getUserId());
+
+    log.info("[UserController][GET] Response - {}", response);
+
+    return ApiResponse.success(response);
   }
 }
