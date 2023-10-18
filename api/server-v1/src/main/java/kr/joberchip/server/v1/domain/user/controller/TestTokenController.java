@@ -2,22 +2,23 @@ package kr.joberchip.server.v1.domain.user.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import kr.joberchip.server.v1.domain.user.repository.UserRepository;
 import kr.joberchip.server.v1.global.security.JwtProvider;
 import kr.joberchip.server.v1.global.utils.ApiResponse;
-import kr.joberchip.server.v1.domain.user.repository.UserRepository;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Deprecated
 @Slf4j
 @RestController
-@RequestMapping("/v1/user")
+// @RequestMapping("/v1/user")
 @RequiredArgsConstructor
 public class TestTokenController {
   private final UserRepository userRepository;
 
-  @GetMapping("/testTokens")
+  //  @GetMapping("/testTokens")
   public ResponseEntity<ApiResponse.Result<List<TokenResponse>>> generateTestTokens() {
     List<TokenResponse> tokens = new ArrayList<>();
 
@@ -33,5 +34,4 @@ public class TestTokenController {
       return new TokenResponse(username, token);
     }
   }
-
 }
