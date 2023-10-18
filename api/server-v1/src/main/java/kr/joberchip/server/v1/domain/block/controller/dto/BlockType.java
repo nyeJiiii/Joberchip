@@ -1,4 +1,4 @@
-package kr.joberchip.server.v1.global.utils;
+package kr.joberchip.server.v1.domain.block.controller.dto;
 
 public enum BlockType {
   PAGE,

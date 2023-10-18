@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.persistence.Lob;
 import kr.joberchip.core.block.*;
 import kr.joberchip.core.page.SharePage;
-import kr.joberchip.server.v1.global.utils.BlockType;
 
 // TODO : Link, Video 링크 첨부하는 경우와 파일 첨부하는 경우 경로 다르게 설정되도록 해야함.
 @JsonInclude(JsonInclude.Include.NON_NULL)
