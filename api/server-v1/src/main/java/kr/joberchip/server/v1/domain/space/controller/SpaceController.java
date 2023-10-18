@@ -93,7 +93,7 @@ public class SpaceController {
     log.info("[SpaceController][POST] Space Invitation - Current Username : {}", loginUser.user().getUsername());
     log.info("[SpaceController][POST] Space Invitation - {}", spaceInviteRequestDTO);
 
-    // 스페이스 소유자가 아니면 스페이스에 사용자 초애 불가
+    // 스페이스 소유자가 아니면 스페이스에 사용자 초대 불가
     spaceParticipationInfoService.checkOwnerOrDefault(
         loginUser.user().getUserId(), spaceInviteRequestDTO.spaceId());
 
