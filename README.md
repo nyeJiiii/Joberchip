@@ -117,6 +117,7 @@
 | 기본생성 |  자동저장  | 템플릿 생성 |
 |:--:|:--:|:--:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b49db967-fd8d-4f9b-8814-5a8517cd5027" width=400/>|<img src="https://github.com/JoberChipFrappuccino/joberchip-be-demo/assets/128345842/6bfd712e-12ff-481f-b2af-90ed24b9345b" width=400/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/f34fcf0a-1e1c-4edb-8de2-afef72c103d4" width=400/>|
+|JWT 토큰을 통해 로그인한 진입 화면|디바운싱 이용한 자동저장 기능|플로팅바를 통한 블럭 생성|
 
 <br>
 
@@ -125,25 +126,25 @@
 |블럭 생성|블럭 수정|
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/330b2901-8173-43f1-9b13-0065db9952ac" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/a18107e8-43ef-49e1-828e-6e52da78748f" width=600/>|
-|설명|설명|
+|링크 생성 시 Url을 통해 사이트 아이콘을 파싱|수정 시 아이콘 또한 변경|
 
 2️⃣ 이미지 블럭
 |블럭 생성|블럭 수정|
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/89e56f56-716b-455e-82be-6adbbc73498e" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/bdb750a1-66a8-4dff-874b-5effa209a8cb" width=600/>|
-|설명|설명|
+|첨부된 이미지는 S3 버킷에 저장되고 Url을 통해 호출 가능|생성과 수정 모두 png, jpeg, jpg 형식 외 업로드 안되도록 예외 처리|
 
 3️⃣ 비디오 블럭
 |링크로 생성|파일로 생성 |
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/aa64d799-bef9-45cd-bafa-5d8699e83874" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/ec69c00d-cd5e-4ca7-9847-f7c27eb908d4" width=600/>|
-|설명|설명|
+|-링크와 파일 첨부 중 하나만 가능하도록 처리 <br> -링크 생성 시 youtube 썸네일을 함께 노출|생성과 수정 모두 mp4 형식 외 업로드 안되도록 예외 처리|
 
 4️⃣ 지도, 텍스트 블럭
 |지도 생성|텍스트 생성|
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/b7c12bf1-9f9d-4cd9-a10f-e48dd691bb1d" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/aa897168-c5fc-430a-af77-58f78be927df" width=600/>|
-|설명|설명|
+|Google Maps API키를 통해 지도 호출해 위도, 경도를 저장|서체, 크기, 색상 등 스타일 정보를 저장해 다양한 커스텀 가능|
 
 <br>
 
@@ -151,20 +152,22 @@
 |블럭 DnD|공개설정|
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/72a5d14f-ed5d-42d5-82d0-606ed6acba3f" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/c097b420-612f-42c7-b1ff-13b776a3fcb1" width=600/>|
-|설명|설명|
+|디바운싱 통해 블럭 정보가 자동으로 저장되므로 자유로운 변경 가능|블럭 별 공개 설정 가능|
 
 |페이지 트리|경로이동, 반응형|
 |:-----:|:-----:|
 |<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/e46d8a94-43a8-4575-9eb3-7095a910522d" width=600/>|<img src="https://github.com/atsunsetree/joberchip-be/assets/128345842/767b1bc9-3f4c-4001-ab8b-6003bb401c78" width=600/>|
-|설명|설명|
+|-페이지 안에 또 다른 페이지인 하위 페이지를 생성 <br> -최상단 페이지가 같다면 계층에 관계없이 위치 지정 가능|-breadcrumb Bar를 통해 페이지 위치와 트리 확인, 이동 <Br> -반응형으로 제작해 모바일까지 확장 가능|
 
 
 <br></br>
 
 ## ⚙️ 프로젝트 설정
 ### 1. ERD
-![image]()
+![Jober (2)](https://github.com/JoberChipFrappuccino/joberchip-be-demo/assets/128345842/b7252bdf-6af5-42d6-9319-5bf8850466d4)
+
 <br>
+
 ### 2. 시스템 아키텍쳐
 ### 3. 패키지 구조
 ```markdown
